@@ -82,14 +82,36 @@ No flash on load: next-themes injects a blocking script before first paint, and
 Only `opacity` and `transform` are animated. Scroll reveals use Motion's
 `whileInView` with `once: true`.
 
-`components/motion/grid-beams.tsx` runs light pulses along the hero's blueprint
-grid. It is pure CSS — no JS, no timers — with each beam's line, duration and
-delay declared as data at the top of the file. Beams whose grid line falls off a
-narrow viewport are gated behind breakpoints so they never animate off-screen.
-Per-beam timing is set with inline `animation-duration`/`animation-delay`
-longhands, not custom properties: the `--animate-beam-*` tokens compute on
-`:root`, so a `var()` inside them would resolve once there and every beam would
-inherit identical timing.
+### Grid beams
+
+`components/motion/grid-beams.tsx` runs light pulses along the blueprint grid.
+Pure CSS — no JS, no timers — with each beam's line, duration and delay declared
+as data at the top of the file. Two sets: `hero` (dense and quick) and `ambient`
+(sparser, calmer, dimmed to 70%).
+
+They appear in four places:
+
+| Where | Source |
+|---|---|
+| Hero | its own parallax layer, `hero` variant |
+| Any `<Section tone="default">` | the fixed `PageBackdrop`, `ambient` variant |
+| WhyWizard, Footer | their own layer, `ambient` — these paint a background, so the fixed backdrop cannot reach them |
+
+`components/layout/page-backdrop.tsx` is the page-wide layer: `fixed`, so the
+grid holds still while content scrolls over it and the beams keep travelling the
+whole way down. It shows through only the sections that declare no background of
+their own, which is what gives the page its alternating lit/solid rhythm. The
+hero sets `bg-bg` specifically to hide it, so you never see two grids stacked.
+
+Two constraints worth knowing before editing:
+
+- **Per-beam timing must be inline `animation-duration`/`animation-delay`
+  longhands, not custom properties.** The `--animate-beam-*` tokens compute on
+  `:root`, so a `var()` inside them resolves once there and every beam inherits
+  identical timing.
+- **Beams whose grid line falls off a narrow viewport are breakpoint-gated.** An
+  off-screen element still burns animation frames. Counts scale 18 → 28 → 38 →
+  42 from mobile to ultrawide.
 
 GSAP is used in exactly one place — the pinned horizontal project rail in
 `features/home/sections/featured-projects.tsx` — and is dynamically imported, so

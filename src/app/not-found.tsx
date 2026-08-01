@@ -11,12 +11,10 @@ export const metadata = buildMetadata({
 });
 
 export default function NotFound() {
+  // No grid of its own: this section paints no background colour, so the fixed
+  // PageBackdrop grid and beams already show through.
   return (
     <section className="bg-mesh relative flex min-h-[70svh] items-center py-section">
-      <div
-        aria-hidden="true"
-        className="bg-grid mask-fade-y pointer-events-none absolute inset-0 opacity-60"
-      />
       <Container className="relative text-center">
         <p className="text-label mb-6 uppercase text-accent">Error 404</p>
         <h1 className="text-display-xl mx-auto max-w-2xl text-fg">

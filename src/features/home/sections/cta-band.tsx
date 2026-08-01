@@ -21,13 +21,11 @@ import { cn } from "@/lib/utils";
 export function CtaBand() {
   return (
     <Section className="overflow-hidden">
+      {/* No grid of its own — this section paints no background, so the fixed
+          PageBackdrop grid and its beams already show through. */}
       <div
         aria-hidden="true"
         className="bg-mesh pointer-events-none absolute inset-0"
-      />
-      <div
-        aria-hidden="true"
-        className="bg-grid mask-fade-y pointer-events-none absolute inset-0 opacity-70"
       />
 
       <Container className="relative">

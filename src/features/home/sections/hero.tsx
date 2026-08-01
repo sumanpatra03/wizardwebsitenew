@@ -25,10 +25,12 @@ import { HeroBackdrop } from "./hero-backdrop";
  * client-side.
  */
 export function Hero() {
+  // `bg-bg` below is load-bearing: it hides the fixed PageBackdrop so the hero
+  // shows only its own parallax grid, rather than two grids stacked.
   return (
     <section
       data-themed=""
-      className="relative isolate flex min-h-[92svh] items-center overflow-hidden pt-header pb-16 sm:pb-20 lg:min-h-svh"
+      className="relative isolate flex min-h-[92svh] items-center overflow-hidden bg-bg pt-header pb-16 sm:pb-20 lg:min-h-svh"
     >
       <HeroBackdrop />
 

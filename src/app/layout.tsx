@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from "next";
 import "@/styles/globals.css";
 
 import { JsonLd } from "@/components/common/json-ld";
+import { PageBackdrop } from "@/components/layout/page-backdrop";
 import { SITE } from "@/constants/site";
 import { Footer } from "@/features/navigation/footer";
 import { Header } from "@/features/navigation/header";
@@ -80,6 +81,8 @@ export default function RootLayout({
             <a href="#main" className="sr-only-focusable z-100 rounded-pill bg-accent px-5 py-3 text-body-sm font-medium text-accent-fg top-4 left-4">
               Skip to content
             </a>
+
+            <PageBackdrop />
 
             <Header />
 

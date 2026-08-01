@@ -2,6 +2,7 @@ import { Check } from "lucide-react";
 
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
+import { GridBeams } from "@/components/motion/grid-beams";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion/reveal";
 import { MaskReveal } from "@/components/motion/text-reveal";
 import {
@@ -21,11 +22,16 @@ import { cn } from "@/lib/utils";
 export function WhyWizard() {
   return (
     <Section tone="subtle" className="border-y border-border">
-      {/* Decorative grid, masked so it fades before the section edges. */}
+      {/* This section paints its own background, so the fixed PageBackdrop
+          cannot show through — it carries its own grid and beams instead.
+          Both live in one masked wrapper so they fade out together. */}
       <div
         aria-hidden="true"
-        className="bg-grid mask-fade-y pointer-events-none absolute inset-0 opacity-50"
-      />
+        className="mask-fade-y pointer-events-none absolute inset-0 overflow-hidden"
+      >
+        <div className="bg-grid absolute inset-0 opacity-50" />
+        <GridBeams variant="ambient" />
+      </div>
 
       <Container className="relative">
         <div className="grid gap-14 lg:grid-cols-12 lg:gap-12">

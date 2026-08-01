@@ -8,6 +8,7 @@ import {
   LinkedInIcon,
 } from "@/components/common/social-icons";
 import { Container } from "@/components/layout/container";
+import { GridBeams } from "@/components/motion/grid-beams";
 import {
   COPYRIGHT,
   FOOTER_COLUMNS,
@@ -41,11 +42,16 @@ export function Footer() {
       data-themed=""
       className="relative border-t border-border bg-bg-subtle"
     >
-      {/* Decorative grid wash, masked so it never reaches the legal bar. */}
+      {/* The footer paints its own background, so the fixed PageBackdrop
+          cannot show through — it carries its own grid and beams instead,
+          masked so neither reaches the legal bar. */}
       <div
         aria-hidden="true"
-        className="bg-grid mask-fade-y pointer-events-none absolute inset-0 opacity-60"
-      />
+        className="mask-fade-y pointer-events-none absolute inset-0 overflow-hidden"
+      >
+        <div className="bg-grid absolute inset-0 opacity-60" />
+        <GridBeams variant="ambient" />
+      </div>
 
       <Container size="wide" className="relative">
         <div className="grid gap-12 py-16 lg:grid-cols-12 lg:gap-8 lg:py-20">

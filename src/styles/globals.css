@@ -93,6 +93,13 @@
       transition-duration: 0.01ms !important;
       scroll-behavior: auto !important;
     }
+
+    /* The rule above only collapses durations, which would leave the grid
+       beams frozen mid-track as stray lines. They are purely decorative, so
+       remove them outright. */
+    [data-grid-beams] {
+      display: none;
+    }
   }
 
   ::-webkit-scrollbar {
