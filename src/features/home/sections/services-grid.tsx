@@ -1,4 +1,5 @@
 import { ChevronRight } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 
 import { Container } from "@/components/layout/container";
@@ -7,9 +8,20 @@ import { SectionHeading } from "@/components/layout/section-heading";
 import { Stagger, StaggerItem } from "@/components/motion/reveal";
 import { SECTION_COPY } from "@/constants/home";
 import { SERVICES } from "@/constants/services";
+import { findPublicImage } from "@/lib/public-image";
 import { cn } from "@/lib/utils";
 
 import { ServiceArtwork } from "./service-artwork";
+
+/** Shared by both media layers so the hover swap stays in step. */
+const MEDIA_TRANSITION = [
+  "col-start-1 row-start-1 self-stretch",
+  "transition-[opacity,transform] duration-(--duration-base)",
+  "ease-(--ease-out-expo)",
+  "group-hover/card:-translate-y-2 group-hover/card:opacity-0",
+  "group-focus-within/card:-translate-y-2 group-focus-within/card:opacity-0",
+  "motion-reduce:transition-none motion-reduce:transform-none",
+];
 
 /**
  * Services grid.
@@ -41,6 +53,9 @@ export function ServicesGrid() {
         >
           {SERVICES.map((service, index) => {
             const accented = index % 2 === 1;
+            // Drop a file into `public/services/` named after the slug and it
+            // replaces the generated artwork — see `public/services/README.md`.
+            const image = findPublicImage("services", service.slug);
 
             return (
               <StaggerItem key={service.slug}>
@@ -81,19 +96,33 @@ export function ServicesGrid() {
                     {/* Two stacked layers occupying the same grid cell: the
                         artwork, and the detail that replaces it on hover. */}
                     <span className="relative mt-6 grid flex-1 grid-cols-1 grid-rows-1">
-                      <ServiceArtwork
-                        icon={service.icon}
-                        index={index}
-                        className={cn(
-                          "col-start-1 row-start-1 self-stretch",
-                          "transition-[opacity,transform] duration-(--duration-base)",
-                          "ease-(--ease-out-expo)",
-                          "group-hover/card:-translate-y-2 group-hover/card:opacity-0",
-                          "group-focus-within/card:-translate-y-2",
-                          "group-focus-within/card:opacity-0",
-                          "motion-reduce:transition-none motion-reduce:transform-none",
-                        )}
-                      />
+                      {image ? (
+                        <span
+                          className={cn(
+                            MEDIA_TRANSITION,
+                            "relative block overflow-hidden rounded-lg",
+                          )}
+                        >
+                          <Image
+                            src={image}
+                            // Decorative: the title above already names the
+                            // service, so an alt would only repeat it.
+                            alt=""
+                            fill
+                            sizes="(min-width: 1024px) 22vw, (min-width: 640px) 45vw, 88vw"
+                            className="object-cover"
+                          />
+                          {/* Ties the photograph into the card's palette and
+                              keeps the surrounding text dominant. */}
+                          <span className="absolute inset-0 bg-gradient-to-t from-surface/70 via-transparent to-transparent" />
+                        </span>
+                      ) : (
+                        <ServiceArtwork
+                          icon={service.icon}
+                          index={index}
+                          className={cn(MEDIA_TRANSITION)}
+                        />
+                      )}
 
                       <span
                         className={cn(

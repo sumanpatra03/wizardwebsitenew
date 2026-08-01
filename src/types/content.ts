@@ -32,6 +32,12 @@ export type Service = {
   /** Eyebrow label above the card title, e.g. "Engineering". */
   category: string;
   icon: LucideIcon;
+  /**
+   * Brief for this card's photograph, kept in the data so the artwork can be
+   * regenerated consistently. See `public/services/README.md`; a file dropped
+   * there replaces the generated `ServiceArtwork` automatically.
+   */
+  imagePrompt: string;
   /** Capability bullets revealed on card expansion. */
   capabilities: readonly string[];
 };

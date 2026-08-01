@@ -22,6 +22,16 @@ The name must match the card `id` in `src/constants/industries.ts`:
 `.avif`, `.webp`, `.jpg`, `.jpeg` and `.png` all work; the first found wins in
 that order. Then run `npm run build`.
 
+> **Replacing an image that is already live?** Delete `.next/cache/images`
+> first. Next's image optimizer caches its output keyed on the *URL*, not the
+> file contents — so overwriting `healthcare.png` in place leaves the old
+> optimized copy being served, and the page keeps showing the previous
+> artwork even after a rebuild. This bites on every regeneration:
+>
+> ```bash
+> rm -rf .next/cache/images && npm run build
+> ```
+
 ## Specification
 
 - **16:9**, landscape
