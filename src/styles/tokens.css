@@ -146,6 +146,53 @@
   --animate-accordion-up: accordion-up var(--duration-fast) var(--ease-out-quart);
   --animate-overlay-in: overlay-in var(--duration-fast) var(--ease-out-quart);
   --animate-overlay-out: overlay-out var(--duration-fast) var(--ease-out-quart);
+
+  /* Light pulses travelling along the blueprint grid lines.
+     The duration below is only a default: each beam overrides
+     `animation-duration` and `animation-delay` with inline longhands so the
+     group reads as independent traffic rather than a synchronised sweep.
+     (Referencing a per-element var here would not work — this token computes
+     on :root, so the substitution happens before any beam is involved.) */
+  --animate-beam-x: beam-x 8s linear infinite;
+  --animate-beam-y: beam-y 8s linear infinite;
+}
+
+/**
+ * Grid beams.
+ *
+ * The beam is 25% of its track, so translating from -100% to 400% of its own
+ * width carries it from just off one edge to just off the other. Only
+ * `transform` and `opacity` animate, keeping the whole effect on the
+ * compositor.
+ */
+@keyframes beam-x {
+  0% {
+    transform: translate3d(-100%, 0, 0);
+    opacity: 0;
+  }
+  12%,
+  88% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(400%, 0, 0);
+    opacity: 0;
+  }
+}
+
+@keyframes beam-y {
+  0% {
+    transform: translate3d(0, -100%, 0);
+    opacity: 0;
+  }
+  12%,
+  88% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(0, 400%, 0);
+    opacity: 0;
+  }
 }
 
 @keyframes accordion-down {

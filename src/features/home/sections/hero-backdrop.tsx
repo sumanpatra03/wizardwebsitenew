@@ -2,10 +2,12 @@
 
 import { motion, useScroll, useTransform } from "motion/react";
 
+import { GridBeams } from "@/components/motion/grid-beams";
 import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
 
 /**
- * Hero artwork: a slow-drifting gradient mesh over a blueprint grid.
+ * Hero artwork: a slow-drifting gradient mesh over a blueprint grid, with
+ * light pulses running along the grid lines.
  *
  * This is the site's substitute for hero photography — pure CSS, so there is
  * nothing to download, nothing to lay out, and it recolours with the theme.
@@ -32,10 +34,15 @@ export function HeroBackdrop() {
 
   return (
     <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
+      {/* Grid and beams share one parallax layer so the pulses stay welded to
+          the lines they ride, and one mask so both fade out together. */}
       <motion.div
         style={{ y: gridY }}
-        className="bg-grid mask-fade-y absolute inset-0 will-change-transform"
-      />
+        className="mask-fade-y absolute inset-0 will-change-transform"
+      >
+        <div className="bg-grid absolute inset-0" />
+        <GridBeams />
+      </motion.div>
 
       <motion.div
         style={{ y: meshY, opacity: fade }}

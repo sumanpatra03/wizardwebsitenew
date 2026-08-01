@@ -82,6 +82,15 @@ No flash on load: next-themes injects a blocking script before first paint, and
 Only `opacity` and `transform` are animated. Scroll reveals use Motion's
 `whileInView` with `once: true`.
 
+`components/motion/grid-beams.tsx` runs light pulses along the hero's blueprint
+grid. It is pure CSS — no JS, no timers — with each beam's line, duration and
+delay declared as data at the top of the file. Beams whose grid line falls off a
+narrow viewport are gated behind breakpoints so they never animate off-screen.
+Per-beam timing is set with inline `animation-duration`/`animation-delay`
+longhands, not custom properties: the `--animate-beam-*` tokens compute on
+`:root`, so a `var()` inside them would resolve once there and every beam would
+inherit identical timing.
+
 GSAP is used in exactly one place — the pinned horizontal project rail in
 `features/home/sections/featured-projects.tsx` — and is dynamically imported, so
 it never enters the initial bundle and is never fetched on mobile or under
