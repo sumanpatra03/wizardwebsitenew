@@ -96,7 +96,7 @@ export function Header() {
         "fixed inset-x-0 top-0 z-40 w-full",
         "transition-[transform,background-color,border-color,backdrop-filter]",
         "duration-(--duration-fast) ease-(--ease-out-quart)",
-        "motion-reduce:transform-none motion-reduce:transition-none",
+        "motion-reduce:translate-none motion-reduce:transition-none",
         hidden ? "-translate-y-full" : "translate-y-0",
         scrolled
           ? "border-b border-border bg-bg/80 backdrop-blur-xl"

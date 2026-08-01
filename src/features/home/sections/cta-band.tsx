@@ -54,7 +54,7 @@ export function CtaBand() {
                     {CTA_BAND.primaryCta.label}
                     <ArrowRight
                       aria-hidden="true"
-                      className="size-4 transition-transform duration-(--duration-fast) group-hover:translate-x-1 motion-reduce:transform-none"
+                      className="size-4 transition-transform duration-(--duration-fast) group-hover:translate-x-1 motion-reduce:translate-none"
                     />
                   </Link>
                 </Button>

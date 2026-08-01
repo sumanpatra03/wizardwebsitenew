@@ -95,7 +95,7 @@ export function HoverCard({
               "ease-(--ease-out-expo)",
               "group-data-active/panel:scale-110",
               "group-data-active/panel:brightness-110",
-              "motion-reduce:transform-none motion-reduce:transition-none",
+              "motion-reduce:scale-none motion-reduce:transition-none",
             )}
           />
         ) : (
@@ -108,7 +108,7 @@ export function HoverCard({
               "ease-(--ease-out-expo)",
               "group-data-active/panel:scale-110",
               "group-data-active/panel:brightness-110",
-              "motion-reduce:transform-none motion-reduce:transition-none",
+              "motion-reduce:scale-none motion-reduce:transition-none",
             )}
           />
         )}
@@ -151,7 +151,7 @@ export function HoverCard({
             "text-label uppercase text-brand-200",
             "transition-transform duration-[620ms] ease-(--ease-out-expo)",
             "group-data-active/panel:-translate-y-2.5",
-            "motion-reduce:transform-none",
+            "motion-reduce:translate-none",
           )}
         >
           {card.category}
@@ -163,7 +163,7 @@ export function HoverCard({
             "font-display text-heading-md mt-2 text-balance text-white",
             "transition-transform duration-[620ms] ease-(--ease-out-expo)",
             "group-data-active/panel:-translate-y-2.5",
-            "motion-reduce:transform-none",
+            "motion-reduce:translate-none",
           )}
         >
           {card.title}
@@ -216,7 +216,7 @@ export function HoverCard({
                 aria-hidden="true"
                 className={cn(
                   "size-4 transition-transform duration-(--duration-fast)",
-                  "group-hover/panel:translate-x-0.5 motion-reduce:transform-none",
+                  "group-hover/panel:translate-x-0.5 motion-reduce:translate-none",
                 )}
               />
             </Link>

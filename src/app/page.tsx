@@ -1,6 +1,7 @@
 import dynamic from "next/dynamic";
 
 import { ProjectsSkeleton, TestimonialsSkeleton } from "@/features/home/skeletons";
+import { Careers } from "@/features/home/sections/careers";
 import { CtaBand } from "@/features/home/sections/cta-band";
 import { Hero } from "@/features/home/sections/hero";
 import { Industries } from "@/features/home/sections/industries";
@@ -57,6 +58,7 @@ export default function HomePage() {
       <WhyWizard />
       <ProductsSection />
       <Testimonials />
+      <Careers />
       <CtaBand />
     </>
   );

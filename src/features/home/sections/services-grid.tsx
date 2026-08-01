@@ -13,31 +13,22 @@ import { cn } from "@/lib/utils";
 
 import { ServiceArtwork } from "./service-artwork";
 
-/** Shared by both media layers so the hover swap stays in step. */
-const MEDIA_TRANSITION = [
-  "col-start-1 row-start-1 self-stretch",
-  "transition-[opacity,transform] duration-(--duration-base)",
-  "ease-(--ease-out-expo)",
-  "group-hover/card:-translate-y-2 group-hover/card:opacity-0",
-  "group-focus-within/card:-translate-y-2 group-focus-within/card:opacity-0",
-  "motion-reduce:transition-none motion-reduce:transform-none",
+/**
+ * Card height.
+ *
+ * A flip needs a definite box: both faces are absolutely positioned and must
+ * occupy exactly the same space, so the card cannot size itself from the
+ * taller of the two. This value fits the longest back face — a four-line
+ * description plus four capabilities plus the expand row.
+ */
+const CARD_HEIGHT = "h-[25rem] sm:h-[27rem]";
+
+/** Shared by both faces, so front and back sit exactly on top of each other. */
+const FACE = [
+  "absolute inset-0 flex flex-col overflow-hidden rounded-xl border",
+  "p-6 backface-hidden sm:p-7",
 ];
 
-/**
- * Services grid.
- *
- * Website A's card pattern, rebuilt: tall portrait cards in a four-up grid,
- * each led by an eyebrow and a large title, with artwork filling the lower
- * half. On hover — or keyboard focus — the artwork gives way to the service's
- * description, its capability list and an expand affordance.
- *
- * The swap is CSS only (opacity plus a small translate on two stacked grid
- * layers), so it needs no JavaScript and no height measurement. Both layers
- * stay in the DOM at all times, which keeps the copy available to search
- * engines and screen readers whatever the pointer is doing.
- *
- * Server Component; only the stagger wrapper is client-side.
- */
 export function ServicesGrid() {
   return (
     <Section tone="subtle" className="border-y border-border">
@@ -57,126 +48,153 @@ export function ServicesGrid() {
             // replaces the generated artwork — see `public/services/README.md`.
             const image = findPublicImage("services", service.slug);
 
+            const faceTone = accented
+              ? "border-accent/25 bg-bg-elevated bg-mesh"
+              : "border-border bg-surface";
+
             return (
               <StaggerItem key={service.slug}>
+                {/*
+                 * The flip.
+                 *
+                 * `group/card` and the perspective live out here on a element
+                 * that never rotates — perspective has to be applied by an
+                 * ancestor of the rotating box, and the hover target has to
+                 * stay still or the pointer would chase it mid-turn.
+                 */}
                 <article
                   className={cn(
-                    "group/card relative isolate h-full overflow-hidden rounded-xl border",
-                    "transition-[transform,box-shadow,border-color]",
-                    "duration-(--duration-fast) ease-(--ease-out-quart)",
-                    "hover:-translate-y-1 hover:shadow-card-hover",
+                    "group/card relative perspective-[1600px]",
+                    CARD_HEIGHT,
+                    "transition-transform duration-(--duration-fast)",
+                    "ease-(--ease-out-quart) hover:-translate-y-1",
                     "focus-within:-translate-y-1",
-                    "motion-reduce:hover:translate-y-0 motion-reduce:focus-within:translate-y-0",
-                    accented
-                      ? "border-accent/25 bg-bg-elevated bg-mesh hover:border-accent/50"
-                      : "border-border bg-surface hover:border-accent/40",
+                    "motion-reduce:translate-none motion-reduce:transition-none",
                   )}
                 >
+                  {/*
+                   * The rotating box. One link wraps both faces, so the card
+                   * contributes a single stop to the tab order — and focusing
+                   * it turns the card via `focus-within`, which is what makes
+                   * the back reachable without a pointer.
+                   *
+                   * Under reduced motion the turn still happens but without a
+                   * transition: the back face appears instantly, like any
+                   * content swap, with no travel to track.
+                   */}
                   <Link
                     href={`/services/${service.slug}`}
                     className={cn(
-                      "flex h-full min-h-[24rem] flex-col p-6 sm:min-h-[26rem] sm:p-7",
-                      "focus-visible:outline-2 focus-visible:-outline-offset-2",
+                      "relative block size-full rounded-xl transform-3d",
+                      // Symmetric ease, not the site's usual out-expo. Expo is
+                      // so front-loaded that the card reached 176 degrees in
+                      // the first 400ms of 750 — the turn was over before the
+                      // eye could follow it. An in-out curve accelerates and
+                      // decelerates like a real card being turned over.
+                      "transition-transform duration-[700ms]",
+                      "ease-(--ease-in-out-soft)",
+                      "group-hover/card:rotate-y-180",
+                      "group-focus-within/card:rotate-y-180",
+                      "focus-visible:outline-2 focus-visible:outline-offset-4",
                       "focus-visible:outline-ring",
+                      "motion-reduce:transition-none",
                     )}
                   >
-                    <p
-                      className={cn(
-                        "text-label uppercase",
-                        accented ? "text-accent" : "text-fg-subtle",
-                      )}
-                    >
-                      {service.category}
-                    </p>
-
-                    <h3 className="font-display text-heading-md mt-4 text-balance text-fg">
-                      {service.title}
-                    </h3>
-
-                    {/* Two stacked layers occupying the same grid cell: the
-                        artwork, and the detail that replaces it on hover. */}
-                    <span className="relative mt-6 grid flex-1 grid-cols-1 grid-rows-1">
-                      {image ? (
-                        <span
-                          className={cn(
-                            MEDIA_TRANSITION,
-                            "relative block overflow-hidden rounded-lg",
-                          )}
-                        >
-                          <Image
-                            src={image}
-                            // Decorative: the title above already names the
-                            // service, so an alt would only repeat it.
-                            alt=""
-                            fill
-                            sizes="(min-width: 1024px) 22vw, (min-width: 640px) 45vw, 88vw"
-                            className="object-cover"
-                          />
-                          {/* Ties the photograph into the card's palette and
-                              keeps the surrounding text dominant. */}
-                          <span className="absolute inset-0 bg-gradient-to-t from-surface/70 via-transparent to-transparent" />
-                        </span>
-                      ) : (
-                        <ServiceArtwork
-                          icon={service.icon}
-                          index={index}
-                          className={cn(MEDIA_TRANSITION)}
-                        />
-                      )}
-
+                    {/* Front — category, title, artwork. */}
+                    <span className={cn(FACE, faceTone)}>
                       <span
                         className={cn(
-                          "col-start-1 row-start-1 flex translate-y-2 flex-col",
-                          "opacity-0 transition-[opacity,transform]",
-                          "duration-(--duration-base) ease-(--ease-out-expo)",
-                          "group-hover/card:translate-y-0 group-hover/card:opacity-100",
-                          "group-focus-within/card:translate-y-0",
-                          "group-focus-within/card:opacity-100",
-                          "motion-reduce:transition-none motion-reduce:transform-none",
+                          "text-label uppercase",
+                          accented ? "text-accent" : "text-fg-subtle",
                         )}
                       >
-                        <span className="text-body-sm text-fg-muted">
-                          {service.description}.
-                        </span>
+                        {service.category}
+                      </span>
 
-                        <span className="mt-4 flex flex-col gap-1.5">
-                          {service.capabilities.map((capability) => (
-                            <span
-                              key={capability}
-                              className="text-body-sm flex items-start gap-2 text-fg-muted"
-                            >
-                              <span
-                                aria-hidden="true"
-                                className="mt-2 size-1 shrink-0 rounded-pill bg-accent"
-                              />
-                              {capability}
-                            </span>
-                          ))}
-                        </span>
+                      <span className="font-display text-heading-md mt-4 text-balance text-fg">
+                        {service.title}
+                      </span>
+
+                      <span className="relative mt-6 block flex-1 overflow-hidden rounded-lg">
+                        {image ? (
+                          <>
+                            <Image
+                              src={image}
+                              // Decorative: the title above already names the
+                              // service, so an alt would only repeat it.
+                              alt=""
+                              fill
+                              sizes="(min-width: 1024px) 22vw, (min-width: 640px) 45vw, 88vw"
+                              className="object-cover"
+                            />
+                            {/* Ties the photograph into the card's palette. */}
+                            <span className="absolute inset-0 bg-gradient-to-t from-surface/70 via-transparent to-transparent" />
+                          </>
+                        ) : (
+                          <ServiceArtwork
+                            icon={service.icon}
+                            index={index}
+                            className="absolute inset-0"
+                          />
+                        )}
                       </span>
                     </span>
 
-                    {/* Expand affordance, always visible so the card never
-                        looks inert before the pointer arrives. */}
-                    <span
-                      className={cn(
-                        "mt-6 flex items-center justify-between gap-3 border-t pt-4",
-                        "text-body-sm font-medium",
-                        "transition-colors duration-(--duration-fast)",
-                        accented
-                          ? "border-accent/20 text-accent"
-                          : "border-border text-fg group-hover/card:text-accent",
-                      )}
-                    >
-                      Expand
-                      <ChevronRight
-                        aria-hidden="true"
+                    {/*
+                     * Back — pre-rotated a half turn so it reads correctly
+                     * once the card has turned. `backface-hidden` on both
+                     * faces is what stops each showing through the other.
+                     */}
+                    <span className={cn(FACE, faceTone, "rotate-y-180")}>
+                      <span
                         className={cn(
-                          "size-4 transition-transform duration-(--duration-fast)",
-                          "ease-(--ease-out-quart) group-hover/card:translate-x-1",
-                          "motion-reduce:transform-none",
+                          "text-label uppercase",
+                          accented ? "text-accent" : "text-fg-subtle",
                         )}
-                      />
+                      >
+                        {service.category}
+                      </span>
+
+                      <span className="font-display text-heading-md mt-4 text-balance text-fg">
+                        {service.title}
+                      </span>
+
+                      <span className="text-body-sm mt-4 text-fg-muted">
+                        {service.description}.
+                      </span>
+
+                      <span className="mt-4 flex flex-1 flex-col gap-1.5">
+                        {service.capabilities.map((capability) => (
+                          <span
+                            key={capability}
+                            className="text-body-sm flex items-start gap-2 text-fg-muted"
+                          >
+                            <span
+                              aria-hidden="true"
+                              className="mt-2 size-1 shrink-0 rounded-pill bg-accent"
+                            />
+                            {capability}
+                          </span>
+                        ))}
+                      </span>
+
+                      <span
+                        className={cn(
+                          "text-body-sm mt-5 flex items-center justify-between",
+                          "gap-3 border-t pt-4 font-medium text-accent",
+                          accented ? "border-accent/20" : "border-border",
+                        )}
+                      >
+                        Explore
+                        <ChevronRight
+                          aria-hidden="true"
+                          className={cn(
+                            "size-4 transition-transform duration-(--duration-fast)",
+                            "ease-(--ease-out-quart) group-hover/card:translate-x-1",
+                            "motion-reduce:translate-none",
+                          )}
+                        />
+                      </span>
                     </span>
                   </Link>
                 </article>
@@ -185,24 +203,24 @@ export function ServicesGrid() {
           })}
 
           {/* Eighth slot. Seven services would leave a hole in the four-up
-              grid; this closes it and doubles as the route to the full list. */}
+              grid; this closes it and doubles as the route to the full list.
+              It does not flip — there is no second side to show. */}
           <StaggerItem>
             <article
               className={cn(
-                "group/card relative isolate h-full overflow-hidden rounded-xl",
+                "group/card relative overflow-hidden rounded-xl",
+                CARD_HEIGHT,
                 "border border-dashed border-border-strong bg-transparent",
                 "transition-[transform,border-color] duration-(--duration-fast)",
                 "ease-(--ease-out-quart) hover:-translate-y-1 hover:border-accent",
                 "focus-within:-translate-y-1 focus-within:border-accent",
-                "motion-reduce:hover:translate-y-0",
-                "motion-reduce:focus-within:translate-y-0",
+                "motion-reduce:translate-none motion-reduce:transition-none",
               )}
             >
               <Link
                 href="/services"
                 className={cn(
-                  "flex h-full min-h-[24rem] flex-col justify-end p-6",
-                  "sm:min-h-[26rem] sm:p-7",
+                  "flex size-full flex-col justify-end p-6 sm:p-7",
                   "focus-visible:outline-2 focus-visible:-outline-offset-2",
                   "focus-visible:outline-ring",
                 )}
@@ -225,7 +243,7 @@ export function ServicesGrid() {
                     className={cn(
                       "size-4 transition-transform duration-(--duration-fast)",
                       "ease-(--ease-out-quart) group-hover/card:translate-x-1",
-                      "motion-reduce:transform-none",
+                      "motion-reduce:translate-none",
                     )}
                   />
                 </span>

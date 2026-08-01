@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 
+import { keepScrollTriggersFresh } from "@/animations/scroll";
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { SectionHeading } from "@/components/layout/section-heading";
@@ -63,6 +64,10 @@ export function FeaturedProjects() {
       const onLenisScroll = () => ScrollTrigger.update();
       lenis?.on("scroll", onLenisScroll);
 
+      // Lazy-loaded photography above this section changes page height after
+      // the trigger is built, which leaves its cached offsets stale.
+      const stopWatching = keepScrollTriggersFresh(ScrollTrigger);
+
       const ctx = gsap.context(() => {
         // Recomputed on every refresh (resize, font load) rather than
         // captured once, so the pin length always matches real content width.
@@ -87,6 +92,7 @@ export function FeaturedProjects() {
       }, section);
 
       cleanup = () => {
+        stopWatching();
         lenis?.off("scroll", onLenisScroll);
         ctx.revert();
       };

@@ -75,7 +75,7 @@ export function Hero() {
                       {HERO.primaryCta.label}
                       <ArrowRight
                         aria-hidden="true"
-                        className="size-4 transition-transform duration-(--duration-fast) group-hover:translate-x-1 motion-reduce:transform-none"
+                        className="size-4 transition-transform duration-(--duration-fast) group-hover:translate-x-1 motion-reduce:translate-none"
                       />
                     </Link>
                   </Button>
@@ -86,7 +86,7 @@ export function Hero() {
                     {HERO.secondaryCta.label}
                     <ArrowUpRight
                       aria-hidden="true"
-                      className="size-4 transition-transform duration-(--duration-fast) group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:transform-none"
+                      className="size-4 transition-transform duration-(--duration-fast) group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:translate-none"
                     />
                   </Link>
                 </Button>
@@ -118,7 +118,7 @@ export function Hero() {
         </div>
 
         {/* Proof points, on their own row beneath both columns. */}
-        <Stagger
+        {/* <Stagger
           delay={0.7}
           stagger={0.1}
           className="mt-14 border-t border-border pt-8 lg:mt-16"
@@ -134,7 +134,7 @@ export function Hero() {
               </StaggerItem>
             ))}
           </ul>
-        </Stagger>
+        </Stagger> */}
       </Container>
     </section>
   );

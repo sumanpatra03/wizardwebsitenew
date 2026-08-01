@@ -43,7 +43,7 @@ export function ArrowLink({
           "size-4 transition-transform duration-(--duration-fast) ease-(--ease-out-quart)",
           "group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5",
           "group-hover/card:translate-x-0.5 group-hover/card:-translate-y-0.5",
-          "motion-reduce:transform-none",
+          "motion-reduce:translate-none",
         )}
       />
     </Link>
