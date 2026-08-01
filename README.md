@@ -119,6 +119,58 @@ honour the OS preference instead, flip `enableSystem` in
 No flash on load: next-themes injects a blocking script before first paint, and
 `app/layout.tsx` server-renders `<html class="dark">` to match.
 
+## Expanding cards
+
+`components/cards/` holds a reusable pair:
+
+- **`HoverCard`** — one panel. Props follow the card data shape: `image`,
+  `imagePrompt`, `title`, `category`, `description`, `buttonText`, `href`.
+- **`CardsSection`** — the row. Owns the single "which panel is open" value,
+  which is what guarantees only one can ever be expanded, on touch as much as
+  on a pointer.
+
+`features/home/sections/industries.tsx` is a Server Component that feeds it
+real content from `constants/industries.ts`.
+
+The whole hover choreography — expansion, image zoom, scrim lift, title rise,
+description fade, CTA slide — runs off a single `data-active` attribute in CSS.
+React flips that attribute once per interaction, so **no frame of the animation
+costs a re-render**.
+
+Orientation is one code path, not two: the row is a flex column below `lg` and a
+flex row above it, and `flex-grow` expands panels along whichever axis is
+current. Under `prefers-reduced-motion` the metaphor is dropped entirely for a
+plain grid with every description and CTA already visible.
+
+> **On `flex-grow` and "GPU-accelerated".** Expanding via `flex-grow` was the
+> brief, and it is the right call — it is the only approach that lets the text
+> inside reflow honestly as a panel grows. But it is a *layout* property, so
+> that part is not compositor-driven the way a transform is. For a row of five
+> panels the cost is trivial and it holds 60 FPS. Everything else in the card
+> (zoom, fades, slides) is `transform`/`opacity` and does run on the compositor.
+
+### The images are placeholders
+
+**No AI-generated images ship with this.** Each card currently renders
+`CardArtwork` — a cinematic frame composed from CSS gradients, a grid, a
+vignette and an icon silhouette, varied per card but visibly one system.
+
+Every card carries an `imagePrompt` written to be pasted straight into an image
+generator, sharing a house style (cinematic, cyan key light, shallow depth of
+field, no text, no logos) so the set stays coherent.
+
+To swap in a real image: drop the file in `public/cards/`, set `image` on that
+card, and nothing else changes — `HoverCard` switches to `next/image` with
+`fill`, `sizes` and lazy loading automatically.
+
+### Card data must stay serialisable
+
+Card data is defined on the server and rendered by a Client Component, so every
+field has to survive that boundary. **A React component cannot** — passing a
+`LucideIcon` directly fails the build with *"Functions cannot be passed directly
+to Client Components"*. Cards therefore carry an icon **name**, resolved against
+`CARD_ICONS` in `components/cards/card-icons.ts` on the client.
+
 ## Motion
 
 Only `opacity` and `transform` are animated. Scroll reveals use Motion's

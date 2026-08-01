@@ -1,5 +1,7 @@
 import type { LucideIcon } from "lucide-react";
 
+import type { CardIconName } from "@/components/cards/card-icons";
+
 /**
  * Content model.
  *
@@ -78,6 +80,37 @@ export type Differentiator = {
 export type TechCategory = {
   label: string;
   items: readonly string[];
+};
+
+/**
+ * A card in an expanding `<CardsSection>`.
+ *
+ * `image` is optional. When absent the card falls back to generated artwork,
+ * so the section is complete without any binary assets; setting it to a path
+ * under `public/` switches that card to a real photograph with no other
+ * change.
+ *
+ * `imagePrompt` is the brief for that photograph. It is kept in the data — not
+ * in a design doc — so the artwork can be regenerated consistently later, and
+ * so a replacement can be checked against what the card actually says.
+ */
+export type HoverCardItem = {
+  id: string;
+  category: string;
+  title: string;
+  description: string;
+  buttonText: string;
+  href: string;
+  image?: string;
+  imagePrompt: string;
+  /**
+   * Drives the generated fallback artwork.
+   *
+   * A name rather than a component: this data crosses from a Server Component
+   * into a Client one, and React components are not serialisable. Resolved
+   * against `CARD_ICONS` on the client.
+   */
+  icon: CardIconName;
 };
 
 export type SocialLink = {
