@@ -1,0 +1,238 @@
+@import "tailwindcss";
+@import "./tokens.css";
+@import "./themes.css";
+
+/* Explicit source root so class detection never depends on cwd. */
+@source "../../src";
+
+/* ------------------------------------------------------------------
+ * Base
+ * ---------------------------------------------------------------- */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    border-color: var(--border);
+  }
+
+  html {
+    /* `clip` (not `hidden`) prevents any stray wide child from creating a
+       horizontal scrollbar without turning <html> into a scroll container,
+       which would break `position: sticky` on the header. */
+    overflow-x: clip;
+    scrollbar-gutter: stable;
+    -webkit-tap-highlight-color: transparent;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-sans);
+    font-size: var(--text-body-base);
+    line-height: 1.65;
+    overflow-x: clip;
+    font-synthesis-weight: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-display);
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Visible, brand-coloured focus for keyboard users only. */
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 3px;
+    border-radius: var(--radius-sm);
+  }
+
+  ::selection {
+    background-color: var(--accent);
+    color: var(--accent-fg);
+  }
+
+  /* Theme transition.
+     Scoped to colour properties on themed elements only — transitioning `*`
+     or `all` makes the switch janky and fights every other animation. */
+  @media (prefers-reduced-motion: no-preference) {
+    body,
+    header,
+    footer,
+    section,
+    aside,
+    nav,
+    dialog,
+    [data-themed] {
+      transition:
+        background-color var(--duration-fast) var(--ease-out-quart),
+        border-color var(--duration-fast) var(--ease-out-quart),
+        color var(--duration-fast) var(--ease-out-quart);
+    }
+  }
+
+  /* Users who ask for less motion get the final, static state of every
+     animation — content is never left mid-reveal or invisible. */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--bg);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--border-strong);
+    border-radius: var(--radius-pill);
+    border: 2px solid var(--bg);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--fg-subtle);
+  }
+}
+
+/* ------------------------------------------------------------------
+ * Utilities
+ * ---------------------------------------------------------------- */
+
+/** Page gutter + max width. Used by <Container>. */
+@utility container-content {
+  margin-inline: auto;
+  width: 100%;
+  max-width: var(--container-content);
+  padding-inline: var(--spacing-gutter);
+}
+
+@utility container-wide {
+  margin-inline: auto;
+  width: 100%;
+  max-width: var(--container-wide);
+  padding-inline: var(--spacing-gutter);
+}
+
+/** Gradient-filled text using the vivid brand cyan. */
+@utility text-gradient-brand {
+  background-image: linear-gradient(
+    100deg,
+    var(--fg) 0%,
+    var(--accent-vivid) 55%,
+    var(--accent-vivid-2) 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/** Hairline top/bottom rules that fade out at the edges. */
+@utility rule-x {
+  background-image: linear-gradient(
+    90deg,
+    transparent,
+    var(--border-strong) 18%,
+    var(--border-strong) 82%,
+    transparent
+  );
+}
+
+/** Faint blueprint grid used behind hero and CTA bands. */
+@utility bg-grid {
+  background-image:
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+/** Soft radial mesh — our stand-in for photography. */
+@utility bg-mesh {
+  background-image:
+    radial-gradient(60% 55% at 12% 8%, var(--mesh-1) 0%, transparent 62%),
+    radial-gradient(50% 50% at 88% 14%, var(--mesh-2) 0%, transparent 60%),
+    radial-gradient(70% 60% at 50% 100%, var(--mesh-3) 0%, transparent 65%);
+}
+
+/** Masks a decorative layer so it dissolves toward the section edges. */
+@utility mask-fade-y {
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    #000 12%,
+    #000 88%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    #000 12%,
+    #000 88%,
+    transparent
+  );
+}
+
+@utility mask-fade-x {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 8%,
+    #000 92%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 8%,
+    #000 92%,
+    transparent
+  );
+}
+
+/** Screen-reader-only, but revealed when focused (skip link). */
+@utility sr-only-focusable {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+
+  &:focus-visible {
+    position: fixed;
+    width: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    clip-path: none;
+    white-space: normal;
+  }
+}
+
+/** Hides the native scrollbar on horizontal card rails. */
+@utility no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

@@ -1,65 +1,61 @@
-import Image from "next/image";
+import dynamic from "next/dynamic";
 
-export default function Home() {
+import { ProjectsSkeleton, TestimonialsSkeleton } from "@/features/home/skeletons";
+import { CtaBand } from "@/features/home/sections/cta-band";
+import { Hero } from "@/features/home/sections/hero";
+import { IntroStatement } from "@/features/home/sections/intro-statement";
+import { ProductsSection } from "@/features/home/sections/products-section";
+import { ServicesGrid } from "@/features/home/sections/services-grid";
+import { StatsBand } from "@/features/home/sections/stats-band";
+import { TechMarquee } from "@/features/home/sections/tech-marquee";
+import { WhyWizard } from "@/features/home/sections/why-wizard";
+import { buildMetadata } from "@/lib/seo";
+
+/**
+ * The two heaviest sections are the only ones pulling extra libraries — GSAP
+ * for the pinned rail, Embla for the carousel. Splitting them out keeps both
+ * off the critical path; each shows a height-matched skeleton while its chunk
+ * loads, and both sit well below the fold.
+ */
+const FeaturedProjects = dynamic(
+  () =>
+    import("@/features/home/sections/featured-projects").then(
+      (mod) => mod.FeaturedProjects,
+    ),
+  { loading: () => <ProjectsSkeleton /> },
+);
+
+const Testimonials = dynamic(
+  () =>
+    import("@/features/home/sections/testimonials").then((mod) => mod.Testimonials),
+  { loading: () => <TestimonialsSkeleton /> },
+);
+
+export const metadata = buildMetadata({ path: "/" });
+
+/**
+ * Home page.
+ *
+ * A Server Component composing the section list. Each section renders its
+ * copy on the server and delegates only its animation wrappers to the client,
+ * so the full text is present in the served HTML.
+ *
+ * Section order follows Website A's rhythm: statement → capability → proof →
+ * work → differentiators → products → voices → call to action.
+ */
+export default function HomePage() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+    <>
+      <Hero />
+      <TechMarquee />
+      <IntroStatement />
+      <ServicesGrid />
+      <StatsBand />
+      <FeaturedProjects />
+      <WhyWizard />
+      <ProductsSection />
+      <Testimonials />
+      <CtaBand />
+    </>
   );
 }

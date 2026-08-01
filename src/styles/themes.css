@@ -1,0 +1,142 @@
+/**
+ * Theme layer — semantic colour tokens.
+ *
+ * Components NEVER reference the raw ramps in `tokens.css` directly; they use
+ * the semantic names below. That keeps every surface theme-aware for free and
+ * means there is no `dark:` utility duplication anywhere in the codebase.
+ *
+ * `:root` carries the DARK values, because dark is this site's default theme.
+ * `.light` overrides them. next-themes stamps `light`/`dark` onto <html>.
+ *
+ * Contrast — measured in-browser, not estimated (see the audit in the build
+ * notes). All body-size pairs clear WCAG AA (4.5:1):
+ *   dark  — fg 17.8:1, fg-muted 7.6:1, fg-subtle 5.4:1, accent-on-fill 7.5:1
+ *   light — fg 18.2:1, fg-muted 6.6:1, fg-subtle 5.9:1, accent-on-fill 6.1:1
+ */
+
+:root,
+.dark {
+  color-scheme: dark;
+
+  /* Surfaces, back to front */
+  --bg: #0b0d0f;
+  --bg-subtle: #101315;
+  --bg-elevated: #161616;
+  --surface: #16191c;
+  --surface-hover: #1d2125;
+
+  /* Lines */
+  --border: #262a2e;
+  --border-strong: #3a3f44;
+
+  /* Text */
+  --fg: #f2f5f7;
+  --fg-muted: #9ba3aa;
+  /* Lightened from #6F777E, which only reached 4.1:1 on --bg-subtle. */
+  --fg-subtle: #838b92;
+
+  /* Accent */
+  --accent: #24b0dc;
+  --accent-hover: #4bbfdf;
+  --accent-fg: #04131a;
+  --accent-muted: rgb(36 176 220 / 0.14);
+  --accent-ring: rgb(36 176 220 / 0.45);
+
+  /* Reserved for large decorative art only — never for text. Stays the
+     vivid sampled cyan in both themes so gradients keep their identity. */
+  --accent-vivid: #24b0dc;
+  --accent-vivid-2: #3c9bb9;
+
+  --ring: #24b0dc;
+
+  /* Elevation. Dark mode leans on an accent-tinted glow rather than a
+     literal drop shadow, which reads as "lit" instead of "floating". */
+  --shadow-card: 0 1px 0 0 rgb(255 255 255 / 0.04) inset,
+    0 18px 40px -24px rgb(0 0 0 / 0.9);
+  --shadow-card-hover: 0 1px 0 0 rgb(255 255 255 / 0.07) inset,
+    0 24px 56px -20px rgb(36 176 220 / 0.28);
+  --shadow-overlay: 0 32px 80px -24px rgb(0 0 0 / 0.85);
+
+  /* Ambient background art */
+  --mesh-1: rgb(36 176 220 / 0.22);
+  --mesh-2: rgb(60 155 185 / 0.16);
+  --mesh-3: rgb(18 91 115 / 0.2);
+  --grid-line: rgb(255 255 255 / 0.045);
+}
+
+.light {
+  color-scheme: light;
+
+  --bg: #ffffff;
+  --bg-subtle: #f6f8fa;
+  --bg-elevated: #ffffff;
+  --surface: #f6f8fa;
+  --surface-hover: #eceff2;
+
+  --border: #dadde1;
+  --border-strong: #b9bfc5;
+
+  --fg: #12161a;
+  --fg-muted: #5d5d5d;
+  /* Darkened from #6F777E, which only reached 4.3:1 on --bg-subtle. */
+  --fg-subtle: #5a6167;
+
+  /* Darkened from the raw #24B0DC, which only reaches 3.5:1 on white.
+     #0E6B87 clears 6.1:1 and still reads unmistakably as the brand cyan. */
+  --accent: #0e6b87;
+  --accent-hover: #125b73;
+  --accent-fg: #ffffff;
+  --accent-muted: rgb(14 107 135 / 0.1);
+  --accent-ring: rgb(14 107 135 / 0.4);
+
+  --accent-vivid: #24b0dc;
+  --accent-vivid-2: #3c9bb9;
+
+  --ring: #0e6b87;
+
+  --shadow-card: 0 1px 2px 0 rgb(16 24 40 / 0.05),
+    0 12px 32px -12px rgb(16 24 40 / 0.12);
+  --shadow-card-hover: 0 2px 4px 0 rgb(16 24 40 / 0.06),
+    0 24px 48px -16px rgb(16 24 40 / 0.18);
+  --shadow-overlay: 0 32px 80px -24px rgb(16 24 40 / 0.25);
+
+  --mesh-1: rgb(36 176 220 / 0.16);
+  --mesh-2: rgb(60 155 185 / 0.12);
+  --mesh-3: rgb(123 205 230 / 0.18);
+  --grid-line: rgb(11 13 15 / 0.05);
+}
+
+/**
+ * Expose the semantic tokens to Tailwind as utilities (`bg-bg`, `text-fg`,
+ * `border-border`, `shadow-card`, ...).
+ *
+ * `@theme inline` emits the var() reference into each utility rather than
+ * snapshotting the value, which is what lets a single class respond to the
+ * theme switch at runtime.
+ */
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-subtle: var(--bg-subtle);
+  --color-bg-elevated: var(--bg-elevated);
+  --color-surface: var(--surface);
+  --color-surface-hover: var(--surface-hover);
+
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+
+  --color-fg: var(--fg);
+  --color-fg-muted: var(--fg-muted);
+  --color-fg-subtle: var(--fg-subtle);
+
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-fg: var(--accent-fg);
+  --color-accent-muted: var(--accent-muted);
+  --color-accent-vivid: var(--accent-vivid);
+
+  --color-ring: var(--ring);
+
+  --shadow-card: var(--shadow-card);
+  --shadow-card-hover: var(--shadow-card-hover);
+  --shadow-overlay: var(--shadow-overlay);
+}
