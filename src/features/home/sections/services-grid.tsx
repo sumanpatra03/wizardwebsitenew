@@ -1,25 +1,30 @@
-import { ArrowUpRight } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { SectionHeading } from "@/components/layout/section-heading";
 import { Stagger, StaggerItem } from "@/components/motion/reveal";
-import { Card } from "@/components/ui/card";
 import { SECTION_COPY } from "@/constants/home";
 import { SERVICES } from "@/constants/services";
 import { cn } from "@/lib/utils";
 
+import { ServiceArtwork } from "./service-artwork";
+
 /**
  * Services grid.
  *
- * Website A's card pattern: an icon, a title, a short descriptor and a
- * corner arrow, with the detail — here the capability list — revealed on
- * hover or keyboard focus.
+ * Website A's card pattern, rebuilt: tall portrait cards in a four-up grid,
+ * each led by an eyebrow and a large title, with artwork filling the lower
+ * half. On hover — or keyboard focus — the artwork gives way to the service's
+ * description, its capability list and an expand affordance.
  *
- * The reveal is CSS-only (grid-template-rows 0fr → 1fr), which animates
- * smoothly without measuring heights in JavaScript. The list is always in
- * the DOM, so screen readers and search engines see the full content.
+ * The swap is CSS only (opacity plus a small translate on two stacked grid
+ * layers), so it needs no JavaScript and no height measurement. Both layers
+ * stay in the DOM at all times, which keeps the copy available to search
+ * engines and screen readers whatever the pointer is doing.
+ *
+ * Server Component; only the stagger wrapper is client-side.
  */
 export function ServicesGrid() {
   return (
@@ -30,64 +35,86 @@ export function ServicesGrid() {
           title={SECTION_COPY.services.title}
         />
 
-        <Stagger stagger={0.06} className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {SERVICES.map((service) => {
-            const Icon = service.icon;
+        <Stagger
+          stagger={0.06}
+          className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
+        >
+          {SERVICES.map((service, index) => {
+            const accented = index % 2 === 1;
+
             return (
               <StaggerItem key={service.slug}>
-                <Card interactive className="h-full">
+                <article
+                  className={cn(
+                    "group/card relative isolate h-full overflow-hidden rounded-xl border",
+                    "transition-[transform,box-shadow,border-color]",
+                    "duration-(--duration-fast) ease-(--ease-out-quart)",
+                    "hover:-translate-y-1 hover:shadow-card-hover",
+                    "focus-within:-translate-y-1",
+                    "motion-reduce:hover:translate-y-0 motion-reduce:focus-within:translate-y-0",
+                    accented
+                      ? "border-accent/25 bg-bg-elevated bg-mesh hover:border-accent/50"
+                      : "border-border bg-surface hover:border-accent/40",
+                  )}
+                >
                   <Link
                     href={`/services/${service.slug}`}
-                    className="flex h-full flex-col p-7 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring"
+                    className={cn(
+                      "flex h-full min-h-[24rem] flex-col p-6 sm:min-h-[26rem] sm:p-7",
+                      "focus-visible:outline-2 focus-visible:-outline-offset-2",
+                      "focus-visible:outline-ring",
+                    )}
                   >
-                    <span className="flex items-start justify-between gap-4">
-                      <span
-                        aria-hidden="true"
-                        className={cn(
-                          "grid size-12 place-items-center rounded-lg",
-                          "bg-accent-muted text-accent",
-                          "transition-transform duration-(--duration-fast) ease-(--ease-out-quart)",
-                          "group-hover/card:scale-110 motion-reduce:group-hover/card:scale-100",
-                        )}
-                      >
-                        <Icon className="size-5" />
-                      </span>
-
-                      <ArrowUpRight
-                        aria-hidden="true"
-                        className={cn(
-                          "size-5 text-fg-subtle",
-                          "transition-all duration-(--duration-fast) ease-(--ease-out-quart)",
-                          "group-hover/card:translate-x-0.5 group-hover/card:-translate-y-0.5",
-                          "group-hover/card:text-accent motion-reduce:transform-none",
-                        )}
-                      />
-                    </span>
-
-                    <h3 className="font-display text-heading-md mt-6 text-fg">
-                      {service.title}
-                    </h3>
-                    <p className="text-body-sm mt-2 text-fg-muted">
-                      {service.description}
-                    </p>
-
-                    {/* Expanding detail. The 0fr → 1fr grid trick animates an
-                        unknown height with no JS measurement. */}
-                    <span
+                    <p
                       className={cn(
-                        "grid grid-rows-[0fr] transition-[grid-template-rows,opacity]",
-                        "opacity-0 duration-(--duration-base) ease-(--ease-out-expo)",
-                        "group-hover/card:grid-rows-[1fr] group-hover/card:opacity-100",
-                        "group-focus-within/card:grid-rows-[1fr] group-focus-within/card:opacity-100",
-                        "motion-reduce:transition-none",
+                        "text-label uppercase",
+                        accented ? "text-accent" : "text-fg-subtle",
                       )}
                     >
-                      <span className="overflow-hidden">
-                        <span className="mt-5 flex flex-col gap-2 border-t border-border pt-5">
+                      {service.category}
+                    </p>
+
+                    <h3 className="font-display text-heading-md mt-4 text-balance text-fg">
+                      {service.title}
+                    </h3>
+
+                    {/* Two stacked layers occupying the same grid cell: the
+                        artwork, and the detail that replaces it on hover. */}
+                    <span className="relative mt-6 grid flex-1 grid-cols-1 grid-rows-1">
+                      <ServiceArtwork
+                        icon={service.icon}
+                        index={index}
+                        className={cn(
+                          "col-start-1 row-start-1 self-stretch",
+                          "transition-[opacity,transform] duration-(--duration-base)",
+                          "ease-(--ease-out-expo)",
+                          "group-hover/card:-translate-y-2 group-hover/card:opacity-0",
+                          "group-focus-within/card:-translate-y-2",
+                          "group-focus-within/card:opacity-0",
+                          "motion-reduce:transition-none motion-reduce:transform-none",
+                        )}
+                      />
+
+                      <span
+                        className={cn(
+                          "col-start-1 row-start-1 flex translate-y-2 flex-col",
+                          "opacity-0 transition-[opacity,transform]",
+                          "duration-(--duration-base) ease-(--ease-out-expo)",
+                          "group-hover/card:translate-y-0 group-hover/card:opacity-100",
+                          "group-focus-within/card:translate-y-0",
+                          "group-focus-within/card:opacity-100",
+                          "motion-reduce:transition-none motion-reduce:transform-none",
+                        )}
+                      >
+                        <span className="text-body-sm text-fg-muted">
+                          {service.description}.
+                        </span>
+
+                        <span className="mt-4 flex flex-col gap-1.5">
                           {service.capabilities.map((capability) => (
                             <span
                               key={capability}
-                              className="text-body-sm flex items-start gap-2.5 text-fg-muted"
+                              className="text-body-sm flex items-start gap-2 text-fg-muted"
                             >
                               <span
                                 aria-hidden="true"
@@ -99,11 +126,83 @@ export function ServicesGrid() {
                         </span>
                       </span>
                     </span>
+
+                    {/* Expand affordance, always visible so the card never
+                        looks inert before the pointer arrives. */}
+                    <span
+                      className={cn(
+                        "mt-6 flex items-center justify-between gap-3 border-t pt-4",
+                        "text-body-sm font-medium",
+                        "transition-colors duration-(--duration-fast)",
+                        accented
+                          ? "border-accent/20 text-accent"
+                          : "border-border text-fg group-hover/card:text-accent",
+                      )}
+                    >
+                      Expand
+                      <ChevronRight
+                        aria-hidden="true"
+                        className={cn(
+                          "size-4 transition-transform duration-(--duration-fast)",
+                          "ease-(--ease-out-quart) group-hover/card:translate-x-1",
+                          "motion-reduce:transform-none",
+                        )}
+                      />
+                    </span>
                   </Link>
-                </Card>
+                </article>
               </StaggerItem>
             );
           })}
+
+          {/* Eighth slot. Seven services would leave a hole in the four-up
+              grid; this closes it and doubles as the route to the full list. */}
+          <StaggerItem>
+            <article
+              className={cn(
+                "group/card relative isolate h-full overflow-hidden rounded-xl",
+                "border border-dashed border-border-strong bg-transparent",
+                "transition-[transform,border-color] duration-(--duration-fast)",
+                "ease-(--ease-out-quart) hover:-translate-y-1 hover:border-accent",
+                "focus-within:-translate-y-1 focus-within:border-accent",
+                "motion-reduce:hover:translate-y-0",
+                "motion-reduce:focus-within:translate-y-0",
+              )}
+            >
+              <Link
+                href="/services"
+                className={cn(
+                  "flex h-full min-h-[24rem] flex-col justify-end p-6",
+                  "sm:min-h-[26rem] sm:p-7",
+                  "focus-visible:outline-2 focus-visible:-outline-offset-2",
+                  "focus-visible:outline-ring",
+                )}
+              >
+                <span className="font-display text-heading-md text-balance text-fg">
+                  Every capability, in one place.
+                </span>
+                <span className="text-body-sm mt-3 text-fg-muted">
+                  See the full range of what we build and run.
+                </span>
+                <span
+                  className={cn(
+                    "text-body-sm mt-6 flex items-center justify-between gap-3",
+                    "border-t border-border pt-4 font-medium text-accent",
+                  )}
+                >
+                  All services
+                  <ChevronRight
+                    aria-hidden="true"
+                    className={cn(
+                      "size-4 transition-transform duration-(--duration-fast)",
+                      "ease-(--ease-out-quart) group-hover/card:translate-x-1",
+                      "motion-reduce:transform-none",
+                    )}
+                  />
+                </span>
+              </Link>
+            </article>
+          </StaggerItem>
         </Stagger>
       </Container>
     </Section>

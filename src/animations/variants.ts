@@ -95,5 +95,23 @@ export function staggerContainer(stagger = 0.08, delay = 0): Variants {
   };
 }
 
-/** Shared `whileInView` viewport config: fire once, slightly before entry. */
+/**
+ * `whileInView` config for a single element: fire once, when a quarter of it
+ * has entered, slightly before it is fully on screen.
+ */
 export const viewportOnce = { once: true, amount: 0.25, margin: "0px 0px -12% 0px" };
+
+/**
+ * `whileInView` config for a stagger *container*.
+ *
+ * A proportional `amount` is wrong here. A seven-card grid is ~2800px tall on
+ * a phone, so `amount: 0.25` would demand 700px of it be visible at once —
+ * close to the whole viewport — and the cards would sit blank on screen until
+ * the user had scrolled well past them. `"some"` fires as soon as the
+ * container's leading edge crosses the margin, independent of its height.
+ */
+export const viewportContainer = {
+  once: true,
+  amount: "some",
+  margin: "0px 0px -8% 0px",
+} as const;

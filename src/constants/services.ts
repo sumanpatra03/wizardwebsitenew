@@ -20,6 +20,7 @@ export const SERVICES: readonly Service[] = [
     slug: "software-development",
     title: "Software Development",
     description: "Custom software solutions for growth",
+    category: "Engineering",
     icon: Code2,
     capabilities: [
       "Full-stack product engineering",
@@ -32,6 +33,7 @@ export const SERVICES: readonly Service[] = [
     slug: "ux-ui",
     title: "UX/UI",
     description: "Creating seamless, intuitive user experiences",
+    category: "Experience Design",
     icon: PenTool,
     capabilities: [
       "Experience strategy and research",
@@ -44,6 +46,7 @@ export const SERVICES: readonly Service[] = [
     slug: "artificial-intelligence",
     title: "Artificial Intelligence",
     description: "AI solutions to optimize operations",
+    category: "Intelligence",
     icon: BrainCircuit,
     capabilities: [
       "AI/ML model development",
@@ -56,6 +59,7 @@ export const SERVICES: readonly Service[] = [
     slug: "on-demand-hiring",
     title: "On Demand Hiring",
     description: "Flexible talent for immediate needs",
+    category: "Talent",
     icon: UsersRound,
     capabilities: [
       "Dedicated engineering pods",
@@ -68,6 +72,7 @@ export const SERVICES: readonly Service[] = [
     slug: "maintenance-support",
     title: "Maintenance & Support",
     description: "Ensuring seamless, secure system operations",
+    category: "Managed Services",
     icon: LifeBuoy,
     capabilities: [
       "24/7 application support",
@@ -80,6 +85,7 @@ export const SERVICES: readonly Service[] = [
     slug: "security",
     title: "Security",
     description: "Protecting data with robust cybersecurity",
+    category: "Trust & Safety",
     icon: ShieldCheck,
     capabilities: [
       "Security architecture reviews",
@@ -92,6 +98,7 @@ export const SERVICES: readonly Service[] = [
     slug: "digital-marketing",
     title: "Digital Marketing, SEO",
     description: "Boosting visibility and online engagement",
+    category: "Growth",
     icon: Megaphone,
     capabilities: [
       "Technical and on-page SEO",

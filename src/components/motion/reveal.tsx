@@ -6,6 +6,7 @@ import type { ElementType, ReactNode } from "react";
 import {
   directionVariants,
   staggerContainer,
+  viewportContainer,
   viewportOnce,
   type RevealDirection,
 } from "@/animations/variants";
@@ -97,7 +98,9 @@ export function Stagger({
       variants={staggerContainer(stagger, delay)}
       initial="hidden"
       whileInView="visible"
-      viewport={viewportOnce}
+      // Container config, not the per-element one — see the note on
+      // `viewportContainer`.
+      viewport={viewportContainer}
     >
       {children}
     </MotionTag>

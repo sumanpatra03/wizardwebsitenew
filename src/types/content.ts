@@ -27,6 +27,8 @@ export type Service = {
   slug: string;
   title: string;
   description: string;
+  /** Eyebrow label above the card title, e.g. "Engineering". */
+  category: string;
   icon: LucideIcon;
   /** Capability bullets revealed on card expansion. */
   capabilities: readonly string[];

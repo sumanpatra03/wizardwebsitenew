@@ -124,6 +124,17 @@ No flash on load: next-themes injects a blocking script before first paint, and
 Only `opacity` and `transform` are animated. Scroll reveals use Motion's
 `whileInView` with `once: true`.
 
+`animations/variants.ts` exports **two** viewport configs, and picking the wrong
+one is a real bug:
+
+- `viewportOnce` — for a single element. `amount: 0.25` fires when a quarter of
+  it has entered.
+- `viewportContainer` — for a `<Stagger>` wrapper. Uses `amount: "some"`,
+  because a proportional threshold scales with the container. A seven-card grid
+  is ~2800 px tall on a phone, so `amount: 0.25` would demand 700 px be visible
+  at once and the cards would sit blank on screen until the user scrolled past
+  them.
+
 ### Grid beams
 
 `components/motion/grid-beams.tsx` runs light pulses along the blueprint grid.
