@@ -63,6 +63,20 @@
     color: var(--accent-fg);
   }
 
+  /* Logo artwork swap.
+     Dark is the default theme, so the reversed build shows unless `.light` is
+     present. Doing this in CSS rather than from `useTheme` means the right
+     artwork is picked before first paint, with no client render and no flash. */
+  [data-logo-theme="light"] {
+    display: none;
+  }
+  .light [data-logo-theme="light"] {
+    display: block;
+  }
+  .light [data-logo-theme="dark"] {
+    display: none;
+  }
+
   /* Theme transition.
      Scoped to colour properties on themed elements only — transitioning `*`
      or `all` makes the switch janky and fights every other animation. */

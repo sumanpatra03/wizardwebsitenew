@@ -1,75 +1,68 @@
+import Image from "next/image";
+
 import { cn } from "@/lib/utils";
-import { SITE } from "@/constants/site";
 
-/**
- * Wizard mark — an original geometric "W" drawn as a single chevron
- * polyline, with a spark accent that nods to the company name.
- *
- * Authored from scratch: no asset is taken from either reference site. The
- * stroke uses a gradient between the two brand cyans and inherits sizing from
- * its container, so one component serves the header, footer and favicon.
- */
-export function LogoMark({ className }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 32 32"
-      fill="none"
-      aria-hidden="true"
-      className={cn("size-8 shrink-0", className)}
-    >
-      <defs>
-        <linearGradient id="wizard-mark" x1="0" y1="32" x2="32" y2="0">
-          <stop offset="0%" stopColor="var(--accent-vivid-2)" />
-          <stop offset="100%" stopColor="var(--accent-vivid)" />
-        </linearGradient>
-      </defs>
-
-      {/* Rounded container tile */}
-      <rect
-        x="0.75"
-        y="0.75"
-        width="30.5"
-        height="30.5"
-        rx="9"
-        stroke="url(#wizard-mark)"
-        strokeWidth="1.5"
-        opacity="0.35"
-      />
-
-      {/* The W, drawn as one continuous chevron path */}
-      <path
-        d="M7 10.5 L11.6 22 L16 14.4 L20.4 22 L25 10.5"
-        stroke="url(#wizard-mark)"
-        strokeWidth="2.6"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-
-      {/* Spark */}
-      <circle cx="16" cy="8.4" r="1.7" fill="var(--accent-vivid)" />
-    </svg>
-  );
-}
+/** Intrinsic size of the source artwork, used for aspect-ratio reservation. */
+const LOGO_WIDTH = 182;
+const LOGO_HEIGHT = 57;
 
 type LogoProps = {
   className?: string;
-  /** Hide the wordmark and show the mark alone. */
-  markOnly?: boolean;
+  /** Rendered height in Tailwind units. Width follows the aspect ratio. */
+  size?: "sm" | "md" | "lg";
+  /** Prioritise the fetch — set on the header logo, which is above the fold. */
+  priority?: boolean;
 };
 
-/** Full lockup: mark + wordmark. */
-export function Logo({ className, markOnly = false }: LogoProps) {
+/**
+ * Render heights are deliberately conservative.
+ *
+ * The only artwork Wizard publishes is 182x57, so anything wider than ~91 CSS
+ * px is already below 2x on a retina screen. `h-7`/`h-8` keep the lockup at
+ * 89-102 px wide, which stays effectively crisp. Replace the PNGs with an SVG
+ * and these can grow freely.
+ */
+const SIZES = {
+  sm: "h-6",
+  md: "h-7 sm:h-8",
+  lg: "h-9",
+} as const;
+
+/**
+ * Wizard Communications logo.
+ *
+ * Two artworks ship: the original, and a reversed build whose neutral ink is
+ * lifted to the foreground colour while the brand cyan is left untouched
+ * (generated from the original — see the note in the README).
+ *
+ * The swap is done in CSS on `data-logo-theme`, not with `useTheme`: the theme
+ * class is on <html> before first paint, so the correct artwork is chosen
+ * without a client render and without a flash.
+ *
+ * Both images are decorative here — every call site wraps this in a link that
+ * already carries an `aria-label`, so an `alt` would only duplicate the name.
+ */
+export function Logo({ className, size = "md", priority = false }: LogoProps) {
+  const shared = cn(SIZES[size], "w-auto select-none");
+
+  // `unoptimized`: the source is a 8.7 kB two-colour PNG. Re-encoding it to
+  // lossy WebP at q=75 smears the flat-colour edges and saves nothing, so the
+  // original is both sharper and smaller than any generated variant.
+  const common = {
+    "aria-hidden": true,
+    width: LOGO_WIDTH,
+    height: LOGO_HEIGHT,
+    priority,
+    unoptimized: true,
+    className: shared,
+  } as const;
+
+  // `alt` stays inline on each element rather than in `common` — the
+  // jsx-a11y rule cannot see it through a spread.
   return (
-    <span className={cn("inline-flex items-center gap-2.5", className)}>
-      <LogoMark />
-      {markOnly ? (
-        <span className="sr-only">{SITE.name}</span>
-      ) : (
-        <span className="font-display text-heading-sm leading-none font-bold tracking-tight text-fg">
-          {SITE.shortName}
-          <span className="text-accent">.</span>
-        </span>
-      )}
+    <span className={cn("inline-flex items-center", className)}>
+      <Image src="/wizard-logo-dark.png" alt="" data-logo-theme="dark" {...common} />
+      <Image src="/wizard-logo.png" alt="" data-logo-theme="light" {...common} />
     </span>
   );
 }

@@ -65,6 +65,30 @@ button fills clear WCAG AA on white — the raw cyan only reaches 3.5:1 there.
 > Tailwind's default scales; an unregistered custom token gets misclassified and
 > silently dropped when two utilities collide.
 
+## Brand assets
+
+| File | What it is |
+|---|---|
+| `public/wizard-logo.png` | The official lockup, as published on wizardcomm.net (182×57) |
+| `public/wizard-logo-dark.png` | Reversed build for dark backgrounds — generated from the original |
+| `src/app/icon.png` | Favicon: the logo mark on a dark rounded tile |
+
+The logo has exactly two inks: `#404041` neutral and `#1BB3DF` brand cyan. The
+reversed build lifts only the neutral ink to the foreground colour and leaves
+the cyan untouched, so the mark keeps its colour on a dark canvas. Alpha is
+preserved, so anti-aliased edges stay smooth.
+
+`components/common/logo.tsx` ships both and swaps them with a CSS rule on
+`data-logo-theme` rather than `useTheme` — the theme class is on `<html>`
+before first paint, so the right artwork is chosen with no client render and
+no flash. Both are `unoptimized`: re-encoding a two-colour PNG to lossy WebP
+smears the flat edges and saves nothing.
+
+> **The source artwork is low resolution.** 182×57 is the largest the company
+> publishes — the 512×512 file on their server is an upscaled crop, not a true
+> original. Render sizes in `logo.tsx` are capped at ~102 px wide to stay near
+> 2x on retina. **Drop in an SVG (or a ≥2x PNG pair) and those caps can go.**
+
 ## Theming
 
 `next-themes` with `attribute="class"`, `defaultTheme="dark"`,

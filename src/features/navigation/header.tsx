@@ -109,7 +109,7 @@ export function Header() {
           aria-label={`${SITE.name} home`}
           className="rounded-md focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
         >
-          <Logo />
+          <Logo priority />
         </Link>
 
         <nav

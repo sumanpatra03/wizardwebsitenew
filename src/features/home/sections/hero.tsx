@@ -1,7 +1,7 @@
 import { ArrowRight, ArrowUpRight } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 
-import { Logo } from "@/components/common/logo";
 import { Container } from "@/components/layout/container";
 import { Magnetic } from "@/components/motion/magnetic";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion/reveal";
@@ -112,12 +112,21 @@ export function Hero() {
         </div>
       </Container>
 
-      {/* Watermark mark, bleeding off the bottom-right corner. */}
+      {/* Oversized watermark bleeding off the bottom-right corner. */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -right-10 -bottom-16 hidden opacity-[0.06] lg:block"
+        className="pointer-events-none absolute -right-16 -bottom-12 hidden opacity-[0.05] lg:block"
       >
-        <Logo markOnly className="[&>svg]:size-64" />
+        <Image
+          src="/wizard-logo-dark.png"
+          alt=""
+          width={182}
+          height={57}
+          unoptimized
+          // Heavily upscaled, but at 5% opacity the softness never reads.
+          // Excluded from the a11y tree by the wrapper.
+          className="h-32 w-auto"
+        />
       </div>
     </section>
   );

@@ -1,3 +1,6 @@
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
+
 import { ImageResponse } from "next/og";
 
 import { SITE } from "@/constants/site";
@@ -12,8 +15,16 @@ export const contentType = "image/png";
  * Written with inline styles and literal colours because Satori renders this
  * outside the browser — no Tailwind, no CSS variables, no theme context.
  * Values are copied from the dark theme in `themes.css`.
+ *
+ * The logo is inlined as a data URI: Satori has no access to the public
+ * directory at render time, so the file is read from disk here instead.
  */
-export default function OpenGraphImage() {
+export default async function OpenGraphImage() {
+  const logo = await readFile(
+    join(process.cwd(), "public", "wizard-logo-dark.png"),
+  );
+  const logoSrc = `data:image/png;base64,${logo.toString("base64")}`;
+
   return new ImageResponse(
     (
       <div
@@ -29,31 +40,8 @@ export default function OpenGraphImage() {
           fontFamily: "sans-serif",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
-          <svg width="64" height="64" viewBox="0 0 32 32" fill="none">
-            <rect
-              x="0.75"
-              y="0.75"
-              width="30.5"
-              height="30.5"
-              rx="9"
-              stroke="#24B0DC"
-              strokeWidth="1.5"
-              opacity="0.4"
-            />
-            <path
-              d="M7 10.5 L11.6 22 L16 14.4 L20.4 22 L25 10.5"
-              stroke="#24B0DC"
-              strokeWidth="2.6"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-            <circle cx="16" cy="8.4" r="1.7" fill="#24B0DC" />
-          </svg>
-          <div style={{ color: "#F2F5F7", fontSize: 34, fontWeight: 700 }}>
-            {SITE.name}
-          </div>
-        </div>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={logoSrc} alt="" width={320} height={100} />
 
         <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
           <div
