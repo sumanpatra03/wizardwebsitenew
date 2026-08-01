@@ -71,6 +71,7 @@ button fills clear WCAG AA on white — the raw cyan only reaches 3.5:1 there.
 |---|---|
 | `public/wizard-logo.png` | The official lockup, as published on wizardcomm.net (182×57) |
 | `public/wizard-logo-dark.png` | Reversed build for dark backgrounds — generated from the original |
+| `public/hero-capabilities.png` | The capabilities illustration from wizardcomm.net (636×562) |
 | `src/app/icon.png` | Favicon: the logo mark on a dark rounded tile |
 
 The logo has exactly two inks: `#404041` neutral and `#1BB3DF` brand cyan. The
@@ -88,6 +89,23 @@ smears the flat edges and saves nothing.
 > publishes — the 512×512 file on their server is an upscaled crop, not a true
 > original. Render sizes in `logo.tsx` are capped at ~102 px wide to stay near
 > 2x on retina. **Drop in an SVG (or a ≥2x PNG pair) and those caps can go.**
+
+The hero illustration is neutral line art drawn for a dark canvas. Rather than
+ship a second file, the light theme inverts it with a CSS filter
+(`[data-invert-on-light]` in `globals.css`): white maps to near-black and the
+mid grey to light grey, preserving the drawing's depth, and `filter` leaves the
+alpha channel alone so the transparency survives.
+
+Two things to know about that asset:
+
+- **Its labels are baked into the pixels** ("eLearning Solutions", "Digital
+  Commerce", "Web/Mob Apps", "Strategy & Development", "Supply Chain
+  Consulting"). They are unselectable and untranslatable, so the `alt` text in
+  `hero.tsx` carries them. If those capabilities change, the `alt` has to change
+  with the artwork.
+- **The original contains a typo** — "Eleaming" rather than "Elearning" — and is
+  clipped at its top, right and bottom edges. Both are in the published file, so
+  both need fixing at source.
 
 ## Theming
 

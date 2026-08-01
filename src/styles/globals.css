@@ -77,6 +77,15 @@
     display: none;
   }
 
+  /* Neutral line art drawn for a dark canvas. Inverting it in the light theme
+     maps white to near-black and the mid grey to a light grey, preserving the
+     drawing's depth — and costs nothing, where shipping a second file would
+     double the request. `filter` leaves the alpha channel alone, so the
+     transparent background survives. */
+  .light [data-invert-on-light] {
+    filter: invert(1);
+  }
+
   /* Theme transition.
      Scoped to colour properties on themed elements only — transitioning `*`
      or `all` makes the switch janky and fights every other animation. */

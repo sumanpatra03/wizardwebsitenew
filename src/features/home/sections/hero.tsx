@@ -16,10 +16,10 @@ import { HeroBackdrop } from "./hero-backdrop";
 /**
  * Hero.
  *
- * Website A's opening move: an oversized editorial headline on an almost bare
- * canvas, with the artwork kept behind and below the type. Our stand-in for
- * their photography is a CSS gradient mesh over a blueprint grid — no image
- * request, and it recolours with the theme for free.
+ * Website A's opening move — an oversized editorial headline on an almost bare
+ * canvas — paired with Wizard's own capabilities illustration on the right.
+ * Behind both sits a CSS gradient mesh over a blueprint grid, which needs no
+ * network request and recolours with the theme.
  *
  * Server Component; only the motion wrappers and the parallax backdrop are
  * client-side.
@@ -35,8 +35,8 @@ export function Hero() {
       <HeroBackdrop />
 
       <Container size="wide" className="relative">
-        <div className="grid items-end gap-12 lg:grid-cols-12 lg:gap-10">
-          <div className="lg:col-span-8">
+        <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-10">
+          <div className="lg:col-span-7">
             <Reveal direction="none">
               <p
                 className={cn(
@@ -63,7 +63,7 @@ export function Hero() {
               lineClassName="[&>span]:inline-block"
             />
 
-            <Reveal delay={0.45} className="mt-7 max-w-2xl">
+            <Reveal delay={0.45} className="mt-7 max-w-xl">
               <p className="text-body-lg text-fg-muted">{HERO.subheadline}</p>
             </Reveal>
 
@@ -94,40 +94,48 @@ export function Hero() {
             </Reveal>
           </div>
 
-          {/* Stat rail — proof points, right-aligned on desktop the way
-              Website A anchors supporting figures beside its headline. */}
-          <Stagger delay={0.7} stagger={0.1} className="lg:col-span-4">
-            <ul className="flex flex-row flex-wrap gap-x-10 gap-y-6 lg:flex-col lg:items-end lg:gap-6">
-              {STATS.map((stat) => (
-                <StaggerItem key={stat.label} as="li" className="lg:text-right">
-                  <p className="font-display text-display-md leading-none text-fg">
-                    {stat.value}
-                    <span className="text-accent">{stat.suffix}</span>
-                  </p>
-                  <p className="text-body-sm mt-1.5 text-fg-muted">{stat.label}</p>
-                </StaggerItem>
-              ))}
-            </ul>
-          </Stagger>
-        </div>
-      </Container>
+          {/* Capabilities illustration.
+              The source is white line art drawn for a dark canvas, so in the
+              light theme it is inverted rather than duplicated — see the
+              `data-invert-on-light` rule in globals.css. One file, no second
+              request, and the transparency survives (filters leave alpha
+              alone).
 
-      {/* Oversized watermark bleeding off the bottom-right corner. */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -right-16 -bottom-12 hidden opacity-[0.05] lg:block"
-      >
-        <Image
-          src="/wizard-logo-dark.png"
-          alt=""
-          width={182}
-          height={57}
-          unoptimized
-          // Heavily upscaled, but at 5% opacity the softness never reads.
-          // Excluded from the a11y tree by the wrapper.
-          className="h-32 w-auto"
-        />
-      </div>
+              The labels are baked into the pixels, so `alt` carries them for
+              anyone who cannot see the image. */}
+          <Reveal direction="scale" delay={0.35} className="lg:col-span-5">
+            <Image
+              src="/hero-capabilities.png"
+              alt="Wizard's capabilities: eLearning solutions, digital commerce, web and mobile apps, strategy and development, and supply chain consulting."
+              width={636}
+              height={562}
+              priority
+              sizes="(min-width: 1024px) 40vw, (min-width: 640px) 60vw, 90vw"
+              data-invert-on-light=""
+              className="animate-float mx-auto h-auto w-full max-w-md lg:max-w-none"
+            />
+          </Reveal>
+        </div>
+
+        {/* Proof points, on their own row beneath both columns. */}
+        <Stagger
+          delay={0.7}
+          stagger={0.1}
+          className="mt-14 border-t border-border pt-8 lg:mt-16"
+        >
+          <ul className="flex flex-row flex-wrap gap-x-12 gap-y-6 sm:justify-between sm:gap-x-6">
+            {STATS.map((stat) => (
+              <StaggerItem key={stat.label} as="li">
+                <p className="font-display text-display-md leading-none text-fg">
+                  {stat.value}
+                  <span className="text-accent">{stat.suffix}</span>
+                </p>
+                <p className="text-body-sm mt-1.5 text-fg-muted">{stat.label}</p>
+              </StaggerItem>
+            ))}
+          </ul>
+        </Stagger>
+      </Container>
     </section>
   );
 }
