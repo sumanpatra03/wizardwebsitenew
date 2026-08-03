@@ -80,6 +80,8 @@ export type Testimonial = {
   role?: string;
   organization: string;
   location?: string;
+  /** Portrait or organisation mark, where one is published. */
+  avatar?: string;
 };
 
 export type Differentiator = {

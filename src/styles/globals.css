@@ -77,6 +77,17 @@
     display: none;
   }
 
+  /* Client logos, flattened to a single colour.
+     Most of the published marks are dark ink on transparency and would be
+     invisible on the dark canvas. `brightness(0)` collapses each to a black
+     silhouette; the dark theme then inverts that to white. */
+  [data-client-logo] {
+    filter: brightness(0) invert(1);
+  }
+  .light [data-client-logo] {
+    filter: brightness(0);
+  }
+
   /* Neutral line art drawn for a dark canvas. Inverting it in the light theme
      maps white to near-black and the mid grey to a light grey, preserving the
      drawing's depth — and costs nothing, where shipping a second file would

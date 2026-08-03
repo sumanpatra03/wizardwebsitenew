@@ -50,9 +50,13 @@ export function Timeline({ entries }: { entries: readonly TimelineEntry[] }) {
             {entry.title}
           </h3>
 
-          <p className="text-body-base mt-3 max-w-2xl text-fg-muted">
-            {entry.body}
-          </p>
+          <div className="mt-3 flex max-w-2xl flex-col gap-3">
+            {entry.body.map((paragraph) => (
+              <p key={paragraph.slice(0, 40)} className="text-body-base text-fg-muted">
+                {paragraph}
+              </p>
+            ))}
+          </div>
 
           {entry.highlights ? (
             <ul className="mt-5 flex flex-wrap gap-2">

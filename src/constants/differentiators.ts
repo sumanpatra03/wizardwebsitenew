@@ -1,22 +1,25 @@
 import {
   CloudCog,
+  Coins,
   Gauge,
+  GraduationCap,
   Lightbulb,
   ShieldCheck,
   Target,
   TrendingUp,
+  TrendingUpDown,
 } from "lucide-react";
 
 import type { Differentiator } from "@/types/content";
 
 /**
- * "Why Wizard" attributes, from wizardcomm.net/why-wizard.
- * Headline and intro are the client's own words.
+ * The nine attributes listed on wizardcomm.net/why-wizard, with their
+ * published one-line descriptions verbatim.
  */
 export const WHY_WIZARD_HEADLINE = "Because Growth Doesn't Happen by Accident.";
 
 export const WHY_WIZARD_INTRO =
-  "Built for today. Ready for what's next. Strategy, creativity, technology and ambition working together to solve real business challenges.";
+  "It happens when strategy, creativity, technology, and ambition work together.";
 
 export const DIFFERENTIATORS: readonly Differentiator[] = [
   {
@@ -26,7 +29,7 @@ export const DIFFERENTIATORS: readonly Differentiator[] = [
   },
   {
     title: "Purpose-Built Solutions",
-    description: "Designed around your business.",
+    description: "Designed around your business, not ours.",
     icon: Target,
   },
   {
@@ -36,25 +39,40 @@ export const DIFFERENTIATORS: readonly Differentiator[] = [
   },
   {
     title: "Industry Intelligence",
-    description: "Connected ecosystems that help you innovate, scale and thrive.",
+    description: "Expertise shaped by real-world experience.",
     icon: Lightbulb,
   },
   {
     title: "Cloud Flexibility",
-    description: "Ready to scale, wherever your workloads run.",
+    description: "Deploy the way your business demands.",
     icon: CloudCog,
   },
   {
+    title: "Maximum Value",
+    description: "Smarter investments. Stronger outcomes.",
+    icon: Coins,
+  },
+  {
+    title: "Ready to Scale",
+    description: "Built for growth from day one.",
+    icon: TrendingUpDown,
+  },
+  {
     title: "Faster Time-to-Value",
-    description: "People-powered adoption from day one.",
+    description: "Launch sooner. Realize benefits faster.",
     icon: Gauge,
+  },
+  {
+    title: "People-Powered Adoption",
+    description: "Training that drives confidence and success.",
+    icon: GraduationCap,
   },
 ] as const;
 
-/** The partnership promises listed alongside the attributes. */
+/** The partnership promises, from "Why Clients Choose Wizard". */
 export const PARTNERSHIP_PROMISES: readonly string[] = [
-  "We think beyond projects",
-  "We ask better questions",
-  "We work as partners — not vendors",
-  "We care equally about outcomes and ideas",
+  "Because we think beyond projects",
+  "Because we ask better questions",
+  "Because we care as much about outcomes as we do about ideas",
+  "Most importantly, because we work as partners — not vendors",
 ] as const;

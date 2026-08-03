@@ -1,6 +1,8 @@
-import { ArrowRight, Check } from "lucide-react";
+import { ArrowRight, Check, Quote } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 
+import { ClientWall } from "@/components/common/client-wall";
 import { JsonLd } from "@/components/common/json-ld";
 import { Container } from "@/components/layout/container";
 import { PageHero } from "@/components/layout/page-hero";
@@ -9,9 +11,14 @@ import { SectionHeading } from "@/components/layout/section-heading";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion/reveal";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { ENGAGEMENT_MODELS, WORK_WITH_US } from "@/constants/company";
+import {
+  CLIENTS_COPY,
+  ENGAGEMENT_MODELS,
+  WORK_WITH_US,
+} from "@/constants/company";
 import { SITE } from "@/constants/site";
 import { TECH_CATEGORIES } from "@/constants/tech-stack";
+import { TESTIMONIALS, TESTIMONIALS_HEADING } from "@/constants/testimonials";
 import { CtaBand } from "@/features/home/sections/cta-band";
 import { breadcrumbJsonLd } from "@/lib/jsonld";
 import { buildMetadata } from "@/lib/seo";
@@ -25,7 +32,7 @@ const CRUMBS = [
 export const metadata = buildMetadata({
   title: "Work With Us",
   description:
-    "Dedicated associates, flexi hiring from 40-hour blocks, or staff augmentation that slots into your existing team. Tell us what you need and we will shape the engagement around it.",
+    "Dedicated associates, flexi hiring from 40-hour blocks, or staff augmentation that blends into your existing team. Tell us your requirement and we will suggest the way out.",
   path: "/work-with-us",
 });
 
@@ -35,26 +42,28 @@ export default function WorkWithUsPage() {
       <PageHero
         crumbs={CRUMBS}
         eyebrow={WORK_WITH_US.eyebrow}
-        titleLines={["Work with our", "talented minds"]}
+        titleLines={WORK_WITH_US.titleLines}
         lead={WORK_WITH_US.lead}
-      >
-        <Button asChild size="lg">
-          <Link href="/contact">
-            Tell us what you need
-            <ArrowRight
-              aria-hidden="true"
-              className="size-4 transition-transform duration-(--duration-fast) group-hover:translate-x-1 motion-reduce:translate-none"
-            />
-          </Link>
-        </Button>
-      </PageHero>
+      />
 
       {/* Engagement models */}
       <Section tone="subtle" className="border-y border-border">
         <Container>
           <SectionHeading
             eyebrow="How It Works"
-            title="Three ways to bring our people onto your team."
+            title={WORK_WITH_US.models.title}
+            description={WORK_WITH_US.models.body}
+            action={
+              <Button asChild size="lg">
+                <Link href={WORK_WITH_US.models.cta.href}>
+                  {WORK_WITH_US.models.cta.label}
+                  <ArrowRight
+                    aria-hidden="true"
+                    className="size-4 transition-transform duration-(--duration-fast) group-hover:translate-x-1 motion-reduce:translate-none"
+                  />
+                </Link>
+              </Button>
+            }
           />
 
           <Stagger stagger={0.08} className="mt-14 grid gap-5 lg:grid-cols-3">
@@ -68,9 +77,9 @@ export default function WorkWithUsPage() {
                     {String(index + 1).padStart(2, "0")}
                   </span>
 
-                  <h2 className="font-display text-heading-md mt-5 text-balance text-fg">
+                  <h3 className="font-display text-heading-md mt-5 text-balance text-fg">
                     {model.name}
-                  </h2>
+                  </h3>
 
                   <p className="text-body-sm mt-3 flex-1 text-fg-muted">
                     {model.summary}
@@ -98,24 +107,36 @@ export default function WorkWithUsPage() {
         </Container>
       </Section>
 
-      {/* Culture */}
+      {/* Join the team */}
       <Section>
         <Container>
           <div className="grid gap-12 lg:grid-cols-12 lg:gap-10">
             <div className="lg:col-span-7">
               <Reveal>
                 <p className="text-label mb-6 uppercase text-accent">
-                  Join The Team
+                  {WORK_WITH_US.culture.eyebrow}
                 </p>
                 <h2 className="text-display-lg text-balance text-fg">
                   {WORK_WITH_US.culture.title}
                 </h2>
-                <p className="text-body-lg mt-6 max-w-xl text-fg-muted">
-                  {WORK_WITH_US.culture.body}
-                </p>
               </Reveal>
 
-              <Reveal delay={0.15}>
+              <Stagger delay={0.12} className="mt-6 flex flex-col gap-5">
+                {WORK_WITH_US.culture.paragraphs.map((paragraph) => (
+                  <StaggerItem
+                    key={paragraph.slice(0, 40)}
+                    as="p"
+                    className="text-body-lg max-w-xl text-fg-muted"
+                  >
+                    {paragraph}
+                  </StaggerItem>
+                ))}
+              </Stagger>
+
+              <Reveal delay={0.28}>
+                <p className="font-display text-heading-md mt-8 text-accent">
+                  {WORK_WITH_US.culture.closing}
+                </p>
                 <div className="mt-9 flex flex-wrap items-center gap-4">
                   <Button asChild size="lg" variant="outline">
                     <a href={`mailto:${SITE.contact.email}`}>
@@ -152,6 +173,64 @@ export default function WorkWithUsPage() {
               </Card>
             </Reveal>
           </div>
+        </Container>
+      </Section>
+
+      {/* Featured clients */}
+      <Section tone="subtle" className="border-y border-border">
+        <Container>
+          <SectionHeading
+            eyebrow={CLIENTS_COPY.eyebrow}
+            title="Trusted by corporates and government alike."
+            description={CLIENTS_COPY.body}
+          />
+          <ClientWall className="mt-14" />
+        </Container>
+      </Section>
+
+      {/* Testimonials */}
+      <Section>
+        <Container>
+          <SectionHeading eyebrow="Client Voices" title={TESTIMONIALS_HEADING} />
+
+          <Stagger stagger={0.08} className="mt-14 grid gap-5 md:grid-cols-2">
+            {TESTIMONIALS.map((testimonial) => (
+              <StaggerItem key={testimonial.author}>
+                <figure className="flex h-full flex-col rounded-xl border border-border bg-surface p-7 sm:p-8">
+                  <Quote
+                    aria-hidden="true"
+                    className="size-8 shrink-0 text-accent/35"
+                  />
+                  <blockquote className="text-body-base mt-5 flex-1 text-fg">
+                    {testimonial.quote}
+                  </blockquote>
+
+                  <figcaption className="mt-7 flex items-center gap-4 border-t border-border pt-5">
+                    {testimonial.avatar ? (
+                      <Image
+                        src={testimonial.avatar}
+                        alt=""
+                        width={48}
+                        height={48}
+                        className="size-12 shrink-0 rounded-pill border border-border object-cover"
+                      />
+                    ) : null}
+                    <span className="min-w-0">
+                      <span className="text-body-sm block font-semibold text-fg">
+                        {testimonial.author}
+                      </span>
+                      <span className="text-body-sm mt-0.5 block text-fg-muted">
+                        {[testimonial.role, testimonial.organization]
+                          .filter(Boolean)
+                          .join(", ")}
+                        {testimonial.location ? ` — ${testimonial.location}` : ""}
+                      </span>
+                    </span>
+                  </figcaption>
+                </figure>
+              </StaggerItem>
+            ))}
+          </Stagger>
         </Container>
       </Section>
 

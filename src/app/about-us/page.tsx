@@ -1,5 +1,7 @@
 import { Quote } from "lucide-react";
+import Image from "next/image";
 
+import { ClientWall } from "@/components/common/client-wall";
 import { JsonLd } from "@/components/common/json-ld";
 import { Timeline } from "@/components/common/timeline";
 import { Container } from "@/components/layout/container";
@@ -11,12 +13,18 @@ import { Reveal, Stagger, StaggerItem } from "@/components/motion/reveal";
 import { Card } from "@/components/ui/card";
 import {
   ABOUT,
+  CLIENTS_COPY,
+  GROWTH_PARTNER,
   LEADERSHIP,
-  MISSION_VISION,
+  MILESTONES,
+  PILLARS,
+  STORY,
+  TEAM,
   TIMELINE,
-  VALUES,
+  VELOCITY,
 } from "@/constants/company";
 import { STATS } from "@/constants/stats";
+import { TESTIMONIALS, TESTIMONIALS_HEADING } from "@/constants/testimonials";
 import { CtaBand } from "@/features/home/sections/cta-band";
 import { breadcrumbJsonLd } from "@/lib/jsonld";
 import { buildMetadata } from "@/lib/seo";
@@ -31,7 +39,7 @@ const CRUMBS = [
 export const metadata = buildMetadata({
   title: "About Us",
   description:
-    "Wizard Communications has been building software in Kolkata since 2004 — e-learning and web portals, then custom software, now AI, commerce and managed platforms.",
+    "From a small room in Kolkata in 2004 to a digital transformation partner for corporates, government and global brands — 200+ projects and 100+ clients.",
   path: "/about-us",
 });
 
@@ -41,11 +49,7 @@ export default function AboutUsPage() {
       <PageHero
         crumbs={CRUMBS}
         eyebrow={ABOUT.eyebrow}
-        titleLines={[
-          "Turning complex",
-          "technology into simple,",
-          "powerful solutions",
-        ]}
+        titleLines={ABOUT.titleLines}
         lead={ABOUT.lead}
       />
 
@@ -76,20 +80,123 @@ export default function AboutUsPage() {
         </Container>
       </Section>
 
-      {/* Mission and vision */}
-      <Section tone="subtle" className="border-y border-border">
-        <Container>
-          <SectionHeading
-            eyebrow="What Drives Us"
-            title="A partner, not a vendor."
-          />
+      {/* Team group photo.
+          Sits between the stats and Our Story, matching where it falls on the
+          live page. Full-bleed to the wide container so it reads as a band
+          rather than a card. */}
+      <Section spacing="sm">
+        <Container size="wide">
+          <Reveal direction="scale">
+            <div className="relative aspect-16/10 w-full overflow-hidden rounded-xl border border-border sm:aspect-21/9">
+              <Image
+                src="/about/team-group.jpeg"
+                alt="The Wizard Communications team together at an office gathering."
+                fill
+                sizes="(min-width: 1600px) 1664px, 100vw"
+                className="object-cover"
+              />
+              {/* Keeps the photo in the page's palette without hiding faces. */}
+              <div
+                aria-hidden="true"
+                className="absolute inset-0 bg-gradient-to-t from-bg/50 via-transparent to-transparent"
+              />
+            </div>
+          </Reveal>
+        </Container>
+      </Section>
 
-          <Stagger stagger={0.1} className="mt-14 grid gap-5 lg:grid-cols-2">
-            {MISSION_VISION.map((item) => (
-              <StaggerItem key={item.label}>
-                <Card className="h-full p-8 sm:p-10">
-                  <p className="text-label uppercase text-accent">{item.label}</p>
-                  <p className="text-body-lg mt-6 text-fg">{item.body}</p>
+      {/* Our Story */}
+      <Section>
+        <Container>
+          <div className="grid gap-10 lg:grid-cols-12 lg:gap-12">
+            <Reveal className="lg:col-span-5">
+              <p className="text-label uppercase text-accent">{STORY.eyebrow}</p>
+              <h2 className="text-display-md mt-5 text-balance text-fg">
+                {STORY.title}
+              </h2>
+            </Reveal>
+
+            <Stagger delay={0.1} className="flex flex-col gap-6 lg:col-span-7">
+              {STORY.paragraphs.map((paragraph) => (
+                <StaggerItem
+                  key={paragraph.slice(0, 40)}
+                  as="p"
+                  className="text-body-lg text-fg-muted"
+                >
+                  {paragraph}
+                </StaggerItem>
+              ))}
+            </Stagger>
+          </div>
+        </Container>
+      </Section>
+
+      {/* Where Vision Meets Velocity.
+          Carries the same growth-chart backdrop the live page uses on this
+          container, behind a scrim heavy enough to keep the copy at AA. */}
+      <Section className="relative overflow-hidden border-y border-border">
+        <div aria-hidden="true" className="absolute inset-0 -z-10">
+          <Image
+            src="/about/growth-backdrop.webp"
+            alt=""
+            fill
+            sizes="100vw"
+            className="object-cover object-right"
+          />
+          <div className="absolute inset-0 bg-bg/82" />
+          <div className="absolute inset-0 bg-gradient-to-r from-bg via-bg/70 to-transparent" />
+        </div>
+
+        <Container>
+          <Reveal>
+            <h2 className="text-display-lg max-w-3xl text-balance text-fg">
+              {VELOCITY.title}
+            </h2>
+            <p className="text-body-lg mt-6 max-w-3xl text-fg-muted">
+              {VELOCITY.lead}
+            </p>
+          </Reveal>
+
+          <Reveal delay={0.12}>
+            <p className="font-display text-display-md mt-10 max-w-3xl text-balance text-accent">
+              {VELOCITY.emphasis}
+            </p>
+          </Reveal>
+
+          <Reveal delay={0.2}>
+            <p className="text-body-lg mt-8 max-w-3xl text-fg-muted">
+              {VELOCITY.body}
+            </p>
+          </Reveal>
+        </Container>
+      </Section>
+
+      {/* Mission, Values, Vision */}
+      <Section>
+        <Container>
+          <Stagger
+            stagger={0.1}
+            className="grid gap-5 md:grid-cols-2 lg:grid-cols-3"
+          >
+            {PILLARS.map((pillar) => (
+              <StaggerItem key={pillar.label}>
+                <Card className="h-full p-7 sm:p-8">
+                  <p className="text-label uppercase text-accent">
+                    {pillar.label}
+                  </p>
+                  {"lead" in pillar && pillar.lead ? (
+                    <p className="font-display text-heading-md mt-5 text-balance text-fg">
+                      {pillar.lead}
+                    </p>
+                  ) : null}
+                  <p
+                    className={cn(
+                      "text-body-base text-fg-muted",
+                      "lead" in pillar && pillar.lead ? "mt-4" : "mt-5",
+                    )}
+                  >
+                    {pillar.body}
+                  </p>
                 </Card>
               </StaggerItem>
             ))}
@@ -97,45 +204,18 @@ export default function AboutUsPage() {
         </Container>
       </Section>
 
-      {/* Values */}
-      <Section>
-        <Container>
-          <Reveal>
-            <div className="mx-auto max-w-4xl text-center">
-              <Quote
-                aria-hidden="true"
-                className="mx-auto size-10 text-accent/40"
-              />
-              <p className="font-display text-display-md mt-8 text-balance text-fg">
-                {VALUES.principle}
-              </p>
-              <p className="text-body-lg mt-6 text-fg-muted">{VALUES.body}</p>
-            </div>
-          </Reveal>
-        </Container>
-      </Section>
-
-      {/* History */}
+      {/* Milestones */}
       <Section tone="subtle" className="border-y border-border">
         <Container>
-          {/* No description here: the first timeline entry already carries the
-              1999/2004 founding line, and repeating it two paragraphs apart
-              read as an editing mistake. */}
-          <SectionHeading
-            eyebrow="Our Story"
-            title="Two decades, one direction."
-          />
+          <SectionHeading eyebrow={MILESTONES.eyebrow} title={MILESTONES.title} />
           <Timeline entries={TIMELINE} />
         </Container>
       </Section>
 
-      {/* Leadership */}
+      {/* Team */}
       <Section>
         <Container>
-          <SectionHeading
-            eyebrow="Leadership"
-            title="The people accountable for the work."
-          />
+          <SectionHeading eyebrow={TEAM.eyebrow} title={TEAM.title} />
 
           <Stagger
             stagger={0.07}
@@ -143,36 +223,125 @@ export default function AboutUsPage() {
           >
             {LEADERSHIP.map((leader) => (
               <StaggerItem key={leader.name}>
-                <Card className="h-full p-7">
-                  {/* Monogram tile — no headshots are published, and a
-                      generated initial reads better than a placeholder
-                      silhouette. */}
-                  <span
-                    aria-hidden="true"
-                    className={cn(
-                      "font-display grid size-14 place-items-center rounded-lg",
-                      "bg-accent-muted text-heading-md text-accent",
-                    )}
-                  >
-                    {leader.initials}
-                  </span>
+                <Card interactive className="h-full overflow-hidden">
+                  <div className="relative aspect-4/3 overflow-hidden border-b border-border">
+                    <Image
+                      src={leader.photo}
+                      alt={`${leader.name}, ${leader.role}`}
+                      fill
+                      sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 90vw"
+                      className={cn(
+                        "object-cover object-top",
+                        "transition-transform duration-(--duration-base)",
+                        "ease-(--ease-out-expo) group-hover/card:scale-105",
+                        "motion-reduce:scale-none motion-reduce:transition-none",
+                      )}
+                    />
+                    {/* Ties the portrait into the card's palette. */}
+                    <span className="absolute inset-0 bg-gradient-to-t from-surface/60 via-transparent to-transparent" />
+                  </div>
 
-                  <h3 className="font-display text-heading-md mt-6 text-fg">
-                    {leader.name}
-                  </h3>
-                  <p className="text-label mt-1.5 uppercase text-accent">
-                    {leader.role}
-                  </p>
-                  <p className="text-body-sm mt-4 text-fg-muted">{leader.bio}</p>
+                  <div className="p-7">
+                    <h3 className="font-display text-heading-md text-fg">
+                      {leader.name}
+                    </h3>
+                    <p className="text-label mt-1.5 uppercase text-accent">
+                      {leader.role}
+                    </p>
+                    <p className="text-body-sm mt-4 text-fg-muted">{leader.bio}</p>
+                  </div>
                 </Card>
+              </StaggerItem>
+            ))}
+          </Stagger>
+        </Container>
+      </Section>
+
+      {/* Growth partner */}
+      <Section tone="subtle" className="border-y border-border">
+        <Container>
+          <div className="mx-auto max-w-4xl text-center">
+            <Reveal>
+              <p className="text-label uppercase text-accent">
+                {GROWTH_PARTNER.eyebrow}
+              </p>
+              <h2 className="text-display-lg mt-5 text-balance text-fg">
+                {GROWTH_PARTNER.title}
+              </h2>
+              <p className="text-body-lg mt-6 text-fg-muted">
+                {GROWTH_PARTNER.body}
+              </p>
+            </Reveal>
+            <Reveal delay={0.12}>
+              <p className="font-display text-heading-md mt-8 text-accent">
+                {GROWTH_PARTNER.emphasis}
+              </p>
+            </Reveal>
+          </div>
+        </Container>
+      </Section>
+
+      {/* Featured clients */}
+      <Section>
+        <Container>
+          <SectionHeading
+            eyebrow={CLIENTS_COPY.eyebrow}
+            title="Trusted by corporates and government alike."
+            description={CLIENTS_COPY.body}
+          />
+          <ClientWall className="mt-14" />
+        </Container>
+      </Section>
+
+      {/* Testimonials */}
+      <Section tone="subtle" className="border-y border-border">
+        <Container>
+          <SectionHeading eyebrow="Client Voices" title={TESTIMONIALS_HEADING} />
+
+          <Stagger
+            stagger={0.08}
+            className="mt-14 grid gap-5 md:grid-cols-2"
+          >
+            {TESTIMONIALS.map((testimonial) => (
+              <StaggerItem key={testimonial.author}>
+                <figure className="flex h-full flex-col rounded-xl border border-border bg-bg p-7 sm:p-8">
+                  <Quote
+                    aria-hidden="true"
+                    className="size-8 shrink-0 text-accent/35"
+                  />
+                  <blockquote className="text-body-base mt-5 flex-1 text-fg">
+                    {testimonial.quote}
+                  </blockquote>
+
+                  <figcaption className="mt-7 flex items-center gap-4 border-t border-border pt-5">
+                    {testimonial.avatar ? (
+                      <Image
+                        src={testimonial.avatar}
+                        alt=""
+                        width={48}
+                        height={48}
+                        className="size-12 shrink-0 rounded-pill border border-border object-cover"
+                      />
+                    ) : null}
+                    <span className="min-w-0">
+                      <span className="text-body-sm block font-semibold text-fg">
+                        {testimonial.author}
+                      </span>
+                      <span className="text-body-sm mt-0.5 block text-fg-muted">
+                        {[testimonial.role, testimonial.organization]
+                          .filter(Boolean)
+                          .join(", ")}
+                        {testimonial.location ? ` — ${testimonial.location}` : ""}
+                      </span>
+                    </span>
+                  </figcaption>
+                </figure>
               </StaggerItem>
             ))}
           </Stagger>
 
           <Reveal delay={0.15}>
-            <p className="text-body-base mt-12 text-fg-subtle">
-              {ABOUT.closing}
-            </p>
+            <p className="text-body-base mt-14 text-fg-subtle">{ABOUT.closing}</p>
           </Reveal>
         </Container>
       </Section>

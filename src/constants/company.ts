@@ -1,17 +1,13 @@
-import {
-  Handshake,
-  Layers,
-  LineChart,
-  PenTool,
-  ShieldCheck,
-  Users,
-} from "lucide-react";
+import { Layers, LineChart, PenTool, ShieldCheck, Users } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
 /**
- * Company section content, transcribed from wizardcomm.net's About Us,
- * Why Wizard and Work With Us pages. Wording is theirs; only the grouping is
- * new, to fit this site's section rhythm.
+ * Company section content.
+ *
+ * Transcribed verbatim from wizardcomm.net's About Us, Why Wizard and Work
+ * With Us pages — the wording is theirs, including the em-dashes and the
+ * occasional inconsistency. Only the grouping is new, to fit this site's
+ * section rhythm.
  */
 
 /* ------------------------------------------------------------------ */
@@ -20,50 +16,79 @@ import type { LucideIcon } from "lucide-react";
 
 export const ABOUT = {
   eyebrow: "About Us",
-  title:
-    "Helping businesses grow by turning complex technology into simple, powerful solutions",
-  lead: "Where Vision Meets Velocity. Because growth isn't accidental — it's engineered.",
+  titleLines: [
+    "Helping businesses grow by turning",
+    "complex technology into simple,",
+    "powerful solutions",
+  ],
+  lead: "Growth takes effort. But with the right partner by your side, it doesn't have to feel that hard. We're here to make it easier.",
   closing:
-    "Wizard is a software development company based in Kolkata, India, operating since 2004.",
+    "Wizard is a Software Development Company based in Kolkata, India and operating since 2004.",
 } as const;
 
-export const MISSION_VISION = [
+/** "Our Story" — the two paragraphs beneath the belief line. */
+export const STORY = {
+  eyebrow: "Our Story",
+  title: "In 2004, we started with a simple belief:",
+  paragraphs: [
+    "What began as a small team of passionate thinkers, creators, and technologists has grown into a trusted digital transformation partner serving businesses, enterprises, government organizations, educational institutions, healthcare providers, startups, and global brands.",
+    "Over the last 16+ years, we have delivered more than 200 successful projects and earned the trust of 100+ clients across industries and geographies. But numbers only tell part of the story. The real measure of our success lies in the relationships we've built, the challenges we've solved, and the growth we've helped create.",
+  ],
+} as const;
+
+export const VELOCITY = {
+  title: "Where Vision Meets Velocity",
+  lead: "From strategy to screen, from concept to customer — we create digital products, experiences, and ecosystems that move businesses forward.",
+  emphasis: "Because growth isn't accidental. It's Engineered.",
+  body: "A small room. A big vision. An unwavering belief that technology should create opportunity, not complexity. From Kolkata to clients across continents, we've spent years helping businesses navigate change, embrace innovation, and create lasting value. Today, we help businesses across the world innovate faster, grow smarter, and achieve more.",
+} as const;
+
+/** Mission, Values and Vision, in the order the live page presents them. */
+export const PILLARS = [
   {
-    label: "Our Mission",
+    label: "Mission",
     body: "Our mission is to make technology simple, powerful, and accessible for every business. We listen, we understand, and we deliver solutions that actually work — helping you save time, reduce stress, and focus on what matters most: growing your business.",
   },
   {
-    label: "Our Vision",
-    body: "To be the technology partner that businesses actually love working with. Not just a vendor. Not just a service provider. But a true partner who understands your goals, shares your ambitions, and works tirelessly to help you grow, scale, and lead.",
+    label: "Our Values",
+    lead: "Everything we do at Wizard is guided by one simple principle — do the right thing, every time.",
+    body: "At Wizard, we lead with honesty and deliver with excellence. We keep things simple and transparent — because we believe you deserve to know exactly what you're getting and why. Our commitment goes beyond just solving technical problems; it's about building relationships rooted in trust, respect, and a genuine desire to see your business succeed.",
+  },
+  {
+    label: "Vision",
+    body: "We started Wizard with a simple but powerful vision — to be the technology partner that businesses actually love working with. Not just a vendor. Not just a service provider. But a true partner who understands your goals, shares your ambitions, and works tirelessly to help you grow, scale, and lead. That vision drives everything we do — every strategy we build, every solution we deliver, and every relationship we nurture.",
   },
 ] as const;
-
-export const VALUES = {
-  principle:
-    "Everything we do at Wizard is guided by one simple principle — do the right thing, every time.",
-  body: "Honesty, transparency, and relationships rooted in trust and a genuine commitment to our clients' success.",
-} as const;
 
 export type TimelineEntry = {
   period: string;
   title: string;
-  body: string;
+  body: readonly string[];
   /** Named clients or products from that era. */
   highlights?: readonly string[];
 };
 
+export const MILESTONES = {
+  eyebrow: "Milestone",
+  title: "Small Beginnings. Global Impact.",
+} as const;
+
 export const TIMELINE: readonly TimelineEntry[] = [
   {
-    period: "1999 – 2004",
-    title: "The idea, then the company",
-    body: "Conceptualised in 1999 by a group of creative enthusiasts, and officially established in 2004.",
+    period: "2004",
+    title: "From Vision to Reality",
+    body: [
+      "In 1999, a group of creative enthusiasts with a passion for innovation and marketing excellence envisioned a company dedicated to delivering impactful creative solutions. Their vision became reality in 2004 with the establishment of Wizard Communications, a company committed to creativity, innovation, and customer-focused services.",
+    ],
   },
   {
     period: "2004 – 2008",
-    title: "Building a creative legacy",
-    body: "Creative solutions in e-learning, website development and web portal development for government organisations, corporates and educational institutions.",
+    title: "Building a Creative Legacy",
+    body: [
+      "During its early years, Wizard Communications delivered creative solutions in E-learning, Website Development, and Web Portal Development for Government Organizations, Corporate Houses, Educational Institutions, and individual clients.",
+    ],
     highlights: [
-      "Chartered Institute of Marketing (UK)",
+      "The Chartered Institute of Marketing (UK)",
       "Jadavpur University",
       "Parliament Museum of India",
       "National Science Museum of Yemen",
@@ -74,31 +99,46 @@ export const TIMELINE: readonly TimelineEntry[] = [
   },
   {
     period: "2008 – 2012",
-    title: "Diversification through innovation",
-    body: "Transitioned from a creative design organisation into a technology-driven software development company, adding custom software development, database solutions and enterprise solutions.",
+    title: "Diversification Through Innovation",
+    body: [
+      "As the industry evolved, Wizard Communications transformed from a creative design organization into a technology-driven software development company to support long-term growth and sustainability.",
+      "Leveraging its creative expertise and technical capabilities, the company expanded its services to include Custom Software Development, Database Solutions, and Enterprise Solutions. This transformation strengthened Wizard's position as a trusted technology partner.",
+    ],
   },
   {
     period: "2012 – 2016",
-    title: "The transition into software excellence",
-    body: "Adopted modern development frameworks and expanded into mobile application and responsive website development. ServiceWorks, our field service management software, shipped by the end of 2014 and is used widely across the USA.",
+    title: "The Transition into Software Excellence",
+    body: [
+      "As technology evolved rapidly, Wizard Communications adopted modern development technologies and frameworks to enhance the quality and scalability of its solutions. The company expanded into Mobile Application Development and Responsive Website Development.",
+      "By the end of 2014, Wizard initiated the development of ServiceWorks, a comprehensive Field Service Management Software that later became widely used across the USA.",
+    ],
     highlights: ["ServiceWorks"],
   },
   {
     period: "2016 – 2020",
-    title: "Growth and market expansion",
-    body: "Served clients across healthcare, government, retail and education, and developed the portal for ITC Infotech — strengthening our credibility as a trusted technology solutions provider.",
+    title: "Growth and Market Expansion",
+    body: [
+      "Wizard Communications continued its steady growth by serving clients across industries including Healthcare, Government, Retail, and Education. The company strengthened its project management capabilities and customer service standards while aligning with global technology standards.",
+      "A major milestone during this phase was developing a portal for ITC Infotech, further reinforcing Wizard Communications' credibility as a trusted technology solutions provider.",
+    ],
     highlights: ["ITC Infotech"],
   },
   {
     period: "2020 – 2024",
-    title: "Digital transformation",
-    body: "Focused on innovation and scalable software architecture. Introduced the Smart Commerce Management Suite during the pandemic, and worked in staff augmentation for NEC Japan.",
+    title: "Digital Transformation Phase",
+    body: [
+      "During this phase, Wizard Communications focused on innovation, scalable software architecture, and next-generation technologies. During the pandemic and social distancing restrictions, the company introduced the Smart Commerce Management Suite to help businesses operate more efficiently in a changing environment.",
+      "This phase also marked an important milestone as Wizard had the opportunity to work in Staff Augmentation Services for NEC Japan, further strengthening its international exposure and technical expertise.",
+    ],
     highlights: ["Smart Commerce Management Suite", "NEC Japan"],
   },
   {
     period: "2024 – Present",
-    title: "Leading the future of technology",
-    body: "Smart Commerce Management Suite, asset management systems, restaurant management and POS, project management tools, AI-powered chatbots, and business solutions for sales, purchase, HRMS and delivery management.",
+    title: "Leading the Future of Technology",
+    body: [
+      "With a strong commitment to quality, innovation, and customer satisfaction, Wizard Communications continues to evolve as a trusted technology partner for modern businesses. The company offers advanced solutions including the Smart Commerce Management Suite, Asset Management Systems, Restaurant Management Solutions, Restaurant POS, Project Management Tools, AI-powered Chatbots, and business solutions for Sales, Purchase, HRMS, and Delivery Management.",
+      "Driven by innovation and technical excellence, Wizard Communications remains focused on delivering scalable and future-ready technology solutions while continuing to expand its capabilities for the evolving digital landscape.",
+    ],
   },
 ] as const;
 
@@ -106,47 +146,91 @@ export type Leader = {
   name: string;
   role: string;
   bio: string;
-  /** Initials for the generated portrait tile. */
-  initials: string;
+  /** Portrait in `public/team/`. */
+  photo: string;
 };
+
+export const TEAM = {
+  eyebrow: "Team",
+  title: "Turning possibilities into performance.",
+} as const;
 
 export const LEADERSHIP: readonly Leader[] = [
   {
     name: "Sumit Sarkar",
-    role: "Founder & CEO",
-    initials: "SS",
-    bio: "20+ years driving innovation across design services, software solutions, interaction design and product management — leading strategy and delivering impactful, user-centric products.",
+    role: "CEO",
+    photo: "/team/sumit-sarkar.jpg",
+    bio: "Founder & CEO with 20+ years of experience driving innovation across design services, software solutions, interaction design, and product management, leading strategy and delivering impactful, user-centric products.",
   },
   {
     name: "Biswajit Banerjee",
     role: "CTO",
-    initials: "BB",
-    bio: "Engineering leader with 14+ years driving scalable solutions and technical strategy, with a strong foundation in software development and team leadership.",
+    photo: "/team/biswajit-banerjee.jpg",
+    bio: "Engineering leader with 14+ years of experience driving scalable solutions and technical strategy with a strong foundation in software development and team leadership.",
   },
   {
     name: "Vishwarup Bal",
     role: "IT Manager & Sr. Development",
-    initials: "VB",
-    bio: "20+ years delivering reliable, scalable solutions across the development lifecycle, with a strong focus on quality, performance and continuous improvement.",
+    photo: "/team/vishwarup-bal.jpg",
+    bio: "IT Manager and Software Development Engineer with 20+ years of experience, delivering reliable, scalable solutions across the development lifecycle with a strong focus on quality, performance, and continuous improvement.",
   },
   {
     name: "Anup Kumar Ghosh",
     role: "Senior IT Manager",
-    initials: "AG",
-    bio: "Expert in .NET with 19+ years in client/server and web development, delivering end-to-end solutions with strong problem-solving and a focus on high customer satisfaction.",
+    photo: "/team/anup-kumar-ghosh.webp",
+    bio: "Expert in .NET with 19+ years of experience in client/server and web development, delivering end-to-end solutions with strong problem-solving, efficient decision-making, and a focus on high customer satisfaction and optimized operational costs.",
   },
   {
     name: "Joydeep Mukherjee",
     role: "Senior Software Engineer",
-    initials: "JM",
-    bio: "13+ years specialising in Microsoft SQL Server and ASP.NET, delivering robust solutions and driving innovation through continuous improvement.",
+    photo: "/team/joydeep-mukherjee.webp",
+    bio: "Senior Software Engineer with 13+ years of experience specializing in Microsoft SQL Server and ASP.NET technologies, delivering robust solutions and driving innovation through continuous improvement.",
   },
   {
     name: "Tirthankar Dey",
     role: "Senior Software Engineer",
-    initials: "TD",
-    bio: "14 years in .NET technologies, specialising in system design, application development and client collaboration, delivering high-quality solutions.",
+    photo: "/team/tirthankar-dey.webp",
+    bio: "Software professional with 14 years of experience in .NET technologies, specializing in system design, application development, client collaboration, and delivering high-quality solutions through strong technical and problem-solving expertise.",
   },
+] as const;
+
+export const GROWTH_PARTNER = {
+  eyebrow: "Growth Partner",
+  title: "Better Together. Built for What's Next.",
+  body: "We bring together strategy, creativity, technology, and marketing to help businesses innovate, scale, and stay ahead. Working as an extension of your team, we transform ambitious ideas into measurable business results.",
+  emphasis: "Your vision. Our expertise. Shared success.",
+} as const;
+
+/* ------------------------------------------------------------------ */
+/* Clients                                                             */
+/* ------------------------------------------------------------------ */
+
+export const CLIENTS_COPY = {
+  eyebrow: "Featured Clients",
+  body: "We are proud to have 200+ satisfied clients from across the world and industries. From corporates to the government, we are the secret behind the success of countless agencies for 16 years.",
+} as const;
+
+/**
+ * Client logos, as published.
+ *
+ * Eight of the eleven are dark ink on transparency — measured average ink
+ * luminance below 90 — so they are effectively invisible on this site's
+ * canvas. The wall renders them monochrome for that reason: white on dark,
+ * black on light. It is a common convention for a logo wall and it is the
+ * only treatment that works for all eleven without editing anyone's mark.
+ */
+export const CLIENT_LOGOS = [
+  { name: "ITC", src: "/clients/itc.png" },
+  { name: "SAIL", src: "/clients/sail.png" },
+  { name: "Sanofi Aventis", src: "/clients/sanofi.png" },
+  { name: "NEC", src: "/clients/nec.png" },
+  { name: "CMC Limited", src: "/clients/cmc.png" },
+  { name: "Adayana Learning Solutions", src: "/clients/adayana.png" },
+  { name: "Amplo", src: "/clients/amplo.png" },
+  { name: "CDEC", src: "/clients/cdec.png" },
+  { name: "Crimzon Glow", src: "/clients/crimzon-glow.png" },
+  { name: "Service Works", src: "/clients/service-works.png" },
+  { name: "Trased", src: "/clients/trased.png" },
 ] as const;
 
 /* ------------------------------------------------------------------ */
@@ -155,8 +239,51 @@ export const LEADERSHIP: readonly Leader[] = [
 
 export const WHY_WIZARD_PAGE = {
   eyebrow: "Why Wizard",
-  title: "Because growth doesn't happen by accident.",
-  lead: "Built for today. Ready for what's next. Strategy, creativity, technology and ambition working together to solve real business challenges.",
+  titleLines: ["Because Growth Doesn't", "Happen by Accident."],
+  lead: "It happens when strategy, creativity, technology, and ambition work together.",
+  body: "For 16+ years, we've helped organizations transform ideas into experiences, experiences into engagement, and engagement into measurable business growth.",
+  emphasis: "Built for today. Ready for what's next.",
+  cta: { label: "Let's Talk", href: "/contact" },
+} as const;
+
+/** "Beyond Deliverables. Beyond Expectations." */
+export const BEYOND = {
+  title: "Beyond Deliverables. Beyond Expectations.",
+  anyone: [
+    "Anyone can build a website.",
+    "Anyone can launch a campaign.",
+    "Anyone can write code.",
+  ],
+  difference:
+    "The difference lies in creating solutions that solve real business challenges, drive measurable outcomes, and continue creating value long after launch.",
+  hook: "That's where we come in.",
+  body: "By bringing together strategy, user experience, technology, cloud, enterprise solutions, digital marketing, and managed services, we create connected ecosystems that help organizations innovate, scale, and thrive.",
+} as const;
+
+/** "Why Clients Choose Wizard" */
+export const CHOOSE_WIZARD = {
+  title: "Why Clients Choose Wizard",
+  reasons: [
+    "Because we think beyond projects.",
+    "Because we ask better questions.",
+    "Because we care as much about outcomes as we do about ideas.",
+    "Most importantly, because we work as partners — not vendors.",
+  ],
+  closing: [
+    "Your goals become our goals.",
+    "Your challenges become our challenges.",
+    "Your growth becomes our mission.",
+  ],
+} as const;
+
+/** "The Numbers Behind The Story" — the captions used on this page. */
+export const NUMBERS_BEHIND = {
+  title: "The Numbers Behind The Story",
+  captions: {
+    years: "Creating digital experiences that deliver business value.",
+    projects: "Successfully delivered across industries and platforms.",
+    clients: "Who trust us to help shape their digital future.",
+  },
 } as const;
 
 export type Competency = {
@@ -165,7 +292,14 @@ export type Competency = {
   icon: LucideIcon;
 };
 
-/** The end-to-end expertise listed on wizardcomm.net/why-wizard. */
+/**
+ * "End-to-End Expertise".
+ *
+ * The live page lists these five as names only, with no descriptions. The
+ * one-liners below are new editorial, written from what the rest of the site
+ * says each discipline covers — flagged so they are not mistaken for the
+ * client's own copy.
+ */
 export const COMPETENCIES: readonly Competency[] = [
   {
     name: "Strategy",
@@ -192,11 +326,6 @@ export const COMPETENCIES: readonly Competency[] = [
     body: "Keeping it running after launch: monitoring, security, releases and support.",
     icon: ShieldCheck,
   },
-  {
-    name: "Partnership",
-    body: "Your goals, challenges and growth become our priorities. Partners, not vendors.",
-    icon: Handshake,
-  },
 ] as const;
 
 /* ------------------------------------------------------------------ */
@@ -205,11 +334,22 @@ export const COMPETENCIES: readonly Competency[] = [
 
 export const WORK_WITH_US = {
   eyebrow: "Work With Us",
-  title: "Work with our talented minds to achieve your business needs",
-  lead: "Experienced professionals available full-time or for partial engagement to build and maintain your systems. Tell us what you need and we will shape the right arrangement around it.",
+  titleLines: ["Work with our Talented Minds", "to Achieve your Business Needs"],
+  lead: "Whether you require experienced professionals for full time or partial engagement for maintaining your systems, Wizard is the answer to all your requirements. Just inform us about your requirement, and we will suggest the appropriate way out.",
+  models: {
+    title: "We Offer Different ways to Onboard Our Experts For Your Project",
+    body: "Are you searching for experts in a certain domain who can manage your projects, or you may assign a complete team? If so, Wizard is fully equipped to meet all of your requirements. Take a look at how we can be contracted.",
+    cta: { label: "Get in Touch", href: "/contact" },
+  },
   culture: {
-    title: "Are you seeking to work with an organisation that values your dedication?",
-    body: "Challenging opportunities and a supportive, collaborative environment — with the kind of impact you would expect from a much larger company.",
+    eyebrow: "Connect With Us",
+    title:
+      "Are you seeking to work with an organization that values your dedication to your work?",
+    paragraphs: [
+      "Are you in search of a company that recognizes your efforts like a small firm, but also offers the exposure and impact of a larger corporation? If so, we invite you to consider joining Wizard Communications.",
+      "Our team provides challenging and exciting opportunities, and we are dedicated to fostering a supportive and collaborative work environment.",
+    ],
+    closing: "We're here to help your business grow and succeed.",
   },
 } as const;
 
@@ -223,7 +363,7 @@ export const ENGAGEMENT_MODELS: readonly EngagementModel[] = [
   {
     name: "Dedicated Associates",
     summary:
-      "Exclusive resources or expert teams focused solely on your requirements, functioning as an extension of your own team.",
+      "Exclusive human resources or expert teams focusing solely on your company's requirements, functioning as an extension of your own team.",
     detail: [
       "Full-time, dedicated capacity",
       "Works to your process and tooling",
@@ -233,7 +373,7 @@ export const ENGAGEMENT_MODELS: readonly EngagementModel[] = [
   {
     name: "Flexi Hiring",
     summary:
-      "Flexible scaling from a minimum 40-hour purchase, giving you access to experts for maintenance, bug fixes and small tasks.",
+      "Flexible resource scaling with a minimum 40-hour purchase, enabling access to experts for maintenance, bugfixes and small tasks, with renewable hours.",
     detail: [
       "Minimum 40-hour blocks",
       "Renewable as you need them",
@@ -243,7 +383,7 @@ export const ENGAGEMENT_MODELS: readonly EngagementModel[] = [
   {
     name: "Staff Augmentation",
     summary:
-      "Qualified professionals matched to your project, whether short-term or specialised, integrating with your existing team.",
+      "Qualified professionals tailored to your project needs, whether short-term or specialized, integrating seamlessly with your existing team.",
     detail: [
       "Specialist skills on demand",
       "Short or long engagements",
