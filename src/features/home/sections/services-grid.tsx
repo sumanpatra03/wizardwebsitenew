@@ -63,6 +63,7 @@ export function ServicesGrid() {
                  * stay still or the pointer would chase it mid-turn.
                  */}
                 <article
+                  aria-labelledby={`${service.slug}-title`}
                   className={cn(
                     "group/card relative perspective-[1600px]",
                     CARD_HEIGHT,
@@ -73,19 +74,21 @@ export function ServicesGrid() {
                   )}
                 >
                   {/*
-                   * The rotating box. One link wraps both faces, so the card
-                   * contributes a single stop to the tab order — and focusing
-                   * it turns the card via `focus-within`, which is what makes
-                   * the back reachable without a pointer.
+                   * The rotating box — a plain element, not a link. Only the
+                   * Explore control on the back navigates, so the card itself
+                   * is inert to clicks.
+                   *
+                   * Keyboard still reaches the back: tabbing to that link puts
+                   * focus inside the card, `focus-within` turns it, and the
+                   * link it landed on is the thing now facing the user.
                    *
                    * Under reduced motion the turn still happens but without a
                    * transition: the back face appears instantly, like any
                    * content swap, with no travel to track.
                    */}
-                  <Link
-                    href={`/services/${service.slug}`}
+                  <div
                     className={cn(
-                      "relative block size-full rounded-xl transform-3d",
+                      "relative size-full rounded-xl transform-3d",
                       // Symmetric ease, not the site's usual out-expo. Expo is
                       // so front-loaded that the card reached 176 degrees in
                       // the first 400ms of 750 — the turn was over before the
@@ -95,27 +98,28 @@ export function ServicesGrid() {
                       "ease-(--ease-in-out-soft)",
                       "group-hover/card:rotate-y-180",
                       "group-focus-within/card:rotate-y-180",
-                      "focus-visible:outline-2 focus-visible:outline-offset-4",
-                      "focus-visible:outline-ring",
                       "motion-reduce:transition-none",
                     )}
                   >
                     {/* Front — category, title, artwork. */}
-                    <span className={cn(FACE, faceTone)}>
-                      <span
+                    <div className={cn(FACE, faceTone)}>
+                      <p
                         className={cn(
                           "text-label uppercase",
                           accented ? "text-accent" : "text-fg-subtle",
                         )}
                       >
                         {service.category}
-                      </span>
+                      </p>
 
-                      <span className="font-display text-heading-md mt-4 text-balance text-fg">
+                      <h3
+                        id={`${service.slug}-title`}
+                        className="font-display text-heading-md mt-4 text-balance text-fg"
+                      >
                         {service.title}
-                      </span>
+                      </h3>
 
-                      <span className="relative mt-6 block flex-1 overflow-hidden rounded-lg">
+                      <div className="relative mt-6 flex-1 overflow-hidden rounded-lg">
                         {image ? (
                           <>
                             <Image
@@ -137,35 +141,43 @@ export function ServicesGrid() {
                             className="absolute inset-0"
                           />
                         )}
-                      </span>
-                    </span>
+                      </div>
+                    </div>
 
                     {/*
                      * Back — pre-rotated a half turn so it reads correctly
                      * once the card has turned. `backface-hidden` on both
                      * faces is what stops each showing through the other.
+                     *
+                     * The category and title repeat the front purely for
+                     * layout, so they are hidden from assistive tech — the
+                     * <h3> on the front already names this card.
                      */}
-                    <span className={cn(FACE, faceTone, "rotate-y-180")}>
-                      <span
+                    <div className={cn(FACE, faceTone, "rotate-y-180")}>
+                      <p
+                        aria-hidden="true"
                         className={cn(
                           "text-label uppercase",
                           accented ? "text-accent" : "text-fg-subtle",
                         )}
                       >
                         {service.category}
-                      </span>
+                      </p>
 
-                      <span className="font-display text-heading-md mt-4 text-balance text-fg">
+                      <p
+                        aria-hidden="true"
+                        className="font-display text-heading-md mt-4 text-balance text-fg"
+                      >
                         {service.title}
-                      </span>
+                      </p>
 
-                      <span className="text-body-sm mt-4 text-fg-muted">
+                      <p className="text-body-sm mt-4 text-fg-muted">
                         {service.description}.
-                      </span>
+                      </p>
 
-                      <span className="mt-4 flex flex-1 flex-col gap-1.5">
+                      <ul className="mt-4 flex flex-1 flex-col gap-1.5">
                         {service.capabilities.map((capability) => (
-                          <span
+                          <li
                             key={capability}
                             className="text-body-sm flex items-start gap-2 text-fg-muted"
                           >
@@ -174,14 +186,26 @@ export function ServicesGrid() {
                               className="mt-2 size-1 shrink-0 rounded-pill bg-accent"
                             />
                             {capability}
-                          </span>
+                          </li>
                         ))}
-                      </span>
+                      </ul>
 
-                      <span
+                      {/*
+                       * The only navigable thing in the card. Its label
+                       * carries the service name, because "Explore" alone
+                       * tells a screen-reader user nothing about where seven
+                       * near-identical links each lead.
+                       */}
+                      <Link
+                        href={`/services/${service.slug}`}
+                        aria-label={`Explore ${service.title}`}
                         className={cn(
                           "text-body-sm mt-5 flex items-center justify-between",
                           "gap-3 border-t pt-4 font-medium text-accent",
+                          "transition-colors duration-(--duration-fast)",
+                          "hover:text-accent-hover",
+                          "focus-visible:outline-2 focus-visible:outline-offset-2",
+                          "focus-visible:outline-ring",
                           accented ? "border-accent/20" : "border-border",
                         )}
                       >
@@ -194,9 +218,9 @@ export function ServicesGrid() {
                             "motion-reduce:translate-none",
                           )}
                         />
-                      </span>
-                    </span>
-                  </Link>
+                      </Link>
+                    </div>
+                  </div>
                 </article>
               </StaggerItem>
             );
@@ -217,24 +241,24 @@ export function ServicesGrid() {
                 "motion-reduce:translate-none motion-reduce:transition-none",
               )}
             >
-              <Link
-                href="/services"
-                className={cn(
-                  "flex size-full flex-col justify-end p-6 sm:p-7",
-                  "focus-visible:outline-2 focus-visible:-outline-offset-2",
-                  "focus-visible:outline-ring",
-                )}
-              >
-                <span className="font-display text-heading-md text-balance text-fg">
+              {/* Card body is inert, matching the seven above it — only the
+                  link at the bottom navigates. */}
+              <div className="flex size-full flex-col justify-end p-6 sm:p-7">
+                <h3 className="font-display text-heading-md text-balance text-fg">
                   Every capability, in one place.
-                </span>
-                <span className="text-body-sm mt-3 text-fg-muted">
+                </h3>
+                <p className="text-body-sm mt-3 text-fg-muted">
                   See the full range of what we build and run.
-                </span>
-                <span
+                </p>
+                <Link
+                  href="/services"
                   className={cn(
                     "text-body-sm mt-6 flex items-center justify-between gap-3",
                     "border-t border-border pt-4 font-medium text-accent",
+                    "transition-colors duration-(--duration-fast)",
+                    "hover:text-accent-hover",
+                    "focus-visible:outline-2 focus-visible:outline-offset-2",
+                    "focus-visible:outline-ring",
                   )}
                 >
                   All services
@@ -246,8 +270,8 @@ export function ServicesGrid() {
                       "motion-reduce:translate-none",
                     )}
                   />
-                </span>
-              </Link>
+                </Link>
+              </div>
             </article>
           </StaggerItem>
         </Stagger>

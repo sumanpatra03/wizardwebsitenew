@@ -9,10 +9,8 @@ export const SITE = {
   tagline: "Digital & Beyond",
   secondaryTagline: "Future Ready Technology, Built for You",
   description:
-    "Wizard Communication is a trusted global partner in technology and strategic consulting, delivering end to end IT services and digital transformation solutions.",
-  metaDescription:
-    "Wizard Communications is a Kolkata-based technology and strategic consulting partner delivering custom software, AI, cloud, security and digital transformation services. 16+ years, 200+ projects.",
-  foundedYear: 2004,
+    "Anyone can write code. Anyone can launch a campaign. We exist for the harder part: solving real business problems with technology that keeps paying off long after launch.",
+  
   url: "https://www.wizardcomm.net",
   locale: "en_IN",
 

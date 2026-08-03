@@ -49,11 +49,11 @@ export default function HomePage() {
   return (
     <>
       <Hero />
-      <TechMarquee />
       <IntroStatement />
-      <ServicesGrid />
       <StatsBand />
-      <Industries />
+      <ServicesGrid />
+      <TechMarquee />
+      {/* <Industries /> */}
       <FeaturedProjects />
       <WhyWizard />
       <ProductsSection />

@@ -19,9 +19,9 @@ import { SITE } from "./site";
  * inside the mobile drawer.
  */
 export const NAV_ITEMS: readonly NavItem[] = [
-  { label: "Home", href: "/" },
+  { label: "HOME", href: "/" },
   {
-    label: "Company",
+    label: "COMPANY",
     href: "/company",
     children: [
       {
@@ -45,7 +45,7 @@ export const NAV_ITEMS: readonly NavItem[] = [
     ],
   },
   {
-    label: "Services",
+    label: "SERVICES",
     href: "/services",
     children: [
       {
@@ -86,9 +86,9 @@ export const NAV_ITEMS: readonly NavItem[] = [
       },
     ],
   },
-  { label: "Products", href: "/products" },
-  { label: "Projects", href: "/projects" },
-  { label: "Contact", href: "/contact" },
+  { label: "PRODUCTS", href: "/products" },
+  { label: "PROJECTS", href: "/projects" },
+  { label: "CONTACT", href: "/contact" },
 ] as const;
 
 /** Header call-to-action. */

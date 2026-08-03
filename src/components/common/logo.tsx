@@ -15,17 +15,18 @@ type LogoProps = {
 };
 
 /**
- * Render heights are deliberately conservative.
+ * Render heights.
  *
- * The only artwork Wizard publishes is 182x57, so anything wider than ~91 CSS
- * px is already below 2x on a retina screen. `h-7`/`h-8` keep the lockup at
- * 89-102 px wide, which stays effectively crisp. Replace the PNGs with an SVG
- * and these can grow freely.
+ * Worth knowing the ceiling: the only artwork Wizard publishes is 182x57, so
+ * a lockup wider than ~91 CSS px is already below 2x on a retina screen. `md`
+ * renders 115-128px wide, which trades some of that sharpness for presence in
+ * the header. Supply an SVG (or a 2x PNG pair) and these can grow freely
+ * without the trade.
  */
 const SIZES = {
-  sm: "h-6",
-  md: "h-7 sm:h-8",
-  lg: "h-9",
+  sm: "h-7",
+  md: "h-9 sm:h-11",
+  lg: "h-12",
 } as const;
 
 /**

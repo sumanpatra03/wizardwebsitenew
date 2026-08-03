@@ -4,11 +4,12 @@ import Link from "next/link";
 
 import { Container } from "@/components/layout/container";
 import { Magnetic } from "@/components/motion/magnetic";
-import { Reveal, Stagger, StaggerItem } from "@/components/motion/reveal";
+// The stats block below is commented out; restoring it needs `Stagger`,
+// `StaggerItem` from this module and `STATS` from "@/constants/stats".
+import { Reveal } from "@/components/motion/reveal";
 import { MaskReveal } from "@/components/motion/text-reveal";
 import { Button } from "@/components/ui/button";
 import { HERO } from "@/constants/home";
-import { STATS } from "@/constants/stats";
 import { cn } from "@/lib/utils";
 
 import { HeroBackdrop } from "./hero-backdrop";
@@ -59,7 +60,7 @@ export function Hero() {
               as="h1"
               lines={["Digital", "& Beyond"]}
               delay={0.12}
-              className="mt-7 text-display-2xl text-fg"
+              className="mt-7 text-display-xl text-fg"
               lineClassName="[&>span]:inline-block"
             />
 

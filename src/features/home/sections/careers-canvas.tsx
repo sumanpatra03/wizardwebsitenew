@@ -5,18 +5,36 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
 
-import { keepScrollTriggersFresh } from "@/animations/scroll";
 import { Button } from "@/components/ui/button";
 import { CAREERS } from "@/constants/careers";
 import { useIsDesktop } from "@/hooks/use-media-query";
 import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
-import { cn } from "@/lib/utils";
 
-/** Runway length. The sticky child is 100svh, so this leaves 140vh of scrub. */
-const RUNWAY = "240vh";
+/**
+ * Panel geometry once the transition completes.
+ *
+ * Taken from Website A's own careers module, measured in the browser: its
+ * image goes from 1440x960 (full-bleed, taller than the viewport) to 704x469
+ * anchored hard against the left edge, with the copy in the right half. 704 of
+ * 1440 is 49%, hence the width below.
+ */
+const END = {
+  desktop: { width: "49%", height: "78%", top: "11%" },
+  mobile: { width: "100%", height: "48%", top: "0%" },
+} as const;
 
-/** Panel geometry at the end of the scrub. */
-const END = { width: "46%", height: "78%", radius: 28 };
+const RADIUS = 28;
+
+/**
+ * Where the transition runs, as a fraction of viewport height.
+ *
+ * Progress is 0 while the section's top is still this far down the viewport,
+ * and 1 by the time it reaches the top — roughly the window Website A uses.
+ */
+const TRAVEL = 0.55;
+
+/** How hard the panel chases the scroll position. Lower is heavier. */
+const SMOOTHING = 0.16;
 
 type CareersCanvasProps = {
   /** Resolved on the server from `public/careers/`; undefined falls back. */
@@ -26,100 +44,139 @@ type CareersCanvasProps = {
 /**
  * Careers.
  *
- * The image opens full-bleed and shrinks to a panel as the section scrolls,
- * with the copy arriving in the space it vacates.
+ * The image fills the frame, then shrinks to a panel as the section scrolls
+ * into view while the copy fades up beside it. Scrolling back up reverses
+ * both, because progress is read from scroll position rather than fired as a
+ * one-way reveal.
  *
- * The pin is `position: sticky`, not ScrollTrigger's `pin`. That matters:
- * ScrollTrigger pins by cloning the element into a fixed-position spacer,
- * which is fragile around the fixed header and any ancestor that clips. Sticky
- * has none of those failure modes, so GSAP is left to do the one thing it is
- * genuinely better at — scrubbing values against scroll progress.
+ * ## Why there is no pin
  *
- * The scrub animates `width`/`height`, which are layout properties rather than
- * compositor ones. That is unavoidable here: the point of the effect is that
- * the panel's box actually changes and the copy reflows beside it. It is a
- * single element, so the cost stays well inside frame budget.
+ * The first build of this pinned the section for a 240vh runway. Measuring
+ * Website A's own careers module showed that is not what it does at all: its
+ * section is 681px tall, nothing is sticky, and the image simply resizes as
+ * the section enters view before the whole thing scrolls away normally. A pin
+ * makes the visitor scroll two extra viewports to get past one paragraph.
+ * This matches the real behaviour instead.
  *
- * Below `lg`, and under `prefers-reduced-motion`, the whole mechanism is
- * dropped for a plain stacked layout — no sticky, no GSAP, no scroll runway.
+ * ## Why progress is measured per frame
+ *
+ * ScrollTrigger caches a trigger's page offset when it is built, and this
+ * section sits behind a dozen lazily-loaded photographs. As those decode, the
+ * section moves about a thousand pixels down and the cached offsets stop
+ * describing it — measured behaviour was the panel sitting at its finished
+ * state at *every* scroll position. `getBoundingClientRect()` is read against
+ * live layout each frame, so it cannot go stale. GSAP still owns the
+ * interpolation; only the clock changed.
+ *
+ * The rAF loop is gated by an IntersectionObserver, so it costs nothing while
+ * the section is off-screen.
+ *
+ * The panel is absolutely positioned, so resizing it reflows nothing else on
+ * the page — Website A's version changes its own section height as the image
+ * shrinks, which shifts everything below it mid-scroll.
  */
 export function CareersCanvas({ image }: CareersCanvasProps) {
   const sectionRef = useRef<HTMLElement>(null);
   const mediaRef = useRef<HTMLDivElement>(null);
   const copyRef = useRef<HTMLDivElement>(null);
 
-  const isDesktop = useIsDesktop();
   const prefersReducedMotion = usePrefersReducedMotion();
-  const scrubbed = isDesktop && !prefersReducedMotion;
+  const isDesktop = useIsDesktop();
 
   useEffect(() => {
-    if (!scrubbed) return;
+    if (prefersReducedMotion) return;
 
     let cancelled = false;
     let cleanup: (() => void) | undefined;
 
     void (async () => {
-      const [{ gsap }, { ScrollTrigger }] = await Promise.all([
-        import("gsap"),
-        import("gsap/ScrollTrigger"),
-      ]);
+      const { gsap } = await import("gsap");
 
       const section = sectionRef.current;
       const media = mediaRef.current;
       const copy = copyRef.current;
       if (cancelled || !section || !media || !copy) return;
 
-      gsap.registerPlugin(ScrollTrigger);
+      const end = isDesktop ? END.desktop : END.mobile;
 
-      // Lenis drives scroll from its own rAF loop, so ScrollTrigger has to be
-      // told when that loop moves.
-      const lenis = window.__lenis;
-      const onLenisScroll = () => ScrollTrigger.update();
-      lenis?.on("scroll", onLenisScroll);
+      const timeline = gsap.timeline({ paused: true });
 
-      // Photography above this section loads lazily and pushes it down the
-      // page; without this the trigger keeps its original offsets and the
-      // panel sits at its end state from the start.
-      const stopWatching = keepScrollTriggersFresh(ScrollTrigger);
+      timeline.fromTo(
+        media,
+        { width: "100%", height: "100%", top: "0%", borderRadius: 0 },
+        {
+          width: end.width,
+          height: end.height,
+          top: end.top,
+          // Round only the edges the panel pulls away from, so it still reads
+          // as bleeding off the edge it stays anchored to.
+          ...(isDesktop
+            ? { borderTopRightRadius: RADIUS, borderBottomRightRadius: RADIUS }
+            : { borderBottomLeftRadius: RADIUS, borderBottomRightRadius: RADIUS }),
+          ease: "none",
+        },
+        0,
+      );
 
-      const ctx = gsap.context(() => {
-        const timeline = gsap.timeline({
-          scrollTrigger: {
-            trigger: section,
-            start: "top top",
-            end: "bottom bottom",
-            scrub: 0.6,
-            invalidateOnRefresh: true,
-          },
-        });
+      // Rises from below. Starts part-way in so it lands as the panel is
+      // already clearing rather than fighting it for the space.
+      timeline.fromTo(
+        copy,
+        { autoAlpha: 0, y: 48 },
+        { autoAlpha: 1, y: 0, ease: "none" },
+        0.4,
+      );
 
-        timeline.fromTo(
-          media,
-          { width: "100%", height: "100%", borderRadius: 0 },
-          {
-            width: END.width,
-            height: END.height,
-            borderTopRightRadius: END.radius,
-            borderBottomRightRadius: END.radius,
-            ease: "none",
-          },
-          0,
-        );
+      let smoothed = 0;
+      let frame = 0;
+      let running = false;
 
-        // Starts a third of the way in, so the copy lands as the panel is
-        // already clearing rather than fighting it for the same space.
-        timeline.fromTo(
-          copy,
-          { autoAlpha: 0, x: 56 },
-          { autoAlpha: 1, x: 0, ease: "none" },
-          0.34,
-        );
-      }, section);
+      /** Live progress: 0 before the section arrives, 1 once it reaches top. */
+      const measure = () => {
+        const { top } = section.getBoundingClientRect();
+        const travel = window.innerHeight * TRAVEL;
+        if (travel <= 0) return 0;
+        return Math.min(1, Math.max(0, (travel - top) / travel));
+      };
+
+      const tick = () => {
+        const target = measure();
+        smoothed += (target - smoothed) * SMOOTHING;
+        if (Math.abs(target - smoothed) < 0.0005) smoothed = target;
+        timeline.progress(smoothed);
+        frame = requestAnimationFrame(tick);
+      };
+
+      const start = () => {
+        if (running) return;
+        running = true;
+        // Land on the right value immediately rather than easing in from
+        // wherever the last visit left it.
+        smoothed = measure();
+        timeline.progress(smoothed);
+        frame = requestAnimationFrame(tick);
+      };
+
+      const stop = () => {
+        if (!running) return;
+        running = false;
+        cancelAnimationFrame(frame);
+      };
+
+      // Only spend frames while the section is anywhere near the viewport.
+      const observer = new IntersectionObserver(
+        ([entry]) => (entry?.isIntersecting ? start() : stop()),
+        { rootMargin: "300px 0px" },
+      );
+      observer.observe(section);
 
       cleanup = () => {
-        stopWatching();
-        lenis?.off("scroll", onLenisScroll);
-        ctx.revert();
+        stop();
+        observer.disconnect();
+        timeline.kill();
+        // Drop inline styles so a breakpoint change starts from the
+        // stylesheet's values rather than the previous layout's.
+        gsap.set([media, copy], { clearProps: "all" });
       };
     })();
 
@@ -127,7 +184,7 @@ export function CareersCanvas({ image }: CareersCanvasProps) {
       cancelled = true;
       cleanup?.();
     };
-  }, [scrubbed]);
+  }, [prefersReducedMotion, isDesktop]);
 
   const media = (
     <>
@@ -137,10 +194,10 @@ export function CareersCanvas({ image }: CareersCanvasProps) {
           alt=""
           fill
           sizes="100vw"
-          className="object-cover object-left"
+          className="object-cover object-center lg:object-left"
         />
       ) : (
-        <div aria-hidden="true" className="bg-mesh absolute inset-0 bg-ink-950">
+        <div aria-hidden="true" className="bg-mesh bg-ink-950 absolute inset-0">
           <div className="bg-grid absolute inset-0 opacity-50" />
         </div>
       )}
@@ -148,19 +205,23 @@ export function CareersCanvas({ image }: CareersCanvasProps) {
           overpowering the copy beside it. */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 bg-gradient-to-r from-black/55 via-black/30 to-black/10"
+        className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/25 to-black/5"
       />
     </>
   );
 
   const copy = (
     <>
-      <p className="text-label uppercase text-accent">{CAREERS.eyebrow}</p>
-      <h2 className="text-display-lg mt-5 text-balance text-fg">
+      <p className="text-label text-accent uppercase">{CAREERS.eyebrow}</p>
+      <h2 className="text-display-md lg:text-display-lg text-fg mt-4 text-balance">
         {CAREERS.headline}
       </h2>
-      <p className="text-body-lg mt-6 max-w-lg text-fg-muted">{CAREERS.body}</p>
-      <Button asChild size="lg" className="mt-9">
+      <p className="text-body-base lg:text-body-lg text-fg-muted mt-4 max-w-lg lg:mt-6">
+        {CAREERS.body}
+      </p>
+      {/* `self-start` matters: the copy column is a flex column, so without it
+          the button stretches to the full column width. */}
+      <Button asChild size="lg" className="mt-7 self-start lg:mt-9">
         <Link href={CAREERS.cta.href}>
           {CAREERS.cta.label}
           <ArrowRight
@@ -172,21 +233,15 @@ export function CareersCanvas({ image }: CareersCanvasProps) {
     </>
   );
 
-  // Stacked fallback: no runway, no sticky, no GSAP.
-  if (!scrubbed) {
+  // Reduced motion: no transition at all — the two blocks, laid out plainly.
+  if (prefersReducedMotion) {
     return (
-      <section
-        data-themed=""
-        aria-labelledby="careers-heading"
-        className="py-section"
-      >
+      <section data-themed="" className="py-section">
         <div className="container-wide">
           <div className="relative aspect-video w-full overflow-hidden rounded-xl">
             {media}
           </div>
-          <div id="careers-heading" className="mt-10">
-            {copy}
-          </div>
+          <div className="mt-10">{copy}</div>
         </div>
       </section>
     );
@@ -196,30 +251,30 @@ export function CareersCanvas({ image }: CareersCanvasProps) {
     <section
       ref={sectionRef}
       data-themed=""
-      aria-labelledby="careers-heading"
-      style={{ height: RUNWAY }}
-      className="relative"
+      // One viewport tall and scrolling normally — no runway, no pin.
+      className="relative h-svh overflow-hidden"
     >
-      <div className="sticky top-0 h-svh overflow-hidden">
-        <div className="flex h-full items-center">
-          {/* Opens at 100% x 100% — a full-screen frame — and is scrubbed
-              down to the END geometry. `shrink-0` stops flexbox pre-empting
-              the width GSAP is driving. */}
-          <div
-            ref={mediaRef}
-            className="relative h-full w-full shrink-0 overflow-hidden"
-          >
-            {media}
-          </div>
+      {/* Opens filling the whole frame and is scrubbed down to END. Absolute,
+          so resizing it reflows nothing around it. */}
+      <div
+        ref={mediaRef}
+        className="absolute top-0 left-0 h-full w-full overflow-hidden"
+      >
+        {media}
+      </div>
 
-          <div
-            ref={copyRef}
-            id="careers-heading"
-            className={cn("min-w-0 flex-1 px-gutter", "lg:pr-[max(var(--spacing-gutter),4vw)]")}
-          >
-            {copy}
-          </div>
-        </div>
+      {/* Sits where the panel will not be: the right half on desktop, the
+          lower half on mobile. */}
+      <div
+        ref={copyRef}
+        className={[
+          "px-gutter absolute flex flex-col justify-center",
+          "inset-x-0 bottom-0 h-[52%]",
+          "lg:inset-y-0 lg:right-0 lg:left-[49%] lg:h-auto",
+          "lg:pr-[max(var(--spacing-gutter),4vw)] lg:pl-[max(var(--spacing-gutter),3vw)]",
+        ].join(" ")}
+      >
+        {copy}
       </div>
     </section>
   );

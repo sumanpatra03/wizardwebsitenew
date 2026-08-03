@@ -8,7 +8,7 @@ export const HERO = {
   eyebrow: "Technology & Strategic Consulting",
   headline: SITE.tagline,
   subheadline:
-    "With over 16 years of experience, Wizard empowers businesses to build exceptional products. Whether for your users or customers, our innovative solutions are designed to deliver outstanding results.",
+    "With over 22 years of experience, Wizard empowers businesses to build exceptional products. Whether for your users or customers, our innovative solutions are designed to deliver outstanding results.",
   primaryCta: { label: "Get in Touch", href: "/contact" },
   secondaryCta: { label: "All Projects", href: "/projects" },
 } as const;
@@ -17,7 +17,7 @@ export const INTRO_STATEMENT = {
   eyebrow: "Who We Are",
   statement: SITE.description,
   supporting:
-    "We help businesses grow by turning complex technology into simple, powerful solutions — for enterprises, government, education, healthcare, startups and global brands.",
+    "",
 } as const;
 
 export const CTA_BAND = {
@@ -34,12 +34,12 @@ export const SECTION_COPY = {
   },
   projects: {
     eyebrow: "Our Work",
-    title: "Selected projects.",
+    title: "Proof,not promises.",
     cta: { label: "All Projects", href: "/projects" },
   },
   products: {
     eyebrow: "Our Products",
-    title: "Platforms we built, ready for your business.",
+    title: "Ready to run, day one.",
     cta: { label: "Explore Products", href: "/products" },
   },
   testimonials: {
