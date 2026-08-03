@@ -53,6 +53,28 @@ export function organizationJsonLd() {
   };
 }
 
+/**
+ * BreadcrumbList for an inner page.
+ *
+ * Mirrors the visible `<Breadcrumb>` exactly — search engines penalise
+ * structured data that describes something the page does not show, so both
+ * should be fed the same array.
+ */
+export function breadcrumbJsonLd(
+  crumbs: readonly { label: string; href?: string }[],
+) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: crumbs.map((crumb, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: crumb.label,
+      ...(crumb.href ? { item: new URL(crumb.href, siteUrl).toString() } : {}),
+    })),
+  };
+}
+
 export function websiteJsonLd() {
   return {
     "@context": "https://schema.org",

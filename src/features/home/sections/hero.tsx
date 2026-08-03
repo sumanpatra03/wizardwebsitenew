@@ -31,7 +31,11 @@ export function Hero() {
   return (
     <section
       data-themed=""
-      className="relative isolate flex min-h-[92svh] items-center overflow-hidden bg-bg pt-header pb-16 sm:pb-20 lg:min-h-svh"
+      // The height is capped as well as proportional. A plain `min-h-svh`
+      // means a 1440px-tall monitor gets a 1440px hero for ~500px of content,
+      // which reads as the page having lost its contents. 64rem keeps it
+      // full-bleed on laptops and stops it stretching past that.
+      className="relative isolate flex min-h-[92svh] items-center overflow-hidden bg-bg pt-header pb-16 sm:pb-20 lg:min-h-[min(100svh,64rem)]"
     >
       <HeroBackdrop />
 

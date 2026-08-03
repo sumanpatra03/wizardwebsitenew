@@ -1,10 +1,26 @@
 import type { Stat } from "@/types/content";
 
-/** Headline figures published on wizardcomm.net's About page. */
+/** Headline figures, with the supporting line shown beneath each. */
 export const STATS: readonly Stat[] = [
-  { value: 22, suffix: "+", label: "Years In The Business" },
-  { value: 200, suffix: "+", label: "Successful Projects" },
-  { value: 150, suffix: "+", label: "Happy Customers" },
+  {
+    value: 22,
+    suffix: "yrs",
+    label: "Years In The Business",
+    description: "Building since 2004, through every platform shift, still shipping.",
+  },
+  {
+    value: 200,
+    suffix: "+",
+    label: "Successful Projects",
+    description: "Projects delivered across corporate, government and startups.",
+  },
+  {
+    value: 150,
+    suffix: "+",
+    label: "Happy Customers",
+    description:
+      "Live websites in production, from single-page brands to platforms.",
+  },
 ] as const;
 
 /** Supporting line beneath the stats band. */

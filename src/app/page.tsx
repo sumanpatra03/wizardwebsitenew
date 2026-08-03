@@ -4,7 +4,6 @@ import { ProjectsSkeleton, TestimonialsSkeleton } from "@/features/home/skeleton
 import { Careers } from "@/features/home/sections/careers";
 import { CtaBand } from "@/features/home/sections/cta-band";
 import { Hero } from "@/features/home/sections/hero";
-import { Industries } from "@/features/home/sections/industries";
 import { IntroStatement } from "@/features/home/sections/intro-statement";
 import { ProductsSection } from "@/features/home/sections/products-section";
 import { ServicesGrid } from "@/features/home/sections/services-grid";

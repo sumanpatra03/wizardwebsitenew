@@ -65,8 +65,13 @@ export type Product = {
 export type Stat = {
   /** Numeric target for the count-up animation. */
   value: number;
+  /** Rendered straight after the figure, e.g. "+" or "yrs". */
   suffix: string;
+  /** Short name. Used as the React key and to caption the figure for
+   *  assistive tech — not rendered on its own. */
   label: string;
+  /** The sentence shown beneath the figure. */
+  description: string;
 };
 
 export type Testimonial = {

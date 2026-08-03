@@ -20,17 +20,25 @@ export function IntroStatement() {
           </p>
         </Reveal>
 
+        {/* No `max-w` cap: the statement is meant to run the full width of
+            the content column so it reads as three long lines rather than a
+            narrow seven-line block. */}
         <TextReveal
           as="p"
           text={INTRO_STATEMENT.statement}
-          className="font-display text-display-lg max-w-5xl text-fg"
+          className="font-display text-display-md lg:text-display-lg text-fg"
         />
 
-        <Reveal delay={0.15}>
-          <p className="text-body-lg mt-10 max-w-2xl text-fg-muted">
-            {INTRO_STATEMENT.supporting}
-          </p>
-        </Reveal>
+        {/* Only rendered when there is copy for it. An empty string still
+            produced a paragraph carrying `mt-10` and a line box, which read
+            as an unexplained gap under the statement. */}
+        {INTRO_STATEMENT.supporting ? (
+          <Reveal delay={0.15}>
+            <p className="text-body-lg mt-10 max-w-2xl text-fg-muted">
+              {INTRO_STATEMENT.supporting}
+            </p>
+          </Reveal>
+        ) : null}
       </Container>
     </Section>
   );

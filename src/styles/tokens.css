@@ -115,8 +115,19 @@
   --container-wide: 96rem; /* 1536px */
 
   --spacing-gutter: clamp(1.25rem, 0.9rem + 1.75vw, 3rem);
-  --spacing-section: clamp(4rem, 10vw, 9rem);
-  --spacing-section-sm: clamp(2.5rem, 6vw, 5rem);
+  /**
+   * Vertical rhythm.
+   *
+   * Applied top *and* bottom, so the cap is half the gap between any two
+   * adjacent sections. At the old 9rem that meant 288px of dead space between
+   * every section on a desktop — enough that sections stopped reading as
+   * related. 7rem brings it to 224px.
+   *
+   * The 4rem floor is deliberately unchanged: phones already hit it (8vw of a
+   * 390px screen is 31px), so this retunes large screens only.
+   */
+  --spacing-section: clamp(4rem, 8vw, 7rem);
+  --spacing-section-sm: clamp(2.5rem, 5vw, 4rem);
   --spacing-header: 4.5rem;
 
   /* Ultra-wide tier on top of Tailwind's defaults (sm..2xl). */
@@ -232,6 +243,37 @@
   }
   to {
     opacity: 0;
+  }
+}
+
+/**
+ * Ultra-wide container widths.
+ *
+ * The 1280/1536 caps are right up to roughly 1600px, where content still
+ * fills the screen — at 1440px the wide container sits 5px from each edge.
+ * Past that the page strands itself in the middle: measured at 2560px, the
+ * wide container was 1536px across with **512px of dead margin either side**,
+ * and most sections use the narrower `content` cap, leaving 640px.
+ *
+ * The targets below come from measuring Website A at 2560px, where its
+ * dominant content width is 1920px (320px side gap) with secondary tiers
+ * around 1707px. These land in the same place.
+ *
+ * Media queries rather than a clamp: the caps should hold flat across the
+ * common laptop range and only start growing once there is genuinely surplus
+ * width, which a continuous function would not do.
+ */
+@media (min-width: 1600px) {
+  :root {
+    --container-content: 88rem; /* 1408px */
+    --container-wide: 104rem; /* 1664px */
+  }
+}
+
+@media (min-width: 1920px) {
+  :root {
+    --container-content: 106rem; /* 1696px */
+    --container-wide: 120rem; /* 1920px */
   }
 }
 

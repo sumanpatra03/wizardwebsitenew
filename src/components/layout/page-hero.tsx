@@ -1,0 +1,89 @@
+import type { ReactNode } from "react";
+
+import { Breadcrumb, type Crumb } from "@/components/common/breadcrumb";
+import { Container } from "@/components/layout/container";
+import { Reveal } from "@/components/motion/reveal";
+import { MaskReveal } from "@/components/motion/text-reveal";
+import { cn } from "@/lib/utils";
+
+type PageHeroProps = {
+  crumbs: readonly Crumb[];
+  eyebrow: string;
+  /** Split across lines; each becomes one masked line of the reveal. */
+  titleLines: readonly string[];
+  lead?: string;
+  children?: ReactNode;
+  className?: string;
+};
+
+/**
+ * Opening block for inner pages.
+ *
+ * Deliberately shorter than the home hero — an inner page's job is to get to
+ * its content, not to fill a viewport. It carries the page's single `<h1>`,
+ * so no section beneath it should use one.
+ *
+ * `bg-bg` is load-bearing here for the same reason it is on the home hero: it
+ * hides the fixed `PageBackdrop` so this block shows only its own grid rather
+ * than two stacked on top of each other.
+ */
+export function PageHero({
+  crumbs,
+  eyebrow,
+  titleLines,
+  lead,
+  children,
+  className,
+}: PageHeroProps) {
+  return (
+    <section
+      data-themed=""
+      className={cn(
+        "relative isolate overflow-hidden bg-bg pt-header",
+        "pb-section-sm",
+        className,
+      )}
+    >
+      <div
+        aria-hidden="true"
+        className="bg-mesh pointer-events-none absolute inset-0 opacity-70"
+      />
+      <div
+        aria-hidden="true"
+        className="bg-grid mask-fade-y pointer-events-none absolute inset-0"
+      />
+
+      {/* `content`, not `wide`: every section beneath an inner page uses the
+          content container, and a wider hero left the breadcrumb and heading
+          hanging 80px to the left of everything below them. */}
+      <Container className="relative pt-12 sm:pt-16">
+        <Reveal direction="none">
+          <Breadcrumb items={crumbs} />
+        </Reveal>
+
+        <Reveal delay={0.08}>
+          <p className="text-label mt-8 uppercase text-accent">{eyebrow}</p>
+        </Reveal>
+
+        <MaskReveal
+          as="h1"
+          lines={titleLines}
+          delay={0.16}
+          className="text-display-xl mt-5 max-w-5xl text-fg"
+        />
+
+        {lead ? (
+          <Reveal delay={0.34}>
+            <p className="text-body-lg mt-7 max-w-2xl text-fg-muted">{lead}</p>
+          </Reveal>
+        ) : null}
+
+        {children ? (
+          <Reveal delay={0.42}>
+            <div className="mt-10">{children}</div>
+          </Reveal>
+        ) : null}
+      </Container>
+    </section>
+  );
+}

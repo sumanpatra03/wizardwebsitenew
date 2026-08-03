@@ -8,9 +8,30 @@ export const SITE = {
   shortName: "Wizard",
   tagline: "Digital & Beyond",
   secondaryTagline: "Future Ready Technology, Built for You",
+  /** On-page positioning copy — read by humans, on the site itself. */
   description:
-    "Anyone can write code. Anyone can launch a campaign. We exist for the harder part: solving real business problems with technology that keeps paying off long after launch.",
-  
+    "Your catalyst for digital transformation. Start your journey with us today.",
+  /**
+   * Search-result copy — read by crawlers, in the SERP.
+   *
+   * Deliberately a separate string from `description`: this one has to lead
+   * with what the company does and where, inside ~155 characters, which is a
+   * different job from the brand line above. Consumed by `lib/seo.ts`,
+   * `app/layout.tsx` and the JSON-LD.
+   */
+  metaDescription:
+    "Wizard Communications is a Kolkata-based technology and strategic consulting partner delivering custom software, AI, cloud, security and digital transformation services.",
+
+  /**
+   * Feeds `foundingDate` in the Organization JSON-LD.
+   *
+   * 2004 is the year wizardcomm.net's About timeline gives for the company
+   * being established. Note the stats now say "22+ years", which implies 2003
+   * or earlier — worth reconciling, since this value is the one search engines
+   * read.
+   */
+  foundedYear: 2004,
+
   url: "https://www.wizardcomm.net",
   locale: "en_IN",
 
@@ -29,8 +50,7 @@ export const SITE = {
   },
 
   social: {
-    linkedin:
-      "https://www.linkedin.com/company/wizard-communications-pvt.-ltd.",
+    linkedin: "https://www.linkedin.com/company/wizard-communications-pvt.-ltd.",
     facebook: "https://www.facebook.com/wizardcommunications/",
     instagram: "https://www.instagram.com/wizard_communication/",
   },
