@@ -73,7 +73,7 @@ export default function WhyWizardPage() {
       </PageHero>
 
       {/* Beyond deliverables */}
-      <Section tone="subtle" className="border-y border-border">
+      <Section tone="subtle" backdrop className="border-y border-border">
         <Container>
           <div className="grid gap-12 lg:grid-cols-12 lg:gap-12">
             <Reveal className="lg:col-span-5">
@@ -140,7 +140,7 @@ export default function WhyWizardPage() {
       </Section>
 
       {/* End-to-end expertise */}
-      <Section tone="subtle" className="border-y border-border">
+      <Section tone="subtle" backdrop className="border-y border-border">
         <Container>
           <SectionHeading
             eyebrow="End-to-End Expertise"
@@ -268,7 +268,7 @@ export default function WhyWizardPage() {
       </Section>
 
       {/* Featured clients */}
-      <Section tone="subtle" className="border-y border-border">
+      <Section tone="subtle" backdrop className="border-y border-border">
         <Container>
           <SectionHeading
             eyebrow={CLIENTS_COPY.eyebrow}

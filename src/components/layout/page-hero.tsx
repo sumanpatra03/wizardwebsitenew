@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 
 import { Breadcrumb, type Crumb } from "@/components/common/breadcrumb";
 import { Container } from "@/components/layout/container";
+import { GridBeams } from "@/components/motion/grid-beams";
 import { Reveal } from "@/components/motion/reveal";
 import { MaskReveal } from "@/components/motion/text-reveal";
 import { cn } from "@/lib/utils";
@@ -48,10 +49,18 @@ export function PageHero({
         aria-hidden="true"
         className="bg-mesh pointer-events-none absolute inset-0 opacity-70"
       />
+
+      {/* Grid and beams share one masked, clipped layer — the same treatment
+          the home hero uses. This section sets `bg-bg` to hide the fixed
+          PageBackdrop (otherwise two grids stack), which also hid its beams,
+          so it has to carry its own. */}
       <div
         aria-hidden="true"
-        className="bg-grid mask-fade-y pointer-events-none absolute inset-0"
-      />
+        className="mask-fade-y pointer-events-none absolute inset-0 overflow-hidden"
+      >
+        <div className="bg-grid absolute inset-0" />
+        <GridBeams />
+      </div>
 
       {/* `content`, not `wide`: every section beneath an inner page uses the
           content container, and a wider hero left the breadcrumb and heading

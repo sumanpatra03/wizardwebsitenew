@@ -1,9 +1,9 @@
-import { ArrowRight, Check, Quote } from "lucide-react";
-import Image from "next/image";
+import { ArrowRight, Check } from "lucide-react";
 import Link from "next/link";
 
 import { ClientWall } from "@/components/common/client-wall";
 import { JsonLd } from "@/components/common/json-ld";
+import { TestimonialsCarousel } from "@/components/common/testimonials-carousel";
 import { Container } from "@/components/layout/container";
 import { PageHero } from "@/components/layout/page-hero";
 import { Section } from "@/components/layout/section";
@@ -18,7 +18,7 @@ import {
 } from "@/constants/company";
 import { SITE } from "@/constants/site";
 import { TECH_CATEGORIES } from "@/constants/tech-stack";
-import { TESTIMONIALS, TESTIMONIALS_HEADING } from "@/constants/testimonials";
+import { TESTIMONIALS_HEADING } from "@/constants/testimonials";
 import { CtaBand } from "@/features/home/sections/cta-band";
 import { breadcrumbJsonLd } from "@/lib/jsonld";
 import { buildMetadata } from "@/lib/seo";
@@ -47,7 +47,7 @@ export default function WorkWithUsPage() {
       />
 
       {/* Engagement models */}
-      <Section tone="subtle" className="border-y border-border">
+      <Section tone="subtle" backdrop className="border-y border-border">
         <Container>
           <SectionHeading
             eyebrow="How It Works"
@@ -177,7 +177,7 @@ export default function WorkWithUsPage() {
       </Section>
 
       {/* Featured clients */}
-      <Section tone="subtle" className="border-y border-border">
+      <Section tone="subtle" backdrop className="border-y border-border">
         <Container>
           <SectionHeading
             eyebrow={CLIENTS_COPY.eyebrow}
@@ -188,51 +188,12 @@ export default function WorkWithUsPage() {
         </Container>
       </Section>
 
-      {/* Testimonials */}
-      <Section>
-        <Container>
-          <SectionHeading eyebrow="Client Voices" title={TESTIMONIALS_HEADING} />
-
-          <Stagger stagger={0.08} className="mt-14 grid gap-5 md:grid-cols-2">
-            {TESTIMONIALS.map((testimonial) => (
-              <StaggerItem key={testimonial.author}>
-                <figure className="flex h-full flex-col rounded-xl border border-border bg-surface p-7 sm:p-8">
-                  <Quote
-                    aria-hidden="true"
-                    className="size-8 shrink-0 text-accent/35"
-                  />
-                  <blockquote className="text-body-base mt-5 flex-1 text-fg">
-                    {testimonial.quote}
-                  </blockquote>
-
-                  <figcaption className="mt-7 flex items-center gap-4 border-t border-border pt-5">
-                    {testimonial.avatar ? (
-                      <Image
-                        src={testimonial.avatar}
-                        alt=""
-                        width={48}
-                        height={48}
-                        className="size-12 shrink-0 rounded-pill border border-border object-cover"
-                      />
-                    ) : null}
-                    <span className="min-w-0">
-                      <span className="text-body-sm block font-semibold text-fg">
-                        {testimonial.author}
-                      </span>
-                      <span className="text-body-sm mt-0.5 block text-fg-muted">
-                        {[testimonial.role, testimonial.organization]
-                          .filter(Boolean)
-                          .join(", ")}
-                        {testimonial.location ? ` — ${testimonial.location}` : ""}
-                      </span>
-                    </span>
-                  </figcaption>
-                </figure>
-              </StaggerItem>
-            ))}
-          </Stagger>
-        </Container>
-      </Section>
+      {/* Testimonials — the same carousel the home page uses. */}
+      <TestimonialsCarousel
+        eyebrow="Client Voices"
+        title={TESTIMONIALS_HEADING}
+        tone="default"
+      />
 
       <CtaBand />
 
