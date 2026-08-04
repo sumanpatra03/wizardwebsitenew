@@ -64,6 +64,7 @@ const twMerge = extendTailwindMerge({
         "overlay-out",
         "beam-x",
         "beam-y",
+        "rise-in",
       ],
       font: ["display", "sans", "mono"],
     },

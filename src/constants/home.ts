@@ -17,7 +17,7 @@ export const INTRO_STATEMENT = {
   eyebrow: "Who We Are",
   statement: SITE.description,
   supporting:
-    "",
+    "Wizard Communication is a trusted global partner in technology and strategic consulting, delivering end to end IT services and digital transformation solutions. We collaborate with organizations to tackle complex business challenges through forward thinking innovation, disciplined development practices, and data driven insights. Our team empowers clients to design and implement impactful digital solutions that align with their goals, leveraging the right technologies and proven industry standards. With a focus on customization and scalability, we craft technology and business strategies that not only meet immediate needs but also drive sustainable growth for the future.",
 } as const;
 
 export const CTA_BAND = {
