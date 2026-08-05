@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 
 import { PRODUCTS } from "@/constants/products";
 import { PROJECTS } from "@/constants/projects";
-import { SERVICES } from "@/constants/services";
+import { SERVICE_PAGES } from "@/constants/service-pages";
 import { siteUrl } from "@/lib/seo";
 
 /**
@@ -27,8 +27,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ] satisfies MetadataRoute.Sitemap
   ).map((entry) => ({ ...entry, lastModified }));
 
+  // `SERVICE_PAGES`, not `SERVICES`: the latter is the home page's card list,
+  // which includes services that have no page of their own — submitting those
+  // URLs would put three 404s in the sitemap.
   const dynamicRoutes: MetadataRoute.Sitemap = [
-    ...SERVICES.map((item) => `/services/${item.slug}`),
+    ...SERVICE_PAGES.map((item) => `/services/${item.slug}`),
     ...PRODUCTS.map((item) => `/products/${item.slug}`),
     ...PROJECTS.map((item) => `/projects/${item.slug}`),
   ].map((path) => ({

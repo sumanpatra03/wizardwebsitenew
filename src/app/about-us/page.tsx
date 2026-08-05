@@ -1,6 +1,7 @@
 import Image from "next/image";
 
 import { ClientWall } from "@/components/common/client-wall";
+import { Gallery } from "@/components/common/gallery";
 import { JsonLd } from "@/components/common/json-ld";
 import { TestimonialsCarousel } from "@/components/common/testimonials-carousel";
 import { Timeline } from "@/components/common/timeline";
@@ -14,6 +15,8 @@ import { Card } from "@/components/ui/card";
 import {
   ABOUT,
   CLIENTS_COPY,
+  GALLERY,
+  GALLERY_COPY,
   GROWTH_PARTNER,
   LEADERSHIP,
   MILESTONES,
@@ -257,6 +260,18 @@ export default function AboutUsPage() {
         </Container>
       </Section>
 
+      {/* Gallery */}
+      <Section>
+        <Container>
+          <SectionHeading
+            eyebrow={GALLERY_COPY.eyebrow}
+            title={GALLERY_COPY.title}
+            description={GALLERY_COPY.body}
+          />
+          <Gallery photos={GALLERY} className="mt-14" />
+        </Container>
+      </Section>
+
       {/* Growth partner */}
       <Section tone="subtle" backdrop className="border-y border-border">
         <Container>
@@ -277,6 +292,26 @@ export default function AboutUsPage() {
                 {GROWTH_PARTNER.emphasis}
               </p>
             </Reveal>
+
+            {/* Partner mark. On a light chip for the same reason the client
+                carousel uses one: the wordmark is black ink on transparency
+                and would vanish on the dark canvas. */}
+            <Reveal delay={0.2}>
+              <span
+                className={cn(
+                  "mt-10 inline-grid h-20 place-items-center rounded-xl",
+                  "bg-white px-8 ring-1 ring-ink-950/8",
+                )}
+              >
+                <Image
+                  src={GROWTH_PARTNER.partner.logo}
+                  alt={GROWTH_PARTNER.partner.name}
+                  width={GROWTH_PARTNER.partner.width}
+                  height={GROWTH_PARTNER.partner.height}
+                  className="h-9 w-auto object-contain"
+                />
+              </span>
+            </Reveal>
           </div>
         </Container>
       </Section>
@@ -289,7 +324,7 @@ export default function AboutUsPage() {
             title="Trusted by corporates and government alike."
             description={CLIENTS_COPY.body}
           />
-          <ClientWall className="mt-14" />
+          <ClientWall variant="carousel" className="mt-14" />
         </Container>
       </Section>
 

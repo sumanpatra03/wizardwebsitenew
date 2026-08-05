@@ -1,4 +1,5 @@
 import { ArrowRight, Check } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 
 import { ClientWall } from "@/components/common/client-wall";
@@ -140,7 +141,28 @@ export default function WhyWizardPage() {
       </Section>
 
       {/* End-to-end expertise */}
-      <Section tone="subtle" backdrop className="border-y border-border">
+      {/* End-to-End Expertise.
+          The growth-chart backdrop from About Us, behind a scrim heavy enough
+          to keep the heading and the card grid at AA. No `backdrop` grid here:
+          the beams and the chart lines read as two competing patterns. */}
+      <Section
+        tone="subtle"
+        className="relative overflow-hidden border-y border-border"
+      >
+        <div aria-hidden="true" className="absolute inset-0 -z-10">
+          <Image
+            src="/about/growth-backdrop.webp"
+            alt=""
+            fill
+            sizes="100vw"
+            className="object-cover object-right"
+          />
+          {/* Flat scrim, not the directional one About Us uses — the cards
+              here run the full width, so no side can be left uncovered. */}
+          <div className="absolute inset-0 bg-bg-subtle/88" />
+          <div className="absolute inset-0 bg-gradient-to-b from-bg-subtle via-transparent to-bg-subtle" />
+        </div>
+
         <Container>
           <SectionHeading
             eyebrow="End-to-End Expertise"
@@ -275,7 +297,7 @@ export default function WhyWizardPage() {
             title="Trusted by corporates and government alike."
             description={CLIENTS_COPY.body}
           />
-          <ClientWall className="mt-14" />
+          <ClientWall variant="carousel" className="mt-14" />
         </Container>
       </Section>
 

@@ -19,7 +19,7 @@ export const STATS: readonly Stat[] = [
     suffix: "+",
     label: "Happy Customers",
     description:
-      "Live websites in production, from single-page brands to platforms.",
+      "Web/Mobile apps and Live websites in production, from single-page brands to platforms.",
   },
 ] as const;
 

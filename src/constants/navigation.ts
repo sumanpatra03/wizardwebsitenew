@@ -86,6 +86,7 @@ export const NAV_ITEMS: readonly NavItem[] = [
       },
     ],
   },
+  { label: "INDUSTRIES", href: "/industries" },
   { label: "PRODUCTS", href: "/products" },
   { label: "PROJECTS", href: "/projects" },
   { label: "CONTACT", href: "/contact" },
@@ -111,9 +112,9 @@ export const FOOTER_COLUMNS: readonly FooterColumn[] = [
       { label: "Software Development", href: "/services/custom-software-development" },
       { label: "Mobile App Development", href: "/services/mobile-app-development" },
       { label: "Artificial Intelligence", href: "/services/artificial-intelligence" },
-      { label: "E-Learning Solutions", href: "/services/e-learning" },
       { label: "Security", href: "/services/security" },
       { label: "Digital Marketing, SEO", href: "/services/digital-marketing" },
+      { label: "On Demand Hiring", href: "/services/on-demand-hiring" },
     ],
   },
   {

@@ -64,7 +64,7 @@ export default async function OpenGraphImage() {
             }}
           >
             Technology and strategic consulting — custom software, AI, cloud and
-            security. 16+ years, 200+ projects.
+            security. 22+ years, 200+ projects.
           </div>
         </div>
 

@@ -14,6 +14,12 @@ type PageHeroProps = {
   titleLines: readonly string[];
   lead?: string;
   children?: ReactNode;
+  /**
+   * Content for a second column beside the heading, from `lg` up — artwork,
+   * usually. Below `lg` it drops beneath the copy, since there is no room to
+   * put anything alongside it.
+   */
+  aside?: ReactNode;
   className?: string;
 };
 
@@ -34,6 +40,7 @@ export function PageHero({
   titleLines,
   lead,
   children,
+  aside,
   className,
 }: PageHeroProps) {
   return (
@@ -66,32 +73,71 @@ export function PageHero({
           content container, and a wider hero left the breadcrumb and heading
           hanging 80px to the left of everything below them. */}
       <Container className="relative pt-12 sm:pt-16">
+        {/* The breadcrumb stays full width whatever the layout below it —
+            indenting it into a column would break the left alignment it
+            shares with every section further down the page. */}
         <Reveal direction="none">
           <Breadcrumb items={crumbs} />
         </Reveal>
 
-        <Reveal delay={0.08}>
-          <p className="text-label mt-8 uppercase text-accent">{eyebrow}</p>
-        </Reveal>
+        <div
+          className={cn(
+            // Artwork takes the larger share. `minmax(0,…)` on both tracks,
+            // not a bare fraction: a grid column's default `auto` minimum
+            // refuses to shrink below its content, which lets a long
+            // unbroken word in the heading push the whole row wider than the
+            // container.
+            //
+            // Top-aligned, not centred: centring floated the artwork against
+            // a much taller column of copy, so it lined up with nothing. Its
+            // top edge now sits on the same line the eyebrow starts on.
+            aside &&
+              "grid items-start gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)] lg:gap-14",
+          )}
+        >
+          <div>
+            <Reveal delay={0.08}>
+              <p className="text-label mt-8 uppercase text-accent">{eyebrow}</p>
+            </Reveal>
 
-        <MaskReveal
-          as="h1"
-          lines={titleLines}
-          delay={0.16}
-          className="text-display-xl mt-5 max-w-5xl text-fg"
-        />
+            <MaskReveal
+              as="h1"
+              lines={titleLines}
+              delay={0.16}
+              className={cn(
+                "mt-5 max-w-5xl text-fg",
+                // One step down beside artwork. `display-xl` caps at 80px,
+                // which is sized for the full container width — in half of it
+                // a two-line title breaks to four and towers over everything
+                // it is meant to sit level with.
+                aside ? "text-display-lg" : "text-display-xl",
+              )}
+            />
 
-        {lead ? (
-          <Reveal delay={0.34}>
-            <p className="text-body-lg mt-7 max-w-2xl text-fg-muted">{lead}</p>
-          </Reveal>
-        ) : null}
+            {lead ? (
+              <Reveal delay={0.34}>
+                <p className="text-body-lg mt-7 max-w-2xl text-fg-muted">
+                  {lead}
+                </p>
+              </Reveal>
+            ) : null}
 
-        {children ? (
-          <Reveal delay={0.42}>
-            <div className="mt-10">{children}</div>
-          </Reveal>
-        ) : null}
+            {children ? (
+              <Reveal delay={0.42}>
+                <div className="mt-10">{children}</div>
+              </Reveal>
+            ) : null}
+          </div>
+
+          {aside ? (
+            // `lg:mt-8` is the eyebrow's own top margin, repeated here so the
+            // two columns share a top edge rather than one starting eight
+            // units above the other.
+            <Reveal delay={0.3} direction="right" className="lg:mt-8">
+              {aside}
+            </Reveal>
+          ) : null}
+        </div>
       </Container>
     </section>
   );

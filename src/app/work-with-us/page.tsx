@@ -184,7 +184,7 @@ export default function WorkWithUsPage() {
             title="Trusted by corporates and government alike."
             description={CLIENTS_COPY.body}
           />
-          <ClientWall className="mt-14" />
+          <ClientWall variant="carousel" className="mt-14" />
         </Container>
       </Section>
 

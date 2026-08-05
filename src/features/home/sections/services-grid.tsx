@@ -7,6 +7,7 @@ import { Section } from "@/components/layout/section";
 import { SectionHeading } from "@/components/layout/section-heading";
 import { Stagger, StaggerItem } from "@/components/motion/reveal";
 import { SECTION_COPY } from "@/constants/home";
+import { serviceHref } from "@/constants/service-pages";
 import { SERVICES } from "@/constants/services";
 import { findPublicImage } from "@/lib/public-image";
 import { cn } from "@/lib/utils";
@@ -197,7 +198,7 @@ export function ServicesGrid() {
                        * near-identical links each lead.
                        */}
                       <Link
-                        href={`/services/${service.slug}`}
+                        href={serviceHref(service.slug)}
                         aria-label={`Explore ${service.title}`}
                         className={cn(
                           "text-body-sm mt-5 flex items-center justify-between",

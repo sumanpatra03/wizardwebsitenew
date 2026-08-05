@@ -2,7 +2,12 @@
   "permissions": {
     "allow": [
       "PowerShell($c = Get-NetTCPConnection -LocalPort 3100 -State Listen -ErrorAction SilentlyContinue; if \\($c\\) { $c | ForEach-Object { Stop-Process -Id $_.OwningProcess -Force -ErrorAction SilentlyContinue } }; cd \"c:\\\\Users\\\\suman\\\\Desktop\\\\office\\\\wizard\"; npm run build 2>&1 | Select-Object -Last 3; npx eslint src --max-warnings=0; if \\($?\\) { \"ESLINT CLEAN\" })",
-      "PowerShell($c = Get-NetTCPConnection -LocalPort 3100 -State Listen -ErrorAction SilentlyContinue; if \\($c\\) { $c | ForEach-Object { Stop-Process -Id $_.OwningProcess -Force -ErrorAction SilentlyContinue } }; cd \"c:\\\\Users\\\\suman\\\\Desktop\\\\office\\\\wizard\"; npm run build 2>&1 | Select-Object -Last 4; npx eslint src --max-warnings=0; if \\($?\\) { \"ESLINT CLEAN\" })"
+      "PowerShell($c = Get-NetTCPConnection -LocalPort 3100 -State Listen -ErrorAction SilentlyContinue; if \\($c\\) { $c | ForEach-Object { Stop-Process -Id $_.OwningProcess -Force -ErrorAction SilentlyContinue } }; cd \"c:\\\\Users\\\\suman\\\\Desktop\\\\office\\\\wizard\"; npm run build 2>&1 | Select-Object -Last 4; npx eslint src --max-warnings=0; if \\($?\\) { \"ESLINT CLEAN\" })",
+      "Bash(curl -sS -f -A \"Mozilla/5.0\" -o /tmp/csd.jpg \"https://www.flexsin.com/blog/wp-content/uploads/2019/12/Custom-Software-Development.jpg\")",
+      "Bash(curl -sS -L -A \"Mozilla/5.0 \\(Windows NT 10.0; Win64; x64\\)\" -w \"http=%{http_code} type=%{content_type} size=%{size_download}\\\\n\" -o public/services/hero/custom-software-development-alt.jpg \"https://www.flexsin.com/blog/wp-content/uploads/2019/12/Custom-Software-Development.jpg\")",
+      "Bash(git mv *)",
+      "Bash(mv \"public/services/hero/Hero_growth.png\" \"public/services/hero/hero_growth_tmp.png\")",
+      "Bash(mv \"public/services/hero/hero_growth_tmp.png\" \"public/services/hero/hero_growth.png\")"
     ]
   }
 }

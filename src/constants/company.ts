@@ -32,7 +32,7 @@ export const STORY = {
   title: "In 2004, we started with a simple belief:",
   paragraphs: [
     "What began as a small team of passionate thinkers, creators, and technologists has grown into a trusted digital transformation partner serving businesses, enterprises, government organizations, educational institutions, healthcare providers, startups, and global brands.",
-    "Over the last 16+ years, we have delivered more than 200 successful projects and earned the trust of 100+ clients across industries and geographies. But numbers only tell part of the story. The real measure of our success lies in the relationships we've built, the challenges we've solved, and the growth we've helped create.",
+    "Over the last 22+ years, we have delivered more than 200 successful projects and earned the trust of 100+ clients across industries and geographies. But numbers only tell part of the story. The real measure of our success lies in the relationships we've built, the challenges we've solved, and the growth we've helped create.",
   ],
 } as const;
 
@@ -199,7 +199,87 @@ export const GROWTH_PARTNER = {
   title: "Better Together. Built for What's Next.",
   body: "We bring together strategy, creativity, technology, and marketing to help businesses innovate, scale, and stay ahead. Working as an extension of your team, we transform ambitious ideas into measurable business results.",
   emphasis: "Your vision. Our expertise. Shared success.",
+  /** The partner mark this section carries on the live site. */
+  partner: {
+    name: "Webgiginfo",
+    logo: "/about/webgig-info-logo.png",
+    width: 300,
+    height: 58,
+  },
 } as const;
+
+/* ------------------------------------------------------------------ */
+/* Gallery                                                             */
+/* ------------------------------------------------------------------ */
+
+export const GALLERY_COPY = {
+  eyebrow: "Gallery",
+  title: "The moments between the milestones.",
+  body: "Pujas, picnics, birthdays and the odd trip out of the city — twenty-two years of the people behind the work.",
+} as const;
+
+/**
+ * Office gallery, in the order the live site publishes it.
+ *
+ * Intrinsic dimensions are recorded per photo because the grid is a masonry
+ * layout: it lays each image out at its natural ratio rather than cropping
+ * everything to a common box, so the ratios have to be known up front to
+ * reserve the right space and avoid a layout shift on load.
+ */
+export const GALLERY = [
+  {
+    src: "/gallery/puja-lunch-2024-a.jpg",
+    caption: "2024 Puja lunch with the team",
+    width: 960,
+    height: 1280,
+  },
+  {
+    src: "/gallery/puja-lunch-2024-b.jpg",
+    caption: "2024 Puja lunch with the team",
+    width: 1280,
+    height: 960,
+  },
+  {
+    src: "/gallery/santiniketan-trip-2021.jpg",
+    caption: "2021 Santiniketan trip with our office family",
+    width: 1024,
+    height: 768,
+  },
+  {
+    src: "/gallery/santiniketan-picnic-2021.jpg",
+    caption:
+      "2021 Office employees with their families — Santiniketan picnic",
+    width: 1024,
+    height: 768,
+  },
+  {
+    src: "/gallery/client-lunch-2021.jpg",
+    caption: "2021 Team lunch with our valued client",
+    width: 1032,
+    height: 774,
+  },
+  {
+    src: "/gallery/birthday-client-2021.jpg",
+    caption:
+      "2021 Celebrating our team member's birthday with a valued client",
+    width: 1280,
+    height: 720,
+  },
+  {
+    src: "/gallery/team-client-group-2021.jpg",
+    caption: "2021 Team group photo with our esteemed client",
+    width: 1024,
+    height: 768,
+  },
+  {
+    src: "/gallery/office-picnic-2026.jpg",
+    caption: "2026 Team outing — office picnic",
+    width: 2560,
+    height: 1920,
+  },
+] as const;
+
+export type GalleryPhoto = (typeof GALLERY)[number];
 
 /* ------------------------------------------------------------------ */
 /* Clients                                                             */
@@ -207,7 +287,7 @@ export const GROWTH_PARTNER = {
 
 export const CLIENTS_COPY = {
   eyebrow: "Featured Clients",
-  body: "We are proud to have 200+ satisfied clients from across the world and industries. From corporates to the government, we are the secret behind the success of countless agencies for 16 years.",
+  body: "We are proud to have 200+ satisfied clients from across the world and industries. From corporates to the government, we are the secret behind the success of countless agencies for 22 years.",
 } as const;
 
 /**
@@ -241,7 +321,7 @@ export const WHY_WIZARD_PAGE = {
   eyebrow: "Why Wizard",
   titleLines: ["Because Growth Doesn't", "Happen by Accident."],
   lead: "It happens when strategy, creativity, technology, and ambition work together.",
-  body: "For 16+ years, we've helped organizations transform ideas into experiences, experiences into engagement, and engagement into measurable business growth.",
+  body: "For 22+ years, we've helped organizations transform ideas into experiences, experiences into engagement, and engagement into measurable business growth.",
   emphasis: "Built for today. Ready for what's next.",
   cta: { label: "Let's Talk", href: "/contact" },
 } as const;
