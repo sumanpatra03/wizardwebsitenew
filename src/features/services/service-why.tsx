@@ -19,12 +19,15 @@ import { SectionBackdrop } from "./section-backdrop";
  */
 export function ServiceWhy({
   heading,
+  eyebrow = "Why Wizard",
   lead,
   items,
   backdrop,
   tone = "subtle",
 }: {
   heading: string;
+  /** Section kicker. Defaults to the services wording. */
+  eyebrow?: string;
   lead?: string;
   items: readonly ServiceItem[];
   /** Photograph behind the section, in place of the blueprint grid. */
@@ -45,7 +48,7 @@ export function ServiceWhy({
       {backdrop ? <SectionBackdrop src={backdrop} tone={tone} /> : null}
 
       <Container>
-        <SectionHeading eyebrow="Why Wizard" title={heading} description={lead} />
+        <SectionHeading eyebrow={eyebrow} title={heading} description={lead} />
 
         <Stagger
           stagger={0.06}

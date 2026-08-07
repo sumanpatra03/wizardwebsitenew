@@ -21,11 +21,14 @@ import { cn } from "@/lib/utils";
  */
 export function ServiceFeatures({
   heading,
+  eyebrow = "In detail",
   lead,
   items,
   tone = "default",
 }: {
   heading: string;
+  /** Section kicker. Defaults to the services wording. */
+  eyebrow?: string;
   lead?: string;
   items: readonly ServiceFeature[];
   tone?: "default" | "subtle";
@@ -37,7 +40,7 @@ export function ServiceFeatures({
       className={tone === "subtle" ? "border-y border-border" : undefined}
     >
       <Container>
-        <SectionHeading eyebrow="In detail" title={heading} description={lead} />
+        <SectionHeading eyebrow={eyebrow} title={heading} description={lead} />
 
         <div className="mt-16 flex flex-col gap-16 lg:gap-24">
           {items.map((item, index) => {

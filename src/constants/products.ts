@@ -6,6 +6,7 @@ import type { Product } from "@/types/content";
 export const PRODUCTS: readonly Product[] = [
   {
     slug: "smart-commerce-suite",
+    image: "/products/smart-commerce-suite.webp",
     name: "Smart Commerce Management Suite",
     tagline: "All-in-one commerce operations",
     description:
@@ -20,6 +21,7 @@ export const PRODUCTS: readonly Product[] = [
   },
   {
     slug: "smart-asset-management",
+    image: "/products/smart-asset-management.webp",
     name: "Smart Asset Management Software",
     tagline: "Track every asset, end to end",
     description:
@@ -35,6 +37,7 @@ export const PRODUCTS: readonly Product[] = [
   },
   {
     slug: "smart-restaurant-management",
+    image: "/products/smart-restaurant-management.webp",
     name: "Smart Restaurant Management Software",
     tagline: "Run the whole back of house",
     description:
@@ -49,6 +52,7 @@ export const PRODUCTS: readonly Product[] = [
   },
   {
     slug: "smart-restaurant-pos",
+    image: "/products/smart-restaurant-pos.webp",
     name: "Smart Restaurant POS System",
     tagline: "Fast, reliable front of house",
     description:

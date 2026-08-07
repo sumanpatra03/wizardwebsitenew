@@ -49,6 +49,30 @@ export type Project = {
   description: string;
   /** Two-letter monogram used by the generative card artwork. */
   monogram: string;
+  /**
+   * Card image, as published on wizardcomm.net.
+   *
+   * An explicit path rather than the `findPublicImage` drop-in convention the
+   * service cards use: `ProjectCard` is rendered inside the GSAP-driven rail,
+   * which is a Client Component, and that lookup is server-only.
+   *
+   * Optional — a project without one keeps the generated monogram panel, so
+   * the rail is never half-broken while images are still being supplied.
+   */
+  image?: string;
+  /** The client's own site, where the live portfolio links straight out. */
+  externalUrl?: string;
+  /**
+   * Extra shots the live site opens in a modal. Intrinsic dimensions are
+   * recorded because `<Gallery>` lays these out as masonry and needs the
+   * ratios up front to reserve space.
+   */
+  gallery?: readonly {
+    src: string;
+    caption: string;
+    width: number;
+    height: number;
+  }[];
   tags: readonly string[];
 };
 
@@ -60,6 +84,8 @@ export type Product = {
   icon: LucideIcon;
   features: readonly string[];
   externalUrl?: string;
+  /** Card and hero artwork, as published on wizardcomm.net. */
+  image: string;
 };
 
 export type Stat = {

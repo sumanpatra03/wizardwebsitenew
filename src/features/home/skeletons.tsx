@@ -27,7 +27,9 @@ export function ProjectsSkeleton() {
         <div className="mt-14 flex gap-5 overflow-hidden">
           {[0, 1, 2].map((index) => (
             <div key={index} className="w-[82vw] max-w-sm shrink-0 sm:w-[26rem]">
-              <Skeleton className="aspect-16/10 w-full rounded-t-xl" />
+              {/* Matches `MEDIA` in `project-card.tsx`. If that ratio moves,
+                  this has to move with it or the swap will jump the page. */}
+              <Skeleton className="aspect-[9/10] w-full rounded-t-xl" />
               <div className="flex flex-col gap-3 rounded-b-xl border border-t-0 border-border p-7">
                 <Skeleton className="h-6 w-32 rounded-pill" />
                 <Skeleton className="h-6 w-40" />

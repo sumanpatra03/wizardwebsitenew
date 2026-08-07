@@ -17,11 +17,14 @@ import { cn } from "@/lib/utils";
  */
 export function ServiceOfferings({
   heading,
+  eyebrow = "What we offer",
   lead,
   items,
   tone = "default",
 }: {
   heading: string;
+  /** Section kicker. Defaults to the services wording. */
+  eyebrow?: string;
   lead?: string;
   items: readonly ServiceItem[];
   tone?: "default" | "subtle";
@@ -33,7 +36,7 @@ export function ServiceOfferings({
       className={tone === "subtle" ? "border-y border-border" : undefined}
     >
       <Container>
-        <SectionHeading eyebrow="What we offer" title={heading} description={lead} />
+        <SectionHeading eyebrow={eyebrow} title={heading} description={lead} />
 
         <Stagger
           stagger={0.05}

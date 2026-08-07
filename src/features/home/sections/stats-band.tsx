@@ -10,14 +10,19 @@ import { STATS } from "@/constants/stats";
  * Figures count up once as the band enters view. Dividers are drawn with
  * borders rather than extra elements, and only appear once the items sit on
  * one row, so the mobile stack stays clean.
+ *
+ * `spacing="sm"` because this band pads itself. The rules already sit inside
+ * their own vertical padding, so the full section rhythm on top of that was
+ * stacking two sets of space and pushing the band nearly 170px clear of its
+ * neighbours at desktop widths.
  */
 export function StatsBand() {
   return (
-    <Section>
+    <Section spacing="sm">
       <Container>
         <Stagger
           stagger={0.12}
-          className="grid gap-10 border-y border-border py-14 sm:grid-cols-3 sm:gap-8"
+          className="grid gap-10 border-y border-border py-12 sm:grid-cols-3 sm:gap-8"
         >
           {STATS.map((stat, index) => (
             <StaggerItem

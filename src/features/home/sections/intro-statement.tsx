@@ -1,3 +1,4 @@
+import { ExpandableText } from "@/components/common/expandable-text";
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { Reveal } from "@/components/motion/reveal";
@@ -34,9 +35,14 @@ export function IntroStatement() {
             as an unexplained gap under the statement. */}
         {INTRO_STATEMENT.supporting ? (
           <Reveal delay={0.15}>
-            <p className="text-body-lg mt-10 max-w-2xl text-fg-muted">
-              {INTRO_STATEMENT.supporting}
-            </p>
+            {/* Clamped to four lines. At full length this paragraph runs
+                longer than the statement it is meant to support, which
+                inverted the section's hierarchy. */}
+            <ExpandableText
+              text={INTRO_STATEMENT.supporting}
+              lines={4}
+              className="mt-10 max-w-2xl"
+            />
           </Reveal>
         ) : null}
       </Container>

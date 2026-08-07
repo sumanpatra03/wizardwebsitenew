@@ -17,6 +17,16 @@ import Link from "next/link";
 import { ProjectCard, ProjectsEndCard } from "./project-card";
 
 /**
+ * The home rail shows a selection, not the catalogue.
+ *
+ * `PROJECTS` grew from five entries to the full set published on
+ * wizardcomm.net when `/projects` was built, and this rail maps it directly —
+ * which turned a six-card pinned scroll into a twenty-three-card one, and a
+ * pin length to match. The end card routes to the full index for the rest.
+ */
+const FEATURED = PROJECTS.slice(0, 6);
+
+/**
  * Featured projects.
  *
  * On desktop the section pins and the card rail scrolls sideways as the page
@@ -144,7 +154,7 @@ export function FeaturedProjects() {
               pinned && "will-change-transform",
             )}
           >
-            {PROJECTS.map((project) => (
+            {FEATURED.map((project) => (
               <li key={project.slug} className={cardClass}>
                 <ProjectCard project={project} />
               </li>

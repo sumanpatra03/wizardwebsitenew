@@ -30,10 +30,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // `SERVICE_PAGES`, not `SERVICES`: the latter is the home page's card list,
   // which includes services that have no page of their own — submitting those
   // URLs would put three 404s in the sitemap.
+  //
+  // Projects are deliberately absent: they are listed on `/projects` but have
+  // no page each, so there is nothing per-project to submit.
   const dynamicRoutes: MetadataRoute.Sitemap = [
     ...SERVICE_PAGES.map((item) => `/services/${item.slug}`),
     ...PRODUCTS.map((item) => `/products/${item.slug}`),
-    ...PROJECTS.map((item) => `/projects/${item.slug}`),
   ].map((path) => ({
     url: url(path),
     lastModified,

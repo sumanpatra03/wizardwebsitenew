@@ -7,7 +7,11 @@
       "Bash(curl -sS -L -A \"Mozilla/5.0 \\(Windows NT 10.0; Win64; x64\\)\" -w \"http=%{http_code} type=%{content_type} size=%{size_download}\\\\n\" -o public/services/hero/custom-software-development-alt.jpg \"https://www.flexsin.com/blog/wp-content/uploads/2019/12/Custom-Software-Development.jpg\")",
       "Bash(git mv *)",
       "Bash(mv \"public/services/hero/Hero_growth.png\" \"public/services/hero/hero_growth_tmp.png\")",
-      "Bash(mv \"public/services/hero/hero_growth_tmp.png\" \"public/services/hero/hero_growth.png\")"
+      "Bash(mv \"public/services/hero/hero_growth_tmp.png\" \"public/services/hero/hero_growth.png\")",
+      "Bash(grep -oE '\"[A-Za-z][^\"]{4,50}\"' src/constants/careers.ts)",
+      "Bash(grep -oE \"media/[a-z0-9.\\\\-]+\\\\.woff2|unicode-range:U\\\\+[^,]{1,6}\")",
+      "Bash(curl -s http://localhost:3118/)",
+      "Bash(curl -s -o /dev/null -w \" %{http_code}\\\\n\" http://localhost:3118/)"
     ]
   }
 }

@@ -4,7 +4,7 @@ import type { Stat } from "@/types/content";
 export const STATS: readonly Stat[] = [
   {
     value: 22,
-    suffix: "yrs",
+    suffix: "yrs+",
     label: "Years In The Business",
     description: "Building since 2004, through every platform shift, still shipping.",
   },

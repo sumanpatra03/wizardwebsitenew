@@ -279,7 +279,19 @@ export const GALLERY = [
   },
 ] as const;
 
-export type GalleryPhoto = (typeof GALLERY)[number];
+/**
+ * Declared structurally rather than derived from `GALLERY` with
+ * `(typeof GALLERY)[number]`. That inferred a union of literal types — `src`
+ * was the eight exact filenames rather than `string` — so `<Gallery>` could
+ * only ever be handed this one array, and no other set of photographs would
+ * typecheck against it.
+ */
+export type GalleryPhoto = {
+  src: string;
+  caption: string;
+  width: number;
+  height: number;
+};
 
 /* ------------------------------------------------------------------ */
 /* Clients                                                             */

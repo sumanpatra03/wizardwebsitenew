@@ -8,7 +8,7 @@ export const HERO = {
   eyebrow: "Technology & Strategic Consulting",
   headline: SITE.tagline,
   subheadline:
-    "With over 22 years of experience, Wizard empowers businesses to build exceptional products. Whether for your users or customers, our innovative solutions are designed to deliver outstanding results.",
+    "Since 2004, Wizard has been empowering businesses to build exceptional products. Whether for your users or customers, our innovative solutions are designed to deliver outstanding results.",
   primaryCta: { label: "Get in Touch", href: "/contact" },
   secondaryCta: { label: "All Projects", href: "/projects" },
 } as const;
@@ -34,7 +34,7 @@ export const SECTION_COPY = {
   },
   projects: {
     eyebrow: "Our Work",
-    title: "Proof,not promises.",
+    title: "Proof, not promises.",
     cta: { label: "All Projects", href: "/projects" },
   },
   products: {

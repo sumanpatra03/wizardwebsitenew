@@ -13,6 +13,7 @@ import { findPublicImage } from "@/lib/public-image";
 import { cn } from "@/lib/utils";
 
 import { ServiceArtwork } from "./service-artwork";
+import { ServiceFlipCard } from "./service-flip-card";
 
 /**
  * Card height.
@@ -30,6 +31,19 @@ const FACE = [
   "p-6 backface-hidden sm:p-7",
 ];
 
+/**
+ * One slide of the mobile rail, and one cell of the grid from `sm` up.
+ *
+ * Below `sm` the eight cards are a snapping swipe rail rather than a single
+ * stacked column: eight tall cards end to end is a long scroll past the same
+ * shape eight times. At `82vw` the next card stays part-visible, so the rail
+ * reads as swipeable without arrows or dots.
+ */
+const RAIL_ITEM = [
+  "w-[82vw] max-w-sm shrink-0 snap-center",
+  "sm:w-auto sm:max-w-none sm:shrink sm:snap-align-none",
+];
+
 export function ServicesGrid() {
   return (
     <Section tone="subtle" className="border-y border-border">
@@ -41,7 +55,17 @@ export function ServicesGrid() {
 
         <Stagger
           stagger={0.06}
-          className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
+          className={cn(
+            // Rail below `sm`. Bleeds to the viewport edges and puts the
+            // gutter back as padding, so the first card sits flush with the
+            // heading above while the rail itself runs the full width.
+            "no-scrollbar -mx-gutter px-gutter mt-14 flex snap-x snap-mandatory",
+            "gap-4 overflow-x-auto pb-2",
+            // Grid from `sm` up. Every rail property has to be unwound
+            // explicitly: `grid-cols` on a flex container does nothing.
+            "sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 sm:pb-0",
+            "lg:grid-cols-4",
+          )}
         >
           {SERVICES.map((service, index) => {
             const accented = index % 2 === 1;
@@ -54,54 +78,30 @@ export function ServicesGrid() {
               : "border-border bg-surface";
 
             return (
-              <StaggerItem key={service.slug}>
+              <StaggerItem key={service.slug} className={cn(RAIL_ITEM)}>
                 {/*
                  * The flip.
                  *
-                 * `group/card` and the perspective live out here on a element
-                 * that never rotates — perspective has to be applied by an
-                 * ancestor of the rotating box, and the hover target has to
-                 * stay still or the pointer would chase it mid-turn.
+                 * The shell is a Client Component because the turn has to be
+                 * triggerable on touch, where there is no hover. Both faces
+                 * below are still rendered here on the server and passed
+                 * through as children, so nothing has to serialise.
                  */}
-                <article
-                  aria-labelledby={`${service.slug}-title`}
-                  className={cn(
-                    "group/card relative perspective-[1600px]",
-                    CARD_HEIGHT,
-                    "transition-transform duration-(--duration-fast)",
-                    "ease-(--ease-out-quart) hover:-translate-y-1",
-                    "focus-within:-translate-y-1",
-                    "motion-reduce:translate-none motion-reduce:transition-none",
-                  )}
+                <ServiceFlipCard
+                  title={service.title}
+                  titleId={`${service.slug}-title`}
+                  height={CARD_HEIGHT}
                 >
                   {/*
-                   * The rotating box — a plain element, not a link. Only the
-                   * Explore control on the back navigates, so the card itself
-                   * is inert to clicks.
+                   * The two faces. Neither is a link: only the Explore control
+                   * on the back navigates, so the card itself is inert to
+                   * clicks.
                    *
                    * Keyboard still reaches the back: tabbing to that link puts
                    * focus inside the card, `focus-within` turns it, and the
                    * link it landed on is the thing now facing the user.
-                   *
-                   * Under reduced motion the turn still happens but without a
-                   * transition: the back face appears instantly, like any
-                   * content swap, with no travel to track.
                    */}
-                  <div
-                    className={cn(
-                      "relative size-full rounded-xl transform-3d",
-                      // Symmetric ease, not the site's usual out-expo. Expo is
-                      // so front-loaded that the card reached 176 degrees in
-                      // the first 400ms of 750 — the turn was over before the
-                      // eye could follow it. An in-out curve accelerates and
-                      // decelerates like a real card being turned over.
-                      "transition-transform duration-[700ms]",
-                      "ease-(--ease-in-out-soft)",
-                      "group-hover/card:rotate-y-180",
-                      "group-focus-within/card:rotate-y-180",
-                      "motion-reduce:transition-none",
-                    )}
-                  >
+                  <>
                     {/* Front — category, title, artwork. */}
                     <div className={cn(FACE, faceTone)}>
                       <p
@@ -221,16 +221,17 @@ export function ServicesGrid() {
                         />
                       </Link>
                     </div>
-                  </div>
-                </article>
+                  </>
+                </ServiceFlipCard>
               </StaggerItem>
             );
           })}
 
           {/* Eighth slot. Seven services would leave a hole in the four-up
               grid; this closes it and doubles as the route to the full list.
-              It does not flip — there is no second side to show. */}
-          <StaggerItem>
+              It does not flip — there is no second side to show, so it carries
+              no tap control either. */}
+          <StaggerItem className={cn(RAIL_ITEM)}>
             <article
               className={cn(
                 "group/card relative overflow-hidden rounded-xl",
