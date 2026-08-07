@@ -4,15 +4,20 @@ import type { Project } from "@/types/content";
  * The twenty projects published on wizardcomm.net/projects. Descriptions are
  * the client's own copy.
  *
- * ## Why most cards have no image
+ * ## Where the artwork came from
  *
- * The live portfolio grid renders client-side, so its card artwork is not in
- * the served markup and could not be transcribed with the copy. Five cards
- * carry the artwork the home page publishes for them, two carry the galleries
- * the live site opens in a modal, and one carries its product shot. The rest
- * fall back to the generated monogram panel, which is exactly the case that
- * fallback exists for — the grid is complete today and improves one file at a
- * time as artwork arrives.
+ * The live portfolio grid renders client-side, so its card images never appear
+ * in the served markup and could not be scraped alongside the copy. They were
+ * pulled from the WordPress media library through the site's public REST
+ * endpoint instead, matched to each project by filename.
+ *
+ * Nearly all of them are 360×400 poster cards with the client's mark set
+ * across the top and a headline across the bottom, which is why the grid slot
+ * is 9:10 — anything wider crops through type rather than trimming
+ * background.
+ *
+ * The generated monogram panel is still the fallback for any project added
+ * without artwork, so the grid can never be half-broken.
  *
  * ## Why `externalUrl` and not a detail page
  *
@@ -79,7 +84,7 @@ export const PROJECTS: readonly Project[] = [
     description:
       "Indian Parliament Museum had set up a digital interactive kiosk on the Democratic Heritage of India, spanning 2500 years. We played a significant role in creating this digital experience, woven from virtual 3D walkthroughs, digital rich media interactions and audio-visual presentation.",
     monogram: "PM",
-    image: "/projects/parliament-museum-1.jpg",
+    image: "/projects/parliament-museum.jpg",
     gallery: [
       {
         src: "/projects/parliament-museum-1.jpg",
@@ -119,6 +124,7 @@ export const PROJECTS: readonly Project[] = [
     description:
       "Secure, scalable ecommerce platform delivering seamless shopping, payments, and business growth.",
     monogram: "UV",
+    image: "/projects/uvanij.jpg",
     tags: ["Ecommerce", "Payments", "Platform"],
   },
   {
@@ -128,6 +134,7 @@ export const PROJECTS: readonly Project[] = [
     description:
       "Streamlined restaurant management software improving orders, billing, inventory, efficiency, and profitability.",
     monogram: "RM",
+    image: "/projects/restaurant-management-software.webp",
     tags: ["Hospitality", "Inventory", "POS"],
   },
  
@@ -138,6 +145,7 @@ export const PROJECTS: readonly Project[] = [
     description:
       "Modernized cybersecurity infrastructure delivering secure, resilient, scalable, high-performance digital operations.",
     monogram: "SB",
+    image: "/projects/sunbridge.webp",
     tags: ["Cyber Security", "Infrastructure"],
   },
   
@@ -150,7 +158,7 @@ export const PROJECTS: readonly Project[] = [
     description:
       "Web portal for fire disaster management, explaining the nature and types of fire, immediate action on a fire breaking out, and medical aid to the injured. Countless illustrations, graphics, images, 2D animations and voice-over materials are integral to it.",
     monogram: "MA",
-    image: "/projects/mass-awareness-1.jpg",
+    image: "/projects/mass-awareness-campaign.jpg",
     gallery: [
       { src: "/projects/mass-awareness-1.jpg", caption: "Fire disaster management portal", width: 600, height: 447 },
       { src: "/projects/mass-awareness-2.jpg", caption: "Illustrated safety guidance", width: 600, height: 447 },
@@ -165,6 +173,7 @@ export const PROJECTS: readonly Project[] = [
     description:
       "Multipurpose training modules created for the employees of Aadhaar Enrolment Centres throughout India. The technical methodologies and processes have been described by illustrations, graphics, animation and voice over.",
     monogram: "IC",
+    image: "/projects/interactive-courseware.jpg",
     externalUrl: "https://cmcltd.com/",
     tags: ["e-Learning", "Government", "Animation"],
   },
@@ -175,6 +184,7 @@ export const PROJECTS: readonly Project[] = [
     description:
       "Courseware translation and voice-over recording for the localization of a digital interactive training module for TATA Motors.",
     monogram: "AD",
+    image: "/projects/adayana.jpg",
     externalUrl:
       "https://www.thecompanycheck.com/company/adayana-learning-solutions-private-limited/U72200TG2001PTC037959",
     tags: ["Localization", "Courseware"],
@@ -186,6 +196,7 @@ export const PROJECTS: readonly Project[] = [
     description:
       "Crimzon Glow is a trusted technology partner delivering web, mobile, and enterprise solutions. In collaboration with Wizard Communications, they successfully developed scalable, high-quality courseware and digital learning solutions.",
     monogram: "CG",
+    image: "/projects/crimzon-glow.jpg",
     externalUrl: "http://www.crimzonglow.com/",
     tags: ["Web", "Courseware"],
   },
@@ -196,6 +207,7 @@ export const PROJECTS: readonly Project[] = [
     description:
       "Shakers Daily is a popular online grocery, meat, and food store operating in Kolkata. We helped design the website and scale it to run complex workloads. The simplicity and user experience of the website are also a trademark of Wizard.",
     monogram: "SD",
+    image: "/projects/shakers-daily.jpg",
     externalUrl: "https://shakersdaily.uvanij.com/",
     tags: ["Ecommerce", "Grocery", "Scale"],
   },
@@ -206,6 +218,7 @@ export const PROJECTS: readonly Project[] = [
     description:
       "Our dedicated team of professionals are focused on serving homes and commercial businesses in our community.",
     monogram: "SB",
+    image: "/projects/shiny-bins-cleaning.jpg",
     externalUrl: "https://shinybinscleaning.com/",
     tags: ["Web", "Local Services"],
   },
@@ -216,6 +229,7 @@ export const PROJECTS: readonly Project[] = [
     description:
       "AKM was incorporated in 2011 to provide end-to-end purchasing and supply chain solutions. We empower local and international clients to discover and source from the world's most efficient suppliers.",
     monogram: "AK",
+    image: "/projects/akm.jpg",
     externalUrl: "https://akmcorporation.com/",
     tags: ["Supply Chain", "Web"],
   },
@@ -226,6 +240,7 @@ export const PROJECTS: readonly Project[] = [
     description:
       "Sunbridge Capital Partners is a specialized investment management company. Wizard built its website to increase visibility, delivering a simple site in record time with world-class best practices.",
     monogram: "SC",
+    image: "/projects/sunbridge-capital-partners.jpg",
     externalUrl: "https://sunbridgecapitalpartners.com/",
     tags: ["Finance", "Web"],
   },
@@ -236,6 +251,7 @@ export const PROJECTS: readonly Project[] = [
     description:
       "A state of the art, eco-friendly system that kills 99.9% of bacteria and cleans your garbage, recycle and yard waste bins.",
     monogram: "BF",
+    image: "/projects/bee-fresh-bins.jpg",
     externalUrl: "https://beefreshbins.com/",
     tags: ["Web", "Sustainability"],
   },
@@ -246,6 +262,7 @@ export const PROJECTS: readonly Project[] = [
     description:
       "Hotel New Emerald is glad to welcome you. We are the most-voted accommodation in Kharagpur, with clean, hygienic, and comfortable AC rooms.",
     monogram: "HE",
+    image: "/projects/hotel-new-emerald.jpg",
     externalUrl: "https://hotelnewemerald.com/",
     tags: ["Hospitality", "Web"],
   },
@@ -256,6 +273,7 @@ export const PROJECTS: readonly Project[] = [
     description:
       "A group of nature lovers and avid travelers, building experiential homestays and promoting sustainable tourism.",
     monogram: "KE",
+    image: "/projects/kumaon-elements.jpg",
     externalUrl: "https://kumaonelements.com/",
     tags: ["Travel", "Web"],
   },
@@ -266,6 +284,7 @@ export const PROJECTS: readonly Project[] = [
     description:
       "Light a Lamp creates a platform for its students where skills, expertise, resources and need-based guidance can be rendered by a team of successful professionals and intellectuals from diverse backgrounds.",
     monogram: "LL",
+    image: "/projects/light-a-lamp.jpg",
     externalUrl: "http://lightalamp-artofliving.org",
     tags: ["Education", "Non-profit"],
   },

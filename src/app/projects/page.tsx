@@ -70,7 +70,7 @@ export default function ProjectsPage() {
         <Container>
           <Stagger
             stagger={0.04}
-            className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
+            className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
           >
             {PROJECTS.map((project) => {
               const href = projectHref(project);
@@ -84,13 +84,13 @@ export default function ProjectsPage() {
                     {project.image ? (
                       <div
                         aria-hidden="true"
-                        className="relative aspect-[16/10] overflow-hidden border-b border-border"
+                        className="relative aspect-[9/10] overflow-hidden border-b border-border"
                       >
                         <Image
                           src={project.image}
                           alt=""
                           fill
-                          sizes="(min-width: 1024px) 30vw, (min-width: 640px) 46vw, 92vw"
+                          sizes="(min-width: 1024px) 23vw, (min-width: 640px) 46vw, 92vw"
                           className={cn(
                             "object-cover transition-transform",
                             "duration-(--duration-base) ease-(--ease-out-expo)",
@@ -106,7 +106,7 @@ export default function ProjectsPage() {
                          live grid renders client-side and never serves. */
                       <div
                         aria-hidden="true"
-                        className="bg-mesh relative aspect-[16/10] overflow-hidden border-b border-border"
+                        className="bg-mesh relative aspect-[9/10] overflow-hidden border-b border-border"
                       >
                         <div className="bg-grid absolute inset-0 opacity-70" />
                         <span
