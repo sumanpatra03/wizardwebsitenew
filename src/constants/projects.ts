@@ -304,12 +304,33 @@ export const PROJECTS_COPY = {
 } as const;
 
 /**
- * Where a project card should link.
+ * Where a project card should lead, and what its control should say.
  *
- * The client's own site where there is one, otherwise nowhere — the seven
- * case studies wizardcomm.net publishes have no page on this site yet, and a
- * card that links into a 404 is worse than a card that does not link.
+ * Three cases, in order: the client's own site; this page's own gallery
+ * section for the two projects the live site opens in a modal; and nothing at
+ * all for the seven case studies wizardcomm.net publishes that this site has
+ * not built yet. A card that links into a 404 is worse than a card that does
+ * not link, so the last case returns `undefined` and the card renders inert.
  */
-export function projectHref(project: Project): string | undefined {
-  return project.externalUrl;
+export function projectLink(
+  project: Project,
+): { href: string; label: string; external: boolean } | undefined {
+  if (project.externalUrl) {
+    return { href: project.externalUrl, label: "Visit site", external: true };
+  }
+  if (project.gallery) {
+    return { href: `#${project.slug}`, label: "See the gallery", external: false };
+  }
+  return undefined;
 }
+
+/** Every category present, in descending order of how many projects use it. */
+export const PROJECT_CATEGORIES: readonly { name: string; count: number }[] =
+  Object.entries(
+    PROJECTS.reduce<Record<string, number>>((counts, project) => {
+      counts[project.category] = (counts[project.category] ?? 0) + 1;
+      return counts;
+    }, {}),
+  )
+    .map(([name, count]) => ({ name, count }))
+    .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name));

@@ -13,7 +13,11 @@
       "Bash(curl -s http://localhost:3118/)",
       "Bash(curl -s -o /dev/null -w \" %{http_code}\\\\n\" http://localhost:3118/)",
       "Bash(rm -f public/projects/aim.webp)",
-      "Bash(mv public/projects/aim-full.webp public/projects/aim.webp)"
+      "Bash(mv public/projects/aim-full.webp public/projects/aim.webp)",
+      "Bash(useSearchParams)",
+      "Bash(curl -s http://localhost:3126/projects)",
+      "Bash(grep -oE 'aria-live=\"polite\"[^>]*>.{0,90}')",
+      "Bash(curl -sS -f -A \"Mozilla/5.0 \\(Windows NT 10.0; Win64; x64\\)\" -e \"https://www.wizardcomm.net/\" -o public/projects/projects-banner.png \"https://www.wizardcomm.net/wp-content/uploads/2023/01/project-banner.png\")"
     ]
   }
 }

@@ -1,4 +1,3 @@
-import { ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 
 import { ClientWall } from "@/components/common/client-wall";
@@ -9,13 +8,11 @@ import { Container } from "@/components/layout/container";
 import { PageHero } from "@/components/layout/page-hero";
 import { Section } from "@/components/layout/section";
 import { SectionHeading } from "@/components/layout/section-heading";
-import { Stagger, StaggerItem } from "@/components/motion/reveal";
-import { Badge } from "@/components/ui/badge";
-import { Card } from "@/components/ui/card";
 import { CLIENTS_COPY } from "@/constants/company";
-import { PROJECTS, PROJECTS_COPY, projectHref } from "@/constants/projects";
+import { PROJECTS, PROJECTS_COPY } from "@/constants/projects";
 import { TESTIMONIALS_HEADING } from "@/constants/testimonials";
 import { CtaBand } from "@/features/home/sections/cta-band";
+import { ProjectGrid } from "@/features/projects/project-grid";
 import { breadcrumbJsonLd } from "@/lib/jsonld";
 import { buildMetadata } from "@/lib/seo";
 import { cn } from "@/lib/utils";
@@ -45,6 +42,25 @@ export default function ProjectsPage() {
         eyebrow={PROJECTS_COPY.eyebrow}
         titleLines={PROJECTS_COPY.titleLines}
         lead={PROJECTS_COPY.lead}
+        aside={
+          /*
+           * No frame, no scrim, no crop — unlike the service and product
+           * heroes, which carry photographs. This is transparent line art, so
+           * a card around it would box in something that has no edges, and
+           * `object-cover` in a 16:9 frame would slice through a composition
+           * that runs to all four sides of its own square.
+           */
+          <Image
+            src="/projects/projects-banner.png"
+            // Decorative: the <h1> beside it already says what the page is.
+            alt=""
+            width={641}
+            height={667}
+            priority
+            sizes="(min-width: 1024px) 40vw, 80vw"
+            className="mx-auto h-auto w-full max-w-md lg:max-w-none"
+          />
+        }
       >
         <p className="text-body-base max-w-3xl text-fg-muted">
           {PROJECTS_COPY.body}
@@ -53,141 +69,45 @@ export default function ProjectsPage() {
         {/* The three figures the live page runs above its grid. Static text,
             not the animated `CountUp` used on the home page — two of the three
             are not plain numbers. */}
-        <ul className="mt-12 grid gap-8 border-t border-border pt-10 sm:grid-cols-3">
+        {/*
+         * `auto-fit` with a floor, not `grid-cols-3`.
+         *
+         * Tailwind's `grid-cols-3` compiles to `repeat(3, minmax(0, 1fr))`,
+         * and that zero minimum lets a track shrink below its own content — so
+         * in the hero's left half the figures outgrew their columns and ran
+         * into one another, which no amount of `gap` can prevent because the
+         * text is overflowing the track, not filling it. A `9rem` floor makes
+         * the row drop to two across, then one, before that can happen.
+         */}
+        <ul
+          className={cn(
+            "mt-14 grid border-t border-border pt-12",
+            // Two across on phones. The `9rem` floor below would drop to a
+            // single column on a 360px screen, and the figures are small
+            // enough at that size that a fixed pair never collides.
+            "grid-cols-2 gap-x-6 gap-y-10",
+            "sm:grid-cols-[repeat(auto-fit,minmax(9rem,1fr))] sm:gap-x-10",
+          )}
+        >
           {PROJECTS_COPY.stats.map((stat) => (
             <li key={stat.label}>
-              <p className="font-display text-display-md leading-none text-accent">
+              {/* `tabular-nums` so the three figures sit on a common width and
+                  the labels beneath them line up. */}
+              <p className="font-display text-display-lg leading-none tabular-nums text-accent">
                 {stat.value}
               </p>
-              <p className="text-body-sm mt-3 text-fg-muted">{stat.label}</p>
+              <p className="text-body-base mt-4 text-fg-muted">{stat.label}</p>
             </li>
           ))}
         </ul>
       </PageHero>
 
-      {/* The twenty projects */}
+      {/* The projects. A Client Component so the grid can filter and re-lay
+          out, but it renders its full unfiltered markup on the server — every
+          card is in the served HTML. */}
       <Section>
         <Container>
-          <Stagger
-            stagger={0.04}
-            className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
-          >
-            {PROJECTS.map((project) => {
-              const href = projectHref(project);
-
-              return (
-                <StaggerItem key={project.slug}>
-                  <Card
-                    interactive={Boolean(href)}
-                    className="flex h-full flex-col"
-                  >
-                    {project.image ? (
-                      <div
-                        aria-hidden="true"
-                        className="relative aspect-[9/10] overflow-hidden border-b border-border"
-                      >
-                        <Image
-                          src={project.image}
-                          alt=""
-                          fill
-                          sizes="(min-width: 1024px) 23vw, (min-width: 640px) 46vw, 92vw"
-                          className={cn(
-                            "object-cover transition-transform",
-                            "duration-(--duration-base) ease-(--ease-out-expo)",
-                            "group-hover/card:scale-105",
-                            "motion-reduce:transition-none",
-                            "motion-reduce:group-hover/card:scale-100",
-                          )}
-                        />
-                        <span className="absolute inset-x-0 bottom-0 h-10 bg-gradient-to-b from-transparent to-surface" />
-                      </div>
-                    ) : (
-                      /* Generated fallback, for the cards whose artwork the
-                         live grid renders client-side and never serves. */
-                      <div
-                        aria-hidden="true"
-                        className="bg-mesh relative aspect-[9/10] overflow-hidden border-b border-border"
-                      >
-                        <div className="bg-grid absolute inset-0 opacity-70" />
-                        <span
-                          className={cn(
-                            "absolute inset-0 grid place-items-center",
-                            "font-display text-[clamp(3rem,9vw,5rem)] leading-none",
-                            "font-extrabold text-fg opacity-[0.09] select-none",
-                            "transition-transform duration-(--duration-base)",
-                            "ease-(--ease-out-expo) group-hover/card:scale-110",
-                            "motion-reduce:group-hover/card:scale-100",
-                          )}
-                        >
-                          {project.monogram}
-                        </span>
-                        <span className="absolute inset-x-0 bottom-0 h-10 bg-gradient-to-b from-transparent to-surface" />
-                      </div>
-                    )}
-
-                    <div className="flex flex-1 flex-col p-6">
-                      <Badge variant="accent" className="self-start">
-                        {project.category}
-                      </Badge>
-
-                      <h2 className="font-display text-heading-md mt-4 text-balance text-fg">
-                        {project.title}
-                      </h2>
-
-                      <p className="text-body-sm mt-3 flex-1 text-fg-muted">
-                        {project.description}
-                      </p>
-
-                      <ul className="mt-5 flex flex-wrap gap-2">
-                        {project.tags.map((tag) => (
-                          <li key={tag}>
-                            <Badge variant="outline">{tag}</Badge>
-                          </li>
-                        ))}
-                      </ul>
-
-                      {/* Only the twelve with a client site of their own get a
-                          link. The seven case studies published on
-                          wizardcomm.net have no page here yet, and the two
-                          gallery entries are shown in full below. */}
-                      {href ? (
-                        <div className="mt-6 border-t border-border pt-5">
-                          <a
-                            href={href}
-                            target="_blank"
-                            rel="noreferrer noopener"
-                            className={cn(
-                              "text-body-sm inline-flex items-center gap-2",
-                              "font-medium text-accent",
-                              "after:absolute after:inset-0 after:content-['']",
-                              "transition-colors duration-(--duration-fast)",
-                              "hover:text-accent-hover focus-visible:outline-2",
-                              "focus-visible:outline-offset-2 focus-visible:outline-ring",
-                            )}
-                          >
-                            Visit site
-                            <ArrowUpRight
-                              aria-hidden="true"
-                              className={cn(
-                                "size-4 transition-transform",
-                                "duration-(--duration-fast) ease-(--ease-out-quart)",
-                                "group-hover/card:-translate-y-0.5",
-                                "group-hover/card:translate-x-0.5",
-                                "motion-reduce:translate-none",
-                              )}
-                            />
-                            <span className="sr-only">
-                              {` — ${project.title} (opens in a new tab)`}
-                            </span>
-                          </a>
-                        </div>
-                      ) : null}
-                    </div>
-                  </Card>
-                </StaggerItem>
-              );
-            })}
-          </Stagger>
+          <ProjectGrid />
         </Container>
       </Section>
 
@@ -197,9 +117,16 @@ export default function ProjectsPage() {
       {GALLERIES.map((project, index) => (
         <Section
           key={project.slug}
+          // The target of that project's card control up in the grid.
+          // `scroll-mt` clears the fixed header, which would otherwise cover
+          // the heading the anchor lands on.
+          id={project.slug}
           tone={index % 2 === 0 ? "subtle" : "default"}
           backdrop={index % 2 === 0}
-          className={index % 2 === 0 ? "border-y border-border" : undefined}
+          className={cn(
+            "scroll-mt-header",
+            index % 2 === 0 && "border-y border-border",
+          )}
         >
           <Container>
             <SectionHeading
