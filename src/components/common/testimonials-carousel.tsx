@@ -116,25 +116,35 @@ export function TestimonialsCarousel({
                       only valid inside a `figure`, and it previously sat
                       directly in the card. */}
                   <Card className="h-full">
-                    <figure className="flex h-full flex-col p-7 sm:p-8">
+                    <figure className="flex h-full flex-col p-6">
                       <Quote
                         aria-hidden="true"
-                        className="size-8 shrink-0 text-accent/35"
+                        className="size-6 shrink-0 text-accent/35"
                       />
 
-                      <blockquote className="text-body-base mt-5 flex-1 text-fg">
+                      {/*
+                       * Clamped to eight lines.
+                       *
+                       * Every card in the row is as tall as the longest quote,
+                       * and the CMC testimonial runs to four hundred and fifty
+                       * characters — nearly double the next one. Without a cap
+                       * it sets the height of all four, leaving three cards
+                       * mostly empty. Eight lines carries the shorter three in
+                       * full and stops the outlier from dictating the section.
+                       */}
+                      <blockquote className="text-body-sm mt-4 line-clamp-8 flex-1 text-fg">
                         {testimonial.quote}
                       </blockquote>
 
-                      <figcaption className="mt-7 flex items-center gap-4 border-t border-border pt-5">
+                      <figcaption className="mt-5 flex items-center gap-3 border-t border-border pt-4">
                         {testimonial.avatar ? (
                           <Image
                             src={testimonial.avatar}
                             alt=""
-                            width={48}
-                            height={48}
+                            width={40}
+                            height={40}
                             className={cn(
-                              "size-12 shrink-0 rounded-pill border border-border",
+                              "size-10 shrink-0 rounded-pill border border-border",
                               // `contain` not `cover`: two of the three are
                               // organisation marks, which crop badly.
                               "bg-bg object-contain p-1",
@@ -146,7 +156,7 @@ export function TestimonialsCarousel({
                           <span className="text-body-sm block font-semibold text-fg">
                             {testimonial.author}
                           </span>
-                          <span className="text-body-sm mt-0.5 block text-fg-muted">
+                          <span className="text-label mt-0.5 block text-fg-muted">
                             {[testimonial.role, testimonial.organization]
                               .filter(Boolean)
                               .join(", ")}

@@ -14,6 +14,14 @@ const nextConfig: NextConfig = {
   // exports never reach the client bundle.
   experimental: {
     optimizePackageImports: ["lucide-react", "motion"],
+
+    // Server Actions cap request bodies at 1MB by default, which a CV in PDF
+    // form regularly exceeds. The form itself rejects anything over 5MB, and
+    // this leaves headroom for the multipart boundaries and part headers that
+    // sit on top of the file's own bytes.
+    serverActions: {
+      bodySizeLimit: "6mb",
+    },
   },
 
   async headers() {

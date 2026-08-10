@@ -1,6 +1,7 @@
 import {
   BrainCircuit,
   Code2,
+  GraduationCap,
   Megaphone,
   ShieldCheck,
   Smartphone,
@@ -65,6 +66,16 @@ export type ServicePage = {
    */
   image: string;
   /**
+   * How the hero artwork fills its 16:9 frame.
+   *
+   * `cover` (the default) suits the landscape photographs the other services
+   * publish. `contain` is for artwork drawn at a squarer ratio — cropping a
+   * 1:1 illustration to 16:9 removes 40% of its height, which on a composed
+   * illustration means cutting through the subject rather than trimming
+   * background.
+   */
+  imageFit?: "cover" | "contain";
+  /**
    * Brief for the hero photograph, kept in the data — not in a design doc —
    * so the artwork can be regenerated consistently, and so a replacement can
    * be checked against what the page actually claims. Same convention the
@@ -89,6 +100,8 @@ export type ServicePage = {
     heading: string;
     lead?: string;
     items: readonly ServiceFeature[];
+    /** `contain` for near-square flat artwork. See `ServiceFeatures`. */
+    imageFit?: "cover" | "contain";
   };
   why?: {
     heading: string;
@@ -122,6 +135,15 @@ export type ServicePage = {
     heading: string;
     items: readonly string[];
     note: string;
+  };
+  /**
+   * Work delivered in this line, cited by slug from `projects.ts` so the
+   * copy and artwork live in exactly one place.
+   */
+  caseStudies?: {
+    heading: string;
+    lead?: string;
+    slugs: readonly string[];
   };
   faqs?: {
     heading: string;
@@ -1147,6 +1169,175 @@ const ON_DEMAND_HIRING: ServicePage = {
 };
 
 /* ------------------------------------------------------------------ */
+/* E-Learning Solutions                                                */
+/* ------------------------------------------------------------------ */
+
+const E_LEARNING: ServicePage = {
+  slug: "e-learning-solutions",
+  label: "E-Learning Solutions",
+  eyebrow: "Custom eLearning Solutions",
+  titleLines: ["Custom eLearning that", "people actually finish."],
+  tagline: "Delivering engaging learning experiences.",
+  lead: "e-Learning is the best way to improve retention and make learning fun. At Wizard, we develop innovative eLearning solutions to meet the unique needs of your learners.",
+  body: [
+    "Full-scale services including personalized LMS development, courseware creation, SME hiring, curriculum localization, and interactive mobile learning solutions.",
+  ],
+  image: "/services/hero/e-learning-solutions.png",
+  // Near-square flat artwork, so it is fitted rather than cropped.
+  imageFit: "contain",
+  imagePrompt:
+    "Cinematic shot of a modern learning studio at blue hour, a recording desk with a lit screen showing softly blurred course modules and no legible text, headphones and a tablet beside it, cyan and teal glow against deep charcoal, volumetric haze, shallow depth of field, photorealistic, 16:9, no text, no logos",
+  icon: GraduationCap,
+  summary: "Courseware, LMS and localisation that lands.",
+  metaDescription:
+    "Custom eLearning — courseware development, mobile learning, open-source LMS configuration, translation and localisation, and L&D consultancy.",
+
+  /*
+   * The five services as illustrated rows, which is how the live page runs
+   * them — each with the artwork it publishes alongside it.
+   */
+  features: {
+    heading: "What we build for learning teams",
+    lead: "From a single module to a localised curriculum running on your own LMS.",
+    items: [
+      {
+        title: "Custom Courseware Development",
+        body: "Meaningful, memorable, motivational learning. We use an agile development process, the SAM and CCAF instructional design models, and our own smart studios — building for real-world implementation rather than for the certificate alone.",
+        image: "/services/hero/elearning-courseware.png",
+      },
+      {
+        title: "Mobile Learning",
+        body: "Let learners carry the course with them and continue coursework while travelling. Built for professionals who would rather spend a commute on knowledge acquisition and augmentation than on nothing at all.",
+        image: "/services/hero/elearning-mobile.png",
+      },
+      {
+        title: "Open Source LMS Configuration",
+        body: "SCORM 1.2, SCORM 2004 and AICC-compliant courseware. We favour an open source LMS — Moodle and the likes — for the cost profile and for how far it can be customised to how your teams actually learn.",
+        image: "/services/hero/elearning-lms.png",
+      },
+      {
+        title: "Translation & Localization",
+        body: "Multilingual content development, grounded in large-scale Indian eLearning programmes where the localisation was the hard part rather than an afterthought.",
+        image: "/services/hero/elearning-localization.png",
+      },
+      {
+        title: "L&D Consultancy",
+        body: "Advice on curriculum design, content retention, how effectiveness gets evaluated, and whether learners can actually implement what they have been taught.",
+        image: "/services/hero/elearning-consultancy.png",
+      },
+    ],
+    // Four of the five are near-square flat illustrations that a 16:10 crop
+    // would take a third of the height from.
+    imageFit: "contain",
+  },
+
+  industries: {
+    heading: "Authoring tools we work in",
+    items: [
+      "Captivate 2017",
+      "Storyline 360",
+      "Elucidate",
+      "Lectora",
+      "Animate CC",
+      "Moodle",
+      "SCORM 1.2",
+      "SCORM 2004",
+      "AICC",
+    ],
+    note: "Whatever your LMS already speaks, we can author to it.",
+  },
+
+  /* The single case study the live page features here. */
+  caseStudies: {
+    heading: "Dastur Energy.",
+    lead: "A clean energy company that needed its solutions shown without the complexity — a minimal site with room to breathe, built on WordPress.",
+    slugs: ["dastur-energy"],
+  },
+
+  faqs: {
+    heading: "Frequently Asked Questions",
+    items: [
+      {
+        question: "What are eLearning solutions?",
+        answer:
+          "eLearning solutions are digital platforms and tools designed to deliver online education, training, and skill development programs. These solutions allow organizations to provide structured learning experiences through web and mobile devices.",
+      },
+      {
+        question: "What types of eLearning solutions do you offer?",
+        bullets: [
+          "Learning Management Systems (LMS)",
+          "Corporate training platforms",
+          "Online course portals",
+          "Virtual classroom systems",
+          "Certification and assessment systems",
+          "Mobile learning applications",
+        ],
+      },
+      {
+        question: "Who can benefit from eLearning platforms?",
+        bullets: [
+          "Corporates, for employee training",
+          "Schools, colleges, and universities",
+          "Coaching and training institutes",
+          "Healthcare and compliance training providers",
+          "EdTech startups",
+        ],
+      },
+      {
+        question: "Can the platform support live classes and recorded sessions?",
+        bullets: [
+          "Live video classes",
+          "Recorded video lectures",
+          "Interactive webinars",
+          "Screen sharing and chat features",
+          "Session recording and playback",
+        ],
+      },
+      {
+        question: "Is the eLearning platform mobile-friendly?",
+        answer:
+          "Absolutely. All our eLearning solutions are fully responsive and optimized for desktop, tablet, and mobile devices to ensure seamless access anywhere, anytime.",
+      },
+      {
+        question: "Can learners track their progress?",
+        bullets: [
+          "Course completion status",
+          "Quiz scores",
+          "Performance analytics",
+          "Certification tracking",
+          "User dashboards",
+        ],
+      },
+      {
+        question: "Do you provide assessment and certification features?",
+        bullets: [
+          "Online quizzes and exams",
+          "Automated grading",
+          "Custom certification generation",
+          "Performance-based evaluations",
+        ],
+      },
+      {
+        question: "Can the system be integrated with other software?",
+        bullets: [
+          "HRMS systems",
+          "CRM software",
+          "Payment gateways",
+          "Third-party APIs",
+          "Single Sign-On (SSO)",
+        ],
+      },
+    ],
+  },
+
+  cta: {
+    title: "Ready to build a course people finish?",
+    body: "Get in touch to talk through the curriculum, the platform it has to run on, and the languages it has to reach.",
+    label: "Get in touch",
+  },
+};
+
+/* ------------------------------------------------------------------ */
 /* Index                                                               */
 /* ------------------------------------------------------------------ */
 
@@ -1154,6 +1345,7 @@ export const SERVICE_PAGES: readonly ServicePage[] = [
   CUSTOM_SOFTWARE,
   MOBILE_APP,
   ARTIFICIAL_INTELLIGENCE,
+  E_LEARNING,
   SECURITY,
   DIGITAL_MARKETING,
   ON_DEMAND_HIRING,

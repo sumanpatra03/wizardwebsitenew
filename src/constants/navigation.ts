@@ -3,6 +3,7 @@ import {
   Briefcase,
   Building2,
   Code2,
+  GraduationCap,
   Megaphone,
   ShieldCheck,
   Smartphone,
@@ -67,6 +68,12 @@ export const NAV_ITEMS: readonly NavItem[] = [
         icon: BrainCircuit,
       },
       {
+        label: "E-Learning Solutions",
+        href: "/services/e-learning-solutions",
+        description: "Courseware, LMS and localisation that lands.",
+        icon: GraduationCap,
+      },
+      {
         label: "Security",
         href: "/services/security",
         description: "Protecting data with robust cybersecurity.",
@@ -112,6 +119,7 @@ export const FOOTER_COLUMNS: readonly FooterColumn[] = [
       { label: "Software Development", href: "/services/custom-software-development" },
       { label: "Mobile App Development", href: "/services/mobile-app-development" },
       { label: "Artificial Intelligence", href: "/services/artificial-intelligence" },
+      { label: "E-Learning Solutions", href: "/services/e-learning-solutions" },
       { label: "Security", href: "/services/security" },
       { label: "Digital Marketing, SEO", href: "/services/digital-marketing" },
       { label: "On Demand Hiring", href: "/services/on-demand-hiring" },

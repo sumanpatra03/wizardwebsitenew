@@ -114,7 +114,10 @@ export function FeaturedProjects() {
     };
   }, [pinned]);
 
-  const cardClass = "w-[82vw] max-w-sm shrink-0 snap-start sm:w-[26rem] lg:w-[24rem]";
+  // Narrower than before: the media slot is a ratio, so a narrower card is a
+  // shorter one too. The pin length is derived from `rail.scrollWidth` on every
+  // refresh, so it follows this without a second value to keep in step.
+  const cardClass = "w-[78vw] max-w-xs shrink-0 snap-start sm:w-[21rem] lg:w-[19rem]";
 
   return (
     <Section>

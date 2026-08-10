@@ -120,9 +120,18 @@ export function ProjectGrid() {
         </p>
       </div>
 
+      {/*
+       * Five across once there is room for it.
+       *
+       * Narrower columns are the only way to shrink these cards without
+       * cropping the artwork: the media slot is a ratio, so its height falls
+       * with the column width. A shorter aspect would instead cut into
+       * posters that carry the client's mark at the top and a headline at the
+       * bottom.
+       */}
       <motion.ul
         layout={!prefersReducedMotion}
-        className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
+        className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5"
       >
         <AnimatePresence mode="popLayout" initial={false}>
           {shown.map((project) => {
@@ -158,7 +167,7 @@ export function ProjectGrid() {
                       src={project.image ?? ""}
                       alt=""
                       fill
-                      sizes="(min-width: 1024px) 23vw, (min-width: 640px) 46vw, 92vw"
+                      sizes="(min-width: 1280px) 18vw, (min-width: 1024px) 23vw, (min-width: 640px) 46vw, 92vw"
                       className={cn(
                         "object-cover transition-transform",
                         "duration-(--duration-base) ease-(--ease-out-expo)",
@@ -167,27 +176,30 @@ export function ProjectGrid() {
                         "motion-reduce:group-hover/card:scale-100",
                       )}
                     />
-                    <span className="absolute inset-x-0 bottom-0 h-10 bg-gradient-to-b from-transparent to-surface" />
+                    <span className="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-b from-transparent to-surface" />
                   </div>
 
-                  <div className="flex flex-1 flex-col p-6">
+                  <div className="flex flex-1 flex-col p-5">
                     <Badge variant="accent" className="self-start">
                       {project.category}
                     </Badge>
 
-                    <h2 className="font-display text-heading-md mt-4 text-balance text-fg">
+                    <h2 className="font-display text-heading-sm mt-3.5 text-balance text-fg">
                       {project.title}
                     </h2>
 
                     {/* Clamped so titles and tag rows stay level across a row.
                         These descriptions run from one line to four, which at
                         four-up left every card in the row misaligned. */}
-                    <p className="text-body-sm mt-3 line-clamp-3 flex-1 text-fg-muted">
+                    <p className="text-body-sm mt-2.5 line-clamp-2 flex-1 text-fg-muted">
                       {project.description}
                     </p>
 
-                    <ul className="mt-5 flex flex-wrap gap-2">
-                      {project.tags.map((tag) => (
+                    {/* Two tags, not all of them. A third almost always wraps
+                        to a second row at this width, which costs more height
+                        than the tag is worth. */}
+                    <ul className="mt-4 flex flex-wrap gap-2">
+                      {project.tags.slice(0, 2).map((tag) => (
                         <li key={tag}>
                           <Badge variant="outline">{tag}</Badge>
                         </li>
@@ -195,7 +207,7 @@ export function ProjectGrid() {
                     </ul>
 
                     {link ? (
-                      <div className="mt-6 border-t border-border pt-5">
+                      <div className="mt-4 border-t border-border pt-4">
                         <a
                           href={link.href}
                           {...(link.external

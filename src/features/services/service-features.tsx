@@ -24,6 +24,7 @@ export function ServiceFeatures({
   eyebrow = "In detail",
   lead,
   items,
+  imageFit = "cover",
   tone = "default",
 }: {
   heading: string;
@@ -31,6 +32,12 @@ export function ServiceFeatures({
   eyebrow?: string;
   lead?: string;
   items: readonly ServiceFeature[];
+  /**
+   * How the artwork fills its 16:10 frame. `cover` suits the landscape
+   * photographs most services publish; `contain` is for near-square flat
+   * illustrations, which a 16:10 crop would cut a third of the height from.
+   */
+  imageFit?: "cover" | "contain";
   tone?: "default" | "subtle";
 }) {
   return (
@@ -83,7 +90,12 @@ export function ServiceFeatures({
                   <div
                     className={cn(
                       "group/shot relative aspect-[16/10] overflow-hidden",
-                      "rounded-xl border border-border bg-bg-elevated",
+                      "rounded-xl",
+                      // Fitted artwork is transparent, so the card fill and
+                      // border would box in something with no edges.
+                      imageFit === "contain"
+                        ? "bg-transparent"
+                        : "border border-border bg-bg-elevated",
                     )}
                   >
                     <Image
@@ -94,17 +106,24 @@ export function ServiceFeatures({
                       fill
                       sizes="(min-width: 1024px) 46vw, 92vw"
                       className={cn(
-                        "object-cover transition-transform",
+                        "transition-transform",
                         "duration-(--duration-slow) ease-(--ease-out-expo)",
                         "group-hover/shot:scale-105",
                         "motion-reduce:transition-none motion-reduce:group-hover/shot:scale-100",
+                        imageFit === "contain"
+                          ? "object-contain p-8"
+                          : "object-cover",
                       )}
                     />
-                    {/* Ties the photograph into the page's palette. */}
-                    <span
-                      aria-hidden="true"
-                      className="absolute inset-0 bg-gradient-to-t from-bg/45 via-transparent to-transparent"
-                    />
+                    {/* Ties the photograph into the page's palette. Skipped
+                        for fitted artwork, where it would only dim the empty
+                        frame around the illustration. */}
+                    {imageFit === "contain" ? null : (
+                      <span
+                        aria-hidden="true"
+                        className="absolute inset-0 bg-gradient-to-t from-bg/45 via-transparent to-transparent"
+                      />
+                    )}
                   </div>
                 </Reveal>
               </div>

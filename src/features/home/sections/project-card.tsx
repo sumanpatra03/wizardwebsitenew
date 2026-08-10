@@ -3,22 +3,24 @@ import Image from "next/image";
 import { ArrowLink } from "@/components/common/arrow-link";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
+import { projectLink } from "@/constants/projects";
 import { cn } from "@/lib/utils";
 import type { Project } from "@/types/content";
 
 /**
  * Aspect of the image slot.
  *
- * 9:10 because that is the exact ratio wizardcomm.net publishes its case-card
- * artwork at (360×400). These are poster images with the client's logo set
- * across the top and a headline across the bottom, so any crop tighter than
- * their native ratio cuts through type rather than trimming background — a
- * 16:10 slot would have taken a third of the height and lost a line of it.
+ * Square, against artwork published at 9:10 (360×400). That trims 10% of the
+ * height — 20px from each edge — which is margin on every one of them. It is
+ * the most that can come out of these without cutting into type: they are
+ * poster images with the client's logo across the top and a headline across
+ * the bottom, so a 16:10 slot would take a third of the height and lose a
+ * line of it.
  *
  * The generated fallback uses the same slot, so a project with no image
  * occupies identical space and the rail stays level.
  */
-const MEDIA = "relative aspect-[9/10] overflow-hidden border-b border-border";
+const MEDIA = "relative aspect-square overflow-hidden border-b border-border";
 
 /**
  * Case-study card.
@@ -35,6 +37,8 @@ export function ProjectCard({
   project: Project;
   className?: string;
 }) {
+  const link = projectLink(project);
+
   return (
     <Card interactive className={cn("flex h-full flex-col", className)}>
       {project.image ? (
@@ -74,42 +78,41 @@ export function ProjectCard({
         </div>
       )}
 
-      <div className="flex flex-1 flex-col p-7">
+      <div className="flex flex-1 flex-col p-5">
         <Badge variant="accent" className="self-start">
           {project.category}
         </Badge>
 
-        <h3 className="font-display text-heading-md mt-4 text-fg">
+        <h3 className="font-display text-heading-sm mt-3.5 text-fg">
           {project.title}
         </h3>
 
-        <p className="text-body-sm mt-3 flex-1 text-fg-muted">
+        {/* Clamped so every card in the rail is the same height. These
+            descriptions run from one line to four, and the rail is a single
+            row — one long entry sets the height of all of them. */}
+        <p className="text-body-sm mt-2.5 line-clamp-3 flex-1 text-fg-muted">
           {project.description}
         </p>
 
-        <ul className="mt-5 flex flex-wrap gap-2">
-          {project.tags.map((tag) => (
+        {/* Two tags. A third wraps to a second row at this width, costing
+            more height than the tag is worth. */}
+        <ul className="mt-4 flex flex-wrap gap-2">
+          {project.tags.slice(0, 2).map((tag) => (
             <li key={tag}>
               <Badge variant="outline">{tag}</Badge>
             </li>
           ))}
         </ul>
 
-        {/* Points at the client's own site where there is one, and at the
-            index otherwise: this site publishes no per-project page, so a
-            `/projects/<slug>` link would land on a 404. `stretched` makes the
-            whole card clickable while keeping exactly one labelled link in
-            the tab order. */}
-        <div className="mt-6 border-t border-border pt-5">
-          {project.externalUrl ? (
-            <ArrowLink href={project.externalUrl} stretched>
-              Visit site
-            </ArrowLink>
-          ) : (
-            <ArrowLink href="/projects" stretched>
-              View in projects
-            </ArrowLink>
-          )}
+        {/* Resolved through the same helper the index uses, so a card here
+            and the same card on `/projects` always agree: the case study
+            first, then the client's own site, then the index. `stretched`
+            makes the whole card clickable while keeping exactly one labelled
+            link in the tab order. */}
+        <div className="mt-4 border-t border-border pt-4">
+          <ArrowLink href={link?.href ?? "/projects"} stretched>
+            {link?.label ?? "View in projects"}
+          </ArrowLink>
         </div>
       </div>
     </Card>

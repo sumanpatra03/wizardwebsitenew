@@ -19,11 +19,14 @@ import { cn } from "@/lib/utils";
  */
 export function ServiceProcess({
   heading,
+  eyebrow = "How we work",
   lead,
   steps,
   tone = "default",
 }: {
   heading: string;
+  /** Section kicker. Defaults to the services wording. */
+  eyebrow?: string;
   lead?: string;
   steps: readonly ServiceStep[];
   tone?: "default" | "subtle";
@@ -35,7 +38,7 @@ export function ServiceProcess({
       className={tone === "subtle" ? "border-y border-border" : undefined}
     >
       <Container>
-        <SectionHeading eyebrow="How we work" title={heading} description={lead} />
+        <SectionHeading eyebrow={eyebrow} title={heading} description={lead} />
 
         <Stagger
           stagger={0.07}

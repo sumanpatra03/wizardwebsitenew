@@ -195,7 +195,7 @@ export function HoverCard({
               {card.description}
             </p>
 
-            <Link
+            {/* <Link
               href={card.href}
               className={cn(
                 "mt-5 inline-flex translate-y-4 items-center gap-2 rounded-pill",
@@ -219,7 +219,7 @@ export function HoverCard({
                   "group-hover/panel:translate-x-0.5 motion-reduce:translate-none",
                 )}
               />
-            </Link>
+            </Link> */}
           </div>
         </div>
       </div>

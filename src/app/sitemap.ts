@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 
+import { CASE_STUDIES } from "@/constants/project-pages";
 import { PRODUCTS } from "@/constants/products";
 import { PROJECTS } from "@/constants/projects";
 import { SERVICE_PAGES } from "@/constants/service-pages";
@@ -21,9 +22,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       { url: url("/about-us"), priority: 0.8, changeFrequency: "monthly" },
       { url: url("/why-wizard"), priority: 0.8, changeFrequency: "monthly" },
       { url: url("/services"), priority: 0.9, changeFrequency: "monthly" },
+      { url: url("/industries"), priority: 0.8, changeFrequency: "monthly" },
       { url: url("/products"), priority: 0.9, changeFrequency: "monthly" },
       { url: url("/projects"), priority: 0.8, changeFrequency: "monthly" },
       { url: url("/contact"), priority: 0.7, changeFrequency: "yearly" },
+      { url: url("/career"), priority: 0.6, changeFrequency: "weekly" },
+      { url: url("/privacy-policy"), priority: 0.3, changeFrequency: "yearly" },
     ] satisfies MetadataRoute.Sitemap
   ).map((entry) => ({ ...entry, lastModified }));
 
@@ -31,11 +35,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // which includes services that have no page of their own — submitting those
   // URLs would put three 404s in the sitemap.
   //
-  // Projects are deliberately absent: they are listed on `/projects` but have
-  // no page each, so there is nothing per-project to submit.
+  // Every project now has a page, so all of them belong here — the seven with
+  // a written case study and the fourteen shorter ones alike.
   const dynamicRoutes: MetadataRoute.Sitemap = [
     ...SERVICE_PAGES.map((item) => `/services/${item.slug}`),
     ...PRODUCTS.map((item) => `/products/${item.slug}`),
+    ...PROJECTS.map((item) => `/projects/${item.slug}`),
   ].map((path) => ({
     url: url(path),
     lastModified,

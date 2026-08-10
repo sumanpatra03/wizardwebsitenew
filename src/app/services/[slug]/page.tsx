@@ -16,6 +16,7 @@ import { CLIENTS_COPY } from "@/constants/company";
 import { SERVICE_PAGES, getServicePage } from "@/constants/service-pages";
 import { TESTIMONIALS_HEADING } from "@/constants/testimonials";
 import { RelatedServices } from "@/features/services/related-services";
+import { ServiceCaseStudies } from "@/features/services/service-case-studies";
 import { ServiceCta } from "@/features/services/service-cta";
 import { ServiceFaqs } from "@/features/services/service-faqs";
 import { ServiceFeatures } from "@/features/services/service-features";
@@ -83,6 +84,7 @@ export default async function ServiceDetailPage({
     outcomes,
     tech,
     industries,
+    caseStudies,
     faqs,
   } = page;
 
@@ -128,6 +130,11 @@ export default async function ServiceDetailPage({
       <ServiceIndustries key="industries" {...industries} tone={tone} />
     ));
   }
+  if (caseStudies) {
+    blocks.push((tone) => (
+      <ServiceCaseStudies key="case-studies" {...caseStudies} tone={tone} />
+    ));
+  }
   // The FAQ is deliberately not in this list — it renders near the foot of the
   // page, after the proof sections, where it answers the last objections
   // standing between someone and the call to action.
@@ -156,10 +163,16 @@ export default async function ServiceDetailPage({
         )}
       />
 
+      {/* Fitted artwork gets no frame at all. These are transparent
+          illustrations, so a bordered, filled card would draw a box around
+          something that has no edges — and the padding inside it would read
+          as a mount rather than as part of the page. */}
       <div
         className={cn(
           "relative aspect-[16/9] w-full overflow-hidden rounded-xl",
-          "border border-border shadow-card",
+          page.imageFit === "contain"
+            ? "bg-transparent"
+            : "border border-border shadow-card",
         )}
       >
         <Image
@@ -171,12 +184,18 @@ export default async function ServiceDetailPage({
           // The larger of the two hero columns from `lg`, near-full width
           // below it.
           sizes="(min-width: 1024px) 54vw, 92vw"
-          className="object-cover"
+          className={
+            page.imageFit === "contain" ? "object-contain p-6" : "object-cover"
+          }
         />
-        <span
-          aria-hidden="true"
-          className="absolute inset-0 bg-gradient-to-t from-bg/35 to-transparent"
-        />
+        {/* The scrim settles a photograph into the page. Over `contain`
+            artwork it would only dim the empty frame around it. */}
+        {page.imageFit === "contain" ? null : (
+          <span
+            aria-hidden="true"
+            className="absolute inset-0 bg-gradient-to-t from-bg/35 to-transparent"
+          />
+        )}
       </div>
     </div>
   );
@@ -241,7 +260,7 @@ export default async function ServiceDetailPage({
             eyebrow={CLIENTS_COPY.eyebrow}
             title="Trusted by corporates and government alike."
             description={CLIENTS_COPY.body}
-          />
+            />
           <ClientWall variant="carousel" className="mt-14" />
         </Container>
       </Section>
@@ -249,12 +268,12 @@ export default async function ServiceDetailPage({
       <TestimonialsCarousel
         eyebrow="Client Voices"
         title={TESTIMONIALS_HEADING}
-      />
+        />
 
       {/* `default`, not the component's own `subtle`: the testimonials band
           directly above is subtle, and two together would merge into one
           undifferentiated block. */}
-      {faqs ? <ServiceFaqs {...faqs} tone="default" /> : null}
+          {faqs ? <ServiceFaqs {...faqs} tone="default" /> : null}
 
       <RelatedServices currentSlug={page.slug} />
 

@@ -1,5 +1,7 @@
 import type { Project } from "@/types/content";
 
+import { hasCaseStudy } from "./project-pages";
+
 /**
  * The twenty projects published on wizardcomm.net/projects. Descriptions are
  * the client's own copy.
@@ -46,6 +48,16 @@ export const PROJECTS: readonly Project[] = [
     monogram: "IT",
     image: "/projects/itc-limited.jpg",
     tags: ["Enterprise", "Workflow", "FMCG"],
+  },
+  {
+    slug: "aim",
+    title: "AIM",
+    category: "Software Application",
+    description:
+      "Smart asset management enabling innovation, efficiency, automation, scalability, and business growth.",
+    monogram: "AI",
+    image: "/projects/aim.webp",
+    tags: ["Asset Management", "Automation"],
   },
    {
     slug: "k-middle-east",
@@ -138,6 +150,16 @@ export const PROJECTS: readonly Project[] = [
     tags: ["Hospitality", "Inventory", "POS"],
   },
  
+  {
+    slug: "dastur-energy",
+    title: "Dastur Energy",
+    category: "Web Project",
+    description:
+      "A leading sustainable and clean energy company working with industry leaders globally. They needed a user-friendly platform to showcase clean energy solutions without complexity — a minimalistic site with ample white space, built on WordPress, which improved lead quality, traffic and conversion rates.",
+    monogram: "DE",
+    image: "/projects/dastur-energy.jpg",
+    tags: ["Web Platform", "WordPress", "Clean Energy"],
+  },
   {
     slug: "sunbridge",
     title: "Sunbridge",
@@ -306,22 +328,22 @@ export const PROJECTS_COPY = {
 /**
  * Where a project card should lead, and what its control should say.
  *
- * Three cases, in order: the client's own site; this page's own gallery
- * section for the two projects the live site opens in a modal; and nothing at
- * all for the seven case studies wizardcomm.net publishes that this site has
- * not built yet. A card that links into a 404 is worse than a card that does
- * not link, so the last case returns `undefined` and the card renders inert.
+ * Every project now has a page of its own, so the destination is always
+ * on-site: the seven with a write-up say so, and the rest lead to a shorter
+ * page carrying the artwork, the description and a link out to the client.
+ *
+ * That is deliberately not the client's own site. Sending a reader off-site
+ * from a portfolio card is the one click you cannot get back, and it skips
+ * the only page where the work is framed as ours.
  */
 export function projectLink(
   project: Project,
-): { href: string; label: string; external: boolean } | undefined {
-  if (project.externalUrl) {
-    return { href: project.externalUrl, label: "Visit site", external: true };
-  }
-  if (project.gallery) {
-    return { href: `#${project.slug}`, label: "See the gallery", external: false };
-  }
-  return undefined;
+): { href: string; label: string; external: boolean } {
+  return {
+    href: `/projects/${project.slug}`,
+    label: hasCaseStudy(project.slug) ? "Read the case study" : "View project",
+    external: false,
+  };
 }
 
 /** Every category present, in descending order of how many projects use it. */
