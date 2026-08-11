@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ClientWall } from "@/components/common/client-wall";
 import { JsonLd } from "@/components/common/json-ld";
 import { Container } from "@/components/layout/container";
+import { HeroImage } from "@/components/layout/hero-image";
 import { PageHero } from "@/components/layout/page-hero";
 import { Section } from "@/components/layout/section";
 import { SectionHeading } from "@/components/layout/section-heading";
@@ -55,11 +56,12 @@ export default function WhyWizardPage() {
         eyebrow={WHY_WIZARD_PAGE.eyebrow}
         titleLines={WHY_WIZARD_PAGE.titleLines}
         lead={WHY_WIZARD_PAGE.lead}
+        aside={<HeroImage src="/about/growth-meeting.webp" aspect="3/2" />}
       >
-        <p className="text-body-lg mb-8 max-w-2xl text-fg-muted">
+        <p className="text-body-lg text-fg-muted mb-8 max-w-2xl">
           {WHY_WIZARD_PAGE.body}
         </p>
-        <p className="font-display text-heading-md mb-8 text-accent">
+        <p className="font-display text-heading-md text-accent mb-8">
           {WHY_WIZARD_PAGE.emphasis}
         </p>
         <Button asChild size="lg">
@@ -74,13 +76,11 @@ export default function WhyWizardPage() {
       </PageHero>
 
       {/* Beyond deliverables */}
-      <Section tone="subtle" backdrop className="border-y border-border">
+      <Section tone="subtle" backdrop className="border-border border-y">
         <Container>
           <div className="grid gap-12 lg:grid-cols-12 lg:gap-12">
             <Reveal className="lg:col-span-5">
-              <h2 className="text-display-lg text-balance text-fg">
-                {BEYOND.title}
-              </h2>
+              <h2 className="text-display-lg text-fg text-balance">{BEYOND.title}</h2>
             </Reveal>
 
             <div className="lg:col-span-7">
@@ -98,13 +98,11 @@ export default function WhyWizardPage() {
               </Stagger>
 
               <Reveal delay={0.2}>
-                <p className="text-body-lg mt-8 text-fg-muted">
-                  {BEYOND.difference}
-                </p>
-                <p className="font-display text-heading-md mt-6 text-accent">
+                <p className="text-body-lg text-fg-muted mt-8">{BEYOND.difference}</p>
+                <p className="font-display text-heading-md text-accent mt-6">
                   {BEYOND.hook}
                 </p>
-                <p className="text-body-lg mt-6 text-fg-muted">{BEYOND.body}</p>
+                <p className="text-body-lg text-fg-muted mt-6">{BEYOND.body}</p>
               </Reveal>
             </div>
           </div>
@@ -118,20 +116,20 @@ export default function WhyWizardPage() {
 
           <Stagger
             stagger={0.12}
-            className="mt-14 grid gap-10 border-y border-border py-14 sm:grid-cols-3 sm:gap-8"
+            className="border-border mt-14 grid gap-10 border-y py-14 sm:grid-cols-3 sm:gap-8"
           >
             {STATS.map((stat, index) => (
               <StaggerItem
                 key={stat.label}
                 className={
-                  index > 0 ? "sm:border-l sm:border-border sm:pl-8" : "sm:pr-2"
+                  index > 0 ? "sm:border-border sm:border-l sm:pl-8" : "sm:pr-2"
                 }
               >
-                <p className="font-display text-display-xl leading-none text-fg">
+                <p className="font-display text-display-xl text-fg leading-none">
                   <CountUp value={stat.value} suffix={stat.suffix} />
                   <span className="sr-only"> {stat.label}</span>
                 </p>
-                <p className="text-body-base mt-4 max-w-xs text-fg-muted">
+                <p className="text-body-base text-fg-muted mt-4 max-w-xs">
                   {NUMBER_CAPTIONS[index]}
                 </p>
               </StaggerItem>
@@ -147,7 +145,7 @@ export default function WhyWizardPage() {
           the beams and the chart lines read as two competing patterns. */}
       <Section
         tone="subtle"
-        className="relative overflow-hidden border-y border-border"
+        className="border-border relative overflow-hidden border-y"
       >
         <div aria-hidden="true" className="absolute inset-0 -z-10">
           <Image
@@ -159,8 +157,8 @@ export default function WhyWizardPage() {
           />
           {/* Flat scrim, not the directional one About Us uses — the cards
               here run the full width, so no side can be left uncovered. */}
-          <div className="absolute inset-0 bg-bg-subtle/88" />
-          <div className="absolute inset-0 bg-gradient-to-b from-bg-subtle via-transparent to-bg-subtle" />
+          <div className="bg-bg-subtle/88 absolute inset-0" />
+          <div className="from-bg-subtle to-bg-subtle absolute inset-0 bg-gradient-to-b via-transparent" />
         </div>
 
         <Container>
@@ -190,10 +188,10 @@ export default function WhyWizardPage() {
                     >
                       <Icon className="size-5" />
                     </span>
-                    <h3 className="font-display text-heading-md mt-6 text-fg">
+                    <h3 className="font-display text-heading-md text-fg mt-6">
                       {item.name}
                     </h3>
-                    <p className="text-body-sm mt-3 text-fg-muted">{item.body}</p>
+                    <p className="text-body-sm text-fg-muted mt-3">{item.body}</p>
                   </Card>
                 </StaggerItem>
               );
@@ -208,7 +206,7 @@ export default function WhyWizardPage() {
           <div className="grid gap-14 lg:grid-cols-12 lg:gap-12">
             <div className="lg:col-span-5">
               <Reveal>
-                <h2 className="text-display-lg text-balance text-fg">
+                <h2 className="text-display-lg text-fg text-balance">
                   {CHOOSE_WIZARD.title}
                 </h2>
               </Reveal>
@@ -219,11 +217,11 @@ export default function WhyWizardPage() {
                     key={reason}
                     as="p"
                     direction="left"
-                    className="text-body-lg flex items-start gap-3 text-fg"
+                    className="text-body-lg text-fg flex items-start gap-3"
                   >
                     <span
                       aria-hidden="true"
-                      className="mt-1.5 grid size-5 shrink-0 place-items-center rounded-pill bg-accent-muted text-accent"
+                      className="rounded-pill bg-accent-muted text-accent mt-1.5 grid size-5 shrink-0 place-items-center"
                     >
                       <Check className="size-3" strokeWidth={3} />
                     </span>
@@ -233,12 +231,9 @@ export default function WhyWizardPage() {
               </Stagger>
 
               <Reveal delay={0.3}>
-                <div className="mt-10 border-l-2 border-accent pl-6">
+                <div className="border-accent mt-10 border-l-2 pl-6">
                   {CHOOSE_WIZARD.closing.map((line) => (
-                    <p
-                      key={line}
-                      className="font-display text-heading-md text-fg"
-                    >
+                    <p key={line} className="font-display text-heading-md text-fg">
                       {line}
                     </p>
                   ))}
@@ -256,10 +251,10 @@ export default function WhyWizardPage() {
                   <StaggerItem key={item.title}>
                     <div
                       className={cn(
-                        "group/card h-full rounded-xl border border-border bg-surface p-6",
+                        "group/card border-border bg-surface h-full rounded-xl border p-6",
                         "transition-[border-color,box-shadow,transform]",
                         "duration-(--duration-fast) ease-(--ease-out-quart)",
-                        "hover:-translate-y-1 hover:border-accent/45 hover:shadow-card-hover",
+                        "hover:border-accent/45 hover:shadow-card-hover hover:-translate-y-1",
                         "motion-reduce:hover:translate-y-0",
                       )}
                     >
@@ -274,10 +269,10 @@ export default function WhyWizardPage() {
                       >
                         <Icon className="size-5" />
                       </span>
-                      <h3 className="font-display text-heading-sm mt-5 text-balance text-fg">
+                      <h3 className="font-display text-heading-sm text-fg mt-5 text-balance">
                         {item.title}
                       </h3>
-                      <p className="text-body-sm mt-2 text-fg-muted">
+                      <p className="text-body-sm text-fg-muted mt-2">
                         {item.description}
                       </p>
                     </div>
@@ -290,7 +285,7 @@ export default function WhyWizardPage() {
       </Section>
 
       {/* Featured clients */}
-      <Section tone="subtle" backdrop className="border-y border-border">
+      <Section tone="subtle" backdrop className="border-border border-y">
         <Container>
           <SectionHeading
             eyebrow={CLIENTS_COPY.eyebrow}

@@ -155,42 +155,49 @@ export const TEAM = {
   title: "Turning possibilities into performance.",
 } as const;
 
+/**
+ * Leadership, in the order the business ranks them.
+ *
+ * The bios run to five or six sentences each. That is deliberate — they are
+ * written to be read — so the card shows an opening and the full text opens in
+ * a dialog rather than being truncated with no way to reach the rest.
+ */
 export const LEADERSHIP: readonly Leader[] = [
   {
     name: "Sumit Sarkar",
-    role: "CEO",
+    role: "Founder & Chief Executive Officer",
     photo: "/team/sumit-sarkar.jpg",
-    bio: "Founder & CEO with 20+ years of experience driving innovation across design services, software solutions, interaction design, and product management, leading strategy and delivering impactful, user-centric products.",
+    bio: "What began as a small, humble venture has grown into a company at the forefront of technology and design. Over more than two decades in the industry, Sumit has built a rare blend of design sensibility, strategic vision, and hands-on product leadership, shaping Wizard Communications at every stage of its growth. His career reflects a deep commitment to creating solutions that are as impactful as they are intuitive — a philosophy that continues to define Wizard's vision and its place in the industry today.",
   },
   {
     name: "Biswajit Banerjee",
-    role: "CTO",
+    role: "Chief Technology Officer",
     photo: "/team/biswajit-banerjee.jpg",
-    bio: "Engineering leader with 14+ years of experience driving scalable solutions and technical strategy with a strong foundation in software development and team leadership.",
+    bio: "At Wizard Communications, Biswajit is the one who turns bold ideas into working technology. He brings a distinguished record of technical leadership, shaped by years of delivering scalable, high-impact solutions across some of the industry's most demanding environments. His strength lies in translating ambition into robust, real-world systems — a capability that now drives Wizard's engineering vision and continues to set the technical standard the company strives for.",
   },
   {
     name: "Vishwarup Bal",
-    role: "IT Manager & Sr. Development",
+    role: "Leader – Engineering & Technology Infrastructure",
     photo: "/team/vishwarup-bal.jpg",
-    bio: "IT Manager and Software Development Engineer with 20+ years of experience, delivering reliable, scalable solutions across the development lifecycle with a strong focus on quality, performance, and continuous improvement.",
-  },
-  {
-    name: "Anup Kumar Ghosh",
-    role: "Senior IT Manager",
-    photo: "/team/anup-kumar-ghosh.webp",
-    bio: "Expert in .NET with 19+ years of experience in client/server and web development, delivering end-to-end solutions with strong problem-solving, efficient decision-making, and a focus on high customer satisfaction and optimized operational costs.",
-  },
-  {
-    name: "Joydeep Mukherjee",
-    role: "Senior Software Engineer",
-    photo: "/team/joydeep-mukherjee.webp",
-    bio: "Senior Software Engineer with 13+ years of experience specializing in Microsoft SQL Server and ASP.NET technologies, delivering robust solutions and driving innovation through continuous improvement.",
+    bio: "At Wizard Communications, Vishwarup is the one who builds the systems that let great ideas thrive. He brings extensive experience in delivering reliable, high-performing solutions across the full development lifecycle, from infrastructure to execution. His natural instinct for operational discipline, combined with a sharp focus on quality, reliability, and continuous improvement, makes him the steady hand behind Wizard's engineering delivery and technology infrastructure.",
   },
   {
     name: "Tirthankar Dey",
-    role: "Senior Software Engineer",
+    role: "Solutions Architect",
     photo: "/team/tirthankar-dey.webp",
-    bio: "Software professional with 14 years of experience in .NET technologies, specializing in system design, application development, client collaboration, and delivering high-quality solutions through strong technical and problem-solving expertise.",
+    bio: "Some engineers write code — Tirthankar builds systems that last. Fluent in the Microsoft technology stack, he brings extensive experience delivering solutions across a wide range of complex projects. His natural instinct for translating business requirements into clean, well-architected systems, combined with his collaborative approach and attention to detail, makes him one of the trusted problem-solvers on Wizard's engineering team.",
+  },
+  {
+    name: "Anup Kumar Ghosh",
+    role: "Client Solutions Leader",
+    photo: "/team/anup-kumar-ghosh.webp",
+    bio: "At Wizard Communications, Anup is the one who makes sure every client relationship translates into meaningful technical results. He brings extensive experience delivering end-to-end solutions across client and server environments, with a sharp instinct for solving complex problems efficiently. His focus on strong client collaboration, practical solutions, and optimized outcomes has made him a trusted force behind some of Wizard's most successful engagements.",
+  },
+  {
+    name: "Joydeep Mukherjee",
+    role: "Lead Database & Backend Engineer",
+    photo: "/team/joydeep-mukherjee.webp",
+    bio: "At Wizard Communications, Joydeep is the one who makes sure the systems underneath every application remain fast, stable, and secure. He brings extensive experience in building robust backend architectures and data infrastructure, with a sharp focus on precision, performance, and reliability. His commitment to clean engineering and continuous improvement makes him a key force behind the dependable technical foundations that power Wizard's solutions.",
   },
 ] as const;
 

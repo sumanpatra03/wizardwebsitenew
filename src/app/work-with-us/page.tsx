@@ -5,17 +5,14 @@ import { ClientWall } from "@/components/common/client-wall";
 import { JsonLd } from "@/components/common/json-ld";
 import { TestimonialsCarousel } from "@/components/common/testimonials-carousel";
 import { Container } from "@/components/layout/container";
+import { HeroImage } from "@/components/layout/hero-image";
 import { PageHero } from "@/components/layout/page-hero";
 import { Section } from "@/components/layout/section";
 import { SectionHeading } from "@/components/layout/section-heading";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion/reveal";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import {
-  CLIENTS_COPY,
-  ENGAGEMENT_MODELS,
-  WORK_WITH_US,
-} from "@/constants/company";
+import { CLIENTS_COPY, ENGAGEMENT_MODELS, WORK_WITH_US } from "@/constants/company";
 import { SITE } from "@/constants/site";
 import { TECH_CATEGORIES } from "@/constants/tech-stack";
 import { TESTIMONIALS_HEADING } from "@/constants/testimonials";
@@ -44,10 +41,11 @@ export default function WorkWithUsPage() {
         eyebrow={WORK_WITH_US.eyebrow}
         titleLines={WORK_WITH_US.titleLines}
         lead={WORK_WITH_US.lead}
+        aside={<HeroImage src="/about/team-brainstorming.webp" />}
       />
 
       {/* Engagement models */}
-      <Section tone="subtle" backdrop className="border-y border-border">
+      <Section tone="subtle" backdrop className="border-border border-y">
         <Container>
           <SectionHeading
             eyebrow="How It Works"
@@ -77,23 +75,23 @@ export default function WorkWithUsPage() {
                     {String(index + 1).padStart(2, "0")}
                   </span>
 
-                  <h3 className="font-display text-heading-md mt-5 text-balance text-fg">
+                  <h3 className="font-display text-heading-md text-fg mt-5 text-balance">
                     {model.name}
                   </h3>
 
-                  <p className="text-body-sm mt-3 flex-1 text-fg-muted">
+                  <p className="text-body-sm text-fg-muted mt-3 flex-1">
                     {model.summary}
                   </p>
 
-                  <ul className="mt-6 flex flex-col gap-2.5 border-t border-border pt-6">
+                  <ul className="border-border mt-6 flex flex-col gap-2.5 border-t pt-6">
                     {model.detail.map((point) => (
                       <li
                         key={point}
-                        className="text-body-sm flex items-start gap-2.5 text-fg-muted"
+                        className="text-body-sm text-fg-muted flex items-start gap-2.5"
                       >
                         <Check
                           aria-hidden="true"
-                          className="mt-1 size-3.5 shrink-0 text-accent"
+                          className="text-accent mt-1 size-3.5 shrink-0"
                           strokeWidth={3}
                         />
                         {point}
@@ -113,10 +111,10 @@ export default function WorkWithUsPage() {
           <div className="grid gap-12 lg:grid-cols-12 lg:gap-10">
             <div className="lg:col-span-7">
               <Reveal>
-                <p className="text-label mb-6 uppercase text-accent">
+                <p className="text-label text-accent mb-6 uppercase">
                   {WORK_WITH_US.culture.eyebrow}
                 </p>
-                <h2 className="text-display-lg text-balance text-fg">
+                <h2 className="text-display-lg text-fg text-balance">
                   {WORK_WITH_US.culture.title}
                 </h2>
               </Reveal>
@@ -126,7 +124,7 @@ export default function WorkWithUsPage() {
                   <StaggerItem
                     key={paragraph.slice(0, 40)}
                     as="p"
-                    className="text-body-lg max-w-xl text-fg-muted"
+                    className="text-body-lg text-fg-muted max-w-xl"
                   >
                     {paragraph}
                   </StaggerItem>
@@ -134,7 +132,7 @@ export default function WorkWithUsPage() {
               </Stagger>
 
               <Reveal delay={0.28}>
-                <p className="font-display text-heading-md mt-8 text-accent">
+                <p className="font-display text-heading-md text-accent mt-8">
                   {WORK_WITH_US.culture.closing}
                 </p>
                 <div className="mt-9 flex flex-wrap items-center gap-4">
@@ -147,9 +145,7 @@ export default function WorkWithUsPage() {
                       />
                     </a>
                   </Button>
-                  <p className="text-body-sm text-fg-subtle">
-                    {SITE.contact.email}
-                  </p>
+                  <p className="text-body-sm text-fg-subtle">{SITE.contact.email}</p>
                 </div>
               </Reveal>
             </div>
@@ -157,14 +153,14 @@ export default function WorkWithUsPage() {
             {/* What you would be working with. */}
             <Reveal delay={0.2} className="lg:col-span-5">
               <Card className="h-full p-7 sm:p-8">
-                <p className="text-label uppercase text-accent">Our Stack</p>
+                <p className="text-label text-accent uppercase">Our Stack</p>
                 <ul className="mt-6 flex flex-col gap-5">
                   {TECH_CATEGORIES.map((category) => (
                     <li key={category.label}>
-                      <p className="text-body-sm font-semibold text-fg">
+                      <p className="text-body-sm text-fg font-semibold">
                         {category.label}
                       </p>
-                      <p className="text-body-sm mt-1 text-fg-muted">
+                      <p className="text-body-sm text-fg-muted mt-1">
                         {category.items.join(" · ")}
                       </p>
                     </li>
@@ -177,7 +173,7 @@ export default function WorkWithUsPage() {
       </Section>
 
       {/* Featured clients */}
-      <Section tone="subtle" backdrop className="border-y border-border">
+      <Section tone="subtle" backdrop className="border-border border-y">
         <Container>
           <SectionHeading
             eyebrow={CLIENTS_COPY.eyebrow}

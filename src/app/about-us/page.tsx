@@ -6,6 +6,7 @@ import { JsonLd } from "@/components/common/json-ld";
 import { TestimonialsCarousel } from "@/components/common/testimonials-carousel";
 import { Timeline } from "@/components/common/timeline";
 import { Container } from "@/components/layout/container";
+import { HeroImage } from "@/components/layout/hero-image";
 import { PageHero } from "@/components/layout/page-hero";
 import { Section } from "@/components/layout/section";
 import { SectionHeading } from "@/components/layout/section-heading";
@@ -28,6 +29,7 @@ import {
 } from "@/constants/company";
 import { STATS } from "@/constants/stats";
 import { TESTIMONIALS_HEADING } from "@/constants/testimonials";
+import { TeamCarousel } from "@/features/about/team-carousel";
 import { CtaBand } from "@/features/home/sections/cta-band";
 import { breadcrumbJsonLd } from "@/lib/jsonld";
 import { buildMetadata } from "@/lib/seo";
@@ -54,6 +56,7 @@ export default function AboutUsPage() {
         eyebrow={ABOUT.eyebrow}
         titleLines={ABOUT.titleLines}
         lead={ABOUT.lead}
+        aside={<HeroImage src="/about/team-work.webp" />}
       />
 
       {/* Proof points */}
@@ -61,20 +64,20 @@ export default function AboutUsPage() {
         <Container>
           <Stagger
             stagger={0.12}
-            className="grid gap-10 border-y border-border py-14 sm:grid-cols-3 sm:gap-8"
+            className="border-border grid gap-10 border-y py-14 sm:grid-cols-3 sm:gap-8"
           >
             {STATS.map((stat, index) => (
               <StaggerItem
                 key={stat.label}
                 className={
-                  index > 0 ? "sm:border-l sm:border-border sm:pl-8" : "sm:pr-2"
+                  index > 0 ? "sm:border-border sm:border-l sm:pl-8" : "sm:pr-2"
                 }
               >
-                <p className="font-display text-display-xl leading-none text-fg">
+                <p className="font-display text-display-xl text-fg leading-none">
                   <CountUp value={stat.value} suffix={stat.suffix} />
                   <span className="sr-only"> {stat.label}</span>
                 </p>
-                <p className="text-body-base mt-4 max-w-xs text-fg-muted">
+                <p className="text-body-base text-fg-muted mt-4 max-w-xs">
                   {stat.description}
                 </p>
               </StaggerItem>
@@ -90,7 +93,7 @@ export default function AboutUsPage() {
       <Section spacing="sm">
         <Container size="wide">
           <Reveal direction="scale">
-            <div className="relative aspect-16/10 w-full overflow-hidden rounded-xl border border-border sm:aspect-21/9">
+            <div className="border-border relative aspect-16/10 w-full overflow-hidden rounded-xl border sm:aspect-21/9">
               <Image
                 src="/about/team-group.jpeg"
                 alt="The Wizard Communications team together at an office gathering."
@@ -101,7 +104,7 @@ export default function AboutUsPage() {
               {/* Keeps the photo in the page's palette without hiding faces. */}
               <div
                 aria-hidden="true"
-                className="absolute inset-0 bg-gradient-to-t from-bg/50 via-transparent to-transparent"
+                className="from-bg/50 absolute inset-0 bg-gradient-to-t via-transparent to-transparent"
               />
             </div>
           </Reveal>
@@ -113,8 +116,8 @@ export default function AboutUsPage() {
         <Container>
           <div className="grid gap-10 lg:grid-cols-12 lg:gap-12">
             <Reveal className="lg:col-span-5">
-              <p className="text-label uppercase text-accent">{STORY.eyebrow}</p>
-              <h2 className="text-display-md mt-5 text-balance text-fg">
+              <p className="text-label text-accent uppercase">{STORY.eyebrow}</p>
+              <h2 className="text-display-md text-fg mt-5 text-balance">
                 {STORY.title}
               </h2>
             </Reveal>
@@ -137,7 +140,7 @@ export default function AboutUsPage() {
       {/* Where Vision Meets Velocity.
           Carries the same growth-chart backdrop the live page uses on this
           container, behind a scrim heavy enough to keep the copy at AA. */}
-      <Section className="relative overflow-hidden border-y border-border">
+      <Section className="border-border relative overflow-hidden border-y">
         <div aria-hidden="true" className="absolute inset-0 -z-10">
           <Image
             src="/about/growth-backdrop.webp"
@@ -146,30 +149,26 @@ export default function AboutUsPage() {
             sizes="100vw"
             className="object-cover object-right"
           />
-          <div className="absolute inset-0 bg-bg/82" />
-          <div className="absolute inset-0 bg-gradient-to-r from-bg via-bg/70 to-transparent" />
+          <div className="bg-bg/82 absolute inset-0" />
+          <div className="from-bg via-bg/70 absolute inset-0 bg-gradient-to-r to-transparent" />
         </div>
 
         <Container>
           <Reveal>
-            <h2 className="text-display-lg max-w-3xl text-balance text-fg">
+            <h2 className="text-display-lg text-fg max-w-3xl text-balance">
               {VELOCITY.title}
             </h2>
-            <p className="text-body-lg mt-6 max-w-3xl text-fg-muted">
-              {VELOCITY.lead}
-            </p>
+            <p className="text-body-lg text-fg-muted mt-6 max-w-3xl">{VELOCITY.lead}</p>
           </Reveal>
 
           <Reveal delay={0.12}>
-            <p className="font-display text-display-md mt-10 max-w-3xl text-balance text-accent">
+            <p className="font-display text-display-md text-accent mt-10 max-w-3xl text-balance">
               {VELOCITY.emphasis}
             </p>
           </Reveal>
 
           <Reveal delay={0.2}>
-            <p className="text-body-lg mt-8 max-w-3xl text-fg-muted">
-              {VELOCITY.body}
-            </p>
+            <p className="text-body-lg text-fg-muted mt-8 max-w-3xl">{VELOCITY.body}</p>
           </Reveal>
         </Container>
       </Section>
@@ -177,18 +176,13 @@ export default function AboutUsPage() {
       {/* Mission, Values, Vision */}
       <Section>
         <Container>
-          <Stagger
-            stagger={0.1}
-            className="grid gap-5 md:grid-cols-2 lg:grid-cols-3"
-          >
+          <Stagger stagger={0.1} className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
             {PILLARS.map((pillar) => (
               <StaggerItem key={pillar.label}>
                 <Card className="h-full p-7 sm:p-8">
-                  <p className="text-label uppercase text-accent">
-                    {pillar.label}
-                  </p>
+                  <p className="text-label text-accent uppercase">{pillar.label}</p>
                   {"lead" in pillar && pillar.lead ? (
-                    <p className="font-display text-heading-md mt-5 text-balance text-fg">
+                    <p className="font-display text-heading-md text-fg mt-5 text-balance">
                       {pillar.lead}
                     </p>
                   ) : null}
@@ -208,7 +202,7 @@ export default function AboutUsPage() {
       </Section>
 
       {/* Milestones */}
-      <Section tone="subtle" backdrop className="border-y border-border">
+      <Section tone="subtle" backdrop className="border-border border-y">
         <Container>
           <SectionHeading eyebrow={MILESTONES.eyebrow} title={MILESTONES.title} />
           <Timeline entries={TIMELINE} />
@@ -220,43 +214,7 @@ export default function AboutUsPage() {
         <Container>
           <SectionHeading eyebrow={TEAM.eyebrow} title={TEAM.title} />
 
-          <Stagger
-            stagger={0.07}
-            className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
-          >
-            {LEADERSHIP.map((leader) => (
-              <StaggerItem key={leader.name}>
-                <Card interactive className="h-full overflow-hidden">
-                  <div className="relative aspect-4/3 overflow-hidden border-b border-border">
-                    <Image
-                      src={leader.photo}
-                      alt={`${leader.name}, ${leader.role}`}
-                      fill
-                      sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 90vw"
-                      className={cn(
-                        "object-cover object-top",
-                        "transition-transform duration-(--duration-base)",
-                        "ease-(--ease-out-expo) group-hover/card:scale-105",
-                        "motion-reduce:scale-none motion-reduce:transition-none",
-                      )}
-                    />
-                    {/* Ties the portrait into the card's palette. */}
-                    <span className="absolute inset-0 bg-gradient-to-t from-surface/60 via-transparent to-transparent" />
-                  </div>
-
-                  <div className="p-7">
-                    <h3 className="font-display text-heading-md text-fg">
-                      {leader.name}
-                    </h3>
-                    <p className="text-label mt-1.5 uppercase text-accent">
-                      {leader.role}
-                    </p>
-                    <p className="text-body-sm mt-4 text-fg-muted">{leader.bio}</p>
-                  </div>
-                </Card>
-              </StaggerItem>
-            ))}
-          </Stagger>
+          <TeamCarousel leaders={LEADERSHIP} />
         </Container>
       </Section>
 
@@ -273,22 +231,20 @@ export default function AboutUsPage() {
       </Section>
 
       {/* Growth partner */}
-      <Section tone="subtle" backdrop className="border-y border-border">
+      <Section tone="subtle" backdrop className="border-border border-y">
         <Container>
           <div className="mx-auto max-w-4xl text-center">
             <Reveal>
-              <p className="text-label uppercase text-accent">
+              <p className="text-label text-accent uppercase">
                 {GROWTH_PARTNER.eyebrow}
               </p>
-              <h2 className="text-display-lg mt-5 text-balance text-fg">
+              <h2 className="text-display-lg text-fg mt-5 text-balance">
                 {GROWTH_PARTNER.title}
               </h2>
-              <p className="text-body-lg mt-6 text-fg-muted">
-                {GROWTH_PARTNER.body}
-              </p>
+              <p className="text-body-lg text-fg-muted mt-6">{GROWTH_PARTNER.body}</p>
             </Reveal>
             <Reveal delay={0.12}>
-              <p className="font-display text-heading-md mt-8 text-accent">
+              <p className="font-display text-heading-md text-accent mt-8">
                 {GROWTH_PARTNER.emphasis}
               </p>
             </Reveal>
@@ -300,7 +256,7 @@ export default function AboutUsPage() {
               <span
                 className={cn(
                   "mt-10 inline-grid h-20 place-items-center rounded-xl",
-                  "bg-white px-8 ring-1 ring-ink-950/8",
+                  "ring-ink-950/8 bg-white px-8 ring-1",
                 )}
               >
                 <Image

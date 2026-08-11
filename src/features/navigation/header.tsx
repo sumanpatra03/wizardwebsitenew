@@ -187,7 +187,7 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-2 sm:gap-3">
-          <ThemeToggle />
+          {/* <ThemeToggle /> */}
           <Button asChild size="sm" className="hidden sm:inline-flex">
             <Link href={HEADER_CTA.href}>{HEADER_CTA.label}</Link>
           </Button>
