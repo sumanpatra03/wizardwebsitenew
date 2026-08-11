@@ -329,7 +329,7 @@ export const CLIENT_LOGOS = [
   { name: "CDEC", src: "/clients/cdec.webp" },
   { name: "Crimzon Glow", src: "/clients/crimzon-glow.webp" },
   { name: "Service Works", src: "/clients/service-works.png" },
-  { name: "Trased", src: "/clients/trased.webp" },
+  // { name: "Trased", src: "/clients/trased.webp" },
 ] as const;
 
 /* ------------------------------------------------------------------ */

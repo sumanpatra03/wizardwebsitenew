@@ -7,8 +7,8 @@ import { cn } from "@/lib/utils";
 type ClientWallProps = {
   className?: string;
   /**
-   * `grid` is the static monochrome wall. `carousel` is a continuously
-   * scrolling strip of full-colour marks on light chips.
+   * `grid` is the static wall, `carousel` the continuously scrolling strip.
+   * Both render the marks monochrome.
    */
   variant?: "grid" | "carousel";
   /** Carousel only. Seconds for one full loop; larger is slower. */
@@ -16,34 +16,27 @@ type ClientWallProps = {
 };
 
 /**
- * Client logos.
+ * Client logos, in two layouts and one treatment.
  *
- * ## `grid` — monochrome
+ * ## The treatment
  *
- * Rendered monochrome — white on the dark theme, black on light — via
- * `[data-client-logo]` in `globals.css`.
+ * Both variants render the marks monochrome — white on the dark theme, black
+ * on light — via `[data-client-logo]` in `globals.css`, with nothing behind
+ * them.
  *
  * That is not a stylistic whim. Eight of the eleven published marks are dark
  * ink on a transparent background (measured average ink luminance below 90),
- * so they are effectively invisible on this site's canvas. Tinting the whole
- * set to a single colour is the only treatment that renders all eleven
- * legibly in both themes without editing anyone's logo, and it is the usual
- * convention for a wall like this.
+ * so untinted they are effectively invisible on this site's canvas. Tinting
+ * the whole set to a single colour is the only treatment that renders all
+ * eleven legibly in both themes without a surface behind each one and without
+ * editing anyone's logo — and it is the usual convention for a wall like this.
  *
- * ## `carousel` — full colour
+ * ## The layouts
  *
- * Same logos, untinted, each on its own identical light tile.
- *
- * The tile is doing two jobs. It is what lets brand colour survive the dark
- * theme: the marks above are near-black ink on transparency, so a light
- * surface beneath them is the only thing that makes colour legible on both
- * canvases short of re-cutting eleven logo files. And it is what makes them
- * a uniform size — eleven marks of eleven different proportions cannot
- * otherwise share a footprint without being stretched.
- *
- * The loop is pure CSS: the track holds the set twice and translates by
- * exactly -50%, so it is seamless, runs on the compositor, needs no
- * JavaScript, and is paused by the global reduced-motion rule.
+ * `grid` is a static wall. `carousel` is a continuously scrolling strip, on a
+ * pure-CSS loop: the track holds the set twice and translates by exactly
+ * -50%, so it is seamless, runs on the compositor, needs no JavaScript, and
+ * is paused by the global reduced-motion rule.
  */
 export function ClientWall({
   className,
@@ -72,29 +65,36 @@ export function ClientWall({
                 key={`${client.name}-${copy}`}
                 aria-hidden={copy === 1 ? "true" : undefined}
                 className={cn(
-                  // One identical tile per client. A fixed box is what makes
-                  // eleven logos of eleven different proportions occupy the
-                  // same footprint; the mark inside is only ever fitted to it,
-                  // never stretched, so no one's logo is distorted.
-                  "group/logo grid h-20 w-40 shrink-0 place-items-center",
-                  "rounded-xl bg-white px-5 sm:h-22 sm:w-48 sm:px-6",
-                  "ring-1 ring-ink-950/8 transition-transform",
-                  "duration-(--duration-fast) hover:scale-105",
-                  "motion-reduce:hover:scale-100",
+                  // No tile, no border, no fill — the marks sit straight on
+                  // the canvas. A common slot width is all that is left of the
+                  // box, and it is still needed: without it a wide wordmark
+                  // and a square badge pass at completely different rhythms.
+                  "group/logo grid h-20 w-48 shrink-0 place-items-center",
+                  "sm:w-64 transition-transform duration-(--duration-fast)",
+                  "hover:scale-105 motion-reduce:hover:scale-100",
                 )}
               >
-                {/* Held back at rest so hover reads as the mark coming
-                    forward. Opacity only, no Tailwind filter utilities: they
-                    compose into `filter`, and a `filter` here would knock the
-                    colour back out of the artwork. */}
+                {/* Tinted to a single colour by `[data-client-logo]` in
+                    `globals.css` — white on the dark theme, black on light.
+                    Eight of the eleven marks are near-black ink on
+                    transparency, so untinted they would simply not be there
+                    on this canvas.
+
+                    Opacity carries the hover. It cannot be a filter utility:
+                    those compose into `filter`, which that rule already owns,
+                    and the winner would come down to specificity. */}
                 <Image
                   src={client.src}
                   alt={copy === 1 ? "" : client.name}
                   width={288}
                   height={80}
+                  data-client-logo=""
                   className={cn(
-                    "max-h-10 w-auto max-w-full object-contain sm:max-h-11",
-                    "opacity-85 transition-opacity duration-(--duration-fast)",
+                    // Capped at 56px because the source files are only ~63px
+                    // tall — past that these would be upscaled, and a logo is
+                    // the last thing that should look soft.
+                    "max-h-11 w-auto max-w-full object-contain sm:max-h-14",
+                    "opacity-70 transition-opacity duration-(--duration-fast)",
                     "group-hover/logo:opacity-100",
                   )}
                 />
