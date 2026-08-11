@@ -205,7 +205,7 @@ const CUSTOM_SOFTWARE: ServicePage = {
   tagline: "Build Smarter. Scale Faster. Lead the Future.",
   lead: "Our business is unique. Your software should be too. At Wizard Communications, we design, engineer, and deploy custom software solutions that solve complex business challenges, automate operations, accelerate growth, and create competitive advantage.",
   emphasis: "From Idea to Impact — We Build What Your Business Needs.",
-  image: "/services/hero/custom-software-development.png",
+  image: "/services/hero/custom-software-development.webp",
   imagePrompt:
     "Cinematic wide shot of a modern software engineering workspace at blue hour, a large wall display behind a standing desk showing softly blurred system architecture diagrams with no legible text, an engineer mid-thought tracing a connection between two nodes, cyan and teal screen glow against deep charcoal, volumetric haze, shallow depth of field, photorealistic, 16:9, no text, no logos",
   icon: Code2,
@@ -440,7 +440,7 @@ const MOBILE_APP: ServicePage = {
   body: [
     "From startups to enterprises, we develop secure, scalable, and user-friendly mobile apps tailored to your business goals. Whether you need an Android app, iOS app, or cross-platform solution, our team delivers modern applications with seamless performance and exceptional user experience.",
   ],
-  image: "/services/hero/mobile-app-development.png",
+  image: "/services/hero/mobile-app-development.webp",
   imagePrompt:
     "Cinematic close-up of a hand holding a smartphone at blue hour, the screen casting cyan light up across the fingers, softly blurred interface panels floating above the device with no legible text, a tablet and a second handset out of focus behind, deep charcoal background, volumetric haze, shallow depth of field, photorealistic, 16:9, no text, no logos",
   icon: Smartphone,
@@ -672,7 +672,7 @@ const ARTIFICIAL_INTELLIGENCE: ServicePage = {
   body: [
     "From AI copilots and intelligent assistants to enterprise-grade AI applications, we design and deploy practical AI solutions that solve real business challenges and deliver measurable outcomes.",
   ],
-  image: "/services/hero/artificial-intelligence.png",
+  image: "/services/hero/artificial-intelligence.webp",
   imagePrompt:
     "Cinematic macro shot of a translucent neural sculpture suspended in darkness, fine filaments carrying pulses of cyan light between glowing nodes, a faint particle field drifting around it, one strand resolving into an orderly line at the edge of frame, volumetric haze, shallow depth of field, photorealistic render, 16:9, no text, no logos",
   icon: BrainCircuit,
@@ -835,7 +835,7 @@ const SECURITY: ServicePage = {
   titleLines: ["Protect What Matters.", "Power Your Business", "with Confidence"],
   tagline: "Security is no longer optional — it's mission-critical.",
   lead: "In a world where cyber threats evolve every day, your business needs more than protection—it needs resilience. Wizard secures your systems, safeguards your data, and enables uninterrupted growth.",
-  image: "/services/hero/security.png",
+  image: "/services/hero/security.webp",
   imagePrompt:
     "Cinematic shot of a translucent geometric shield form suspended in a dark server aisle, refracting cyan light, rack status lights receding into haze behind it, a reflective floor doubling the glow, cool desaturated grade, volumetric haze, shallow depth of field, photorealistic render, 16:9, no text, no logos",
   icon: ShieldCheck,
@@ -925,7 +925,7 @@ const DIGITAL_MARKETING: ServicePage = {
   titleLines: ["Grow your brand with smart,", "result-driven digital marketing"],
   tagline: "SEO, social, paid campaigns and content that earns its keep.",
   lead: "Wizard Communications helps businesses build a strong online presence through SEO, social media marketing, paid campaigns, content strategy, and performance-focused digital solutions. We create customized marketing plans that improve visibility, attract the right audience, and generate quality leads for your business.",
-  image: "/services/hero/digital-marketing.png",
+  image: "/services/hero/digital-marketing.webp",
   imagePrompt:
     "Cinematic shot of an abstract ascending data landscape at dusk, glowing cyan ridges climbing through dark mist toward a distant horizon, faint concentric rings spreading outward across the surface like reach, soft rim light, volumetric haze, shallow depth of field, photorealistic render, 16:9, no text, no logos",
   icon: Megaphone,
@@ -1054,7 +1054,7 @@ const ON_DEMAND_HIRING: ServicePage = {
   body: [
     "Sometimes your team needs extra support to meet deadlines or handle new projects. Hiring full-time employees is not always the best option. Staff augmentation lets you bring in skilled professionals when you need them, for as long as you need them.",
   ],
-  image: "/services/hero/on-demand-hiring.png",
+  image: "/services/hero/on-demand-hiring.webp",
   imagePrompt:
     "Cinematic wide shot of a modern collaborative studio at dusk, a small engineering team gathered around a lit table with two newcomers just joining them, laptops open and a whiteboard softly blurred behind, cyan accent light against warm charcoal, volumetric light shafts, shallow depth of field, photorealistic, 16:9, no text, no logos",
   icon: UsersRound,
@@ -1087,7 +1087,7 @@ const ON_DEMAND_HIRING: ServicePage = {
         body: "Save on costs like training, benefits, and long-term salaries. Pay only for what you need.",
       },
     ],
-    backdrop: "/services/hero/hero_trust.png",
+    backdrop: "/services/hero/hero_trust.webp",
   },
 
   tech: {
@@ -1107,7 +1107,7 @@ const ON_DEMAND_HIRING: ServicePage = {
         chips: [TECH.marketing],
       },
     ],
-    backdrop: "/services/hero/hero_growth.png",
+    backdrop: "/services/hero/hero_growth.webp",
   },
 
   offerings: {
@@ -1158,7 +1158,7 @@ const ON_DEMAND_HIRING: ServicePage = {
     },
     closing:
       "At Wizard, we focus on providing reliable talent, quick onboarding, and smooth collaboration. We make it easy for you to scale your team without stress.",
-    backdrop: "/services/hero/hero_collab.png",
+    backdrop: "/services/hero/hero_collab.webp",
   },
 
   cta: {
@@ -1182,7 +1182,7 @@ const E_LEARNING: ServicePage = {
   body: [
     "Full-scale services including personalized LMS development, courseware creation, SME hiring, curriculum localization, and interactive mobile learning solutions.",
   ],
-  image: "/services/hero/e-learning-solutions.png",
+  image: "/services/hero/e-learning-solutions.webp",
   // Near-square flat artwork, so it is fitted rather than cropped.
   imageFit: "contain",
   imagePrompt:
@@ -1203,27 +1203,27 @@ const E_LEARNING: ServicePage = {
       {
         title: "Custom Courseware Development",
         body: "Meaningful, memorable, motivational learning. We use an agile development process, the SAM and CCAF instructional design models, and our own smart studios — building for real-world implementation rather than for the certificate alone.",
-        image: "/services/hero/elearning-courseware.png",
+        image: "/services/hero/elearning-courseware.webp",
       },
       {
         title: "Mobile Learning",
         body: "Let learners carry the course with them and continue coursework while travelling. Built for professionals who would rather spend a commute on knowledge acquisition and augmentation than on nothing at all.",
-        image: "/services/hero/elearning-mobile.png",
+        image: "/services/hero/elearning-mobile.webp",
       },
       {
         title: "Open Source LMS Configuration",
         body: "SCORM 1.2, SCORM 2004 and AICC-compliant courseware. We favour an open source LMS — Moodle and the likes — for the cost profile and for how far it can be customised to how your teams actually learn.",
-        image: "/services/hero/elearning-lms.png",
+        image: "/services/hero/elearning-lms.webp",
       },
       {
         title: "Translation & Localization",
         body: "Multilingual content development, grounded in large-scale Indian eLearning programmes where the localisation was the hard part rather than an afterthought.",
-        image: "/services/hero/elearning-localization.png",
+        image: "/services/hero/elearning-localization.webp",
       },
       {
         title: "L&D Consultancy",
         body: "Advice on curriculum design, content retention, how effectiveness gets evaluated, and whether learners can actually implement what they have been taught.",
-        image: "/services/hero/elearning-consultancy.png",
+        image: "/services/hero/elearning-consultancy.webp",
       },
     ],
     // Four of the five are near-square flat illustrations that a 16:10 crop

@@ -95,7 +95,7 @@ export default function ContactPage() {
            * costs some presence and buys sharpness.
            */
           <Image
-            src="/contact/contact-hero.png"
+            src="/contact/contact-hero.webp"
             // Decorative: the <h1> beside it already says what the page is.
             alt=""
             width={401}

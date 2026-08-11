@@ -69,6 +69,17 @@ export function AccordionContent({
         "overflow-hidden text-body-sm text-fg-muted",
         "data-[state=open]:animate-accordion-down",
         "data-[state=closed]:animate-accordion-up",
+        /*
+         * Only matters with `forceMount`, and then it is essential.
+         *
+         * Radix normally unmounts closed content, so nothing needs hiding.
+         * Kept mounted for crawlers, it has no `hidden` attribute and the
+         * close animation does not persist its end state — so every panel
+         * renders fully expanded. `hidden` collapses them and keeps them out
+         * of the tab order and the accessibility tree, at the cost of the
+         * closing animation, which cannot coexist with `display: none`.
+         */
+        "data-[state=closed]:hidden",
       )}
       {...props}
     >

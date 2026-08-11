@@ -137,7 +137,16 @@ export default function CareerPage() {
             description={CAREER_PAGE.roles.description}
           />
 
-          <Reveal delay={0.1}>
+          {/*
+           * Deliberately not wrapped in `<Reveal>`.
+           *
+           * `Reveal` starts at `opacity: 0` and animates in once a quarter of
+           * the element is on screen. A list this tall can never satisfy that
+           * on a laptop, so the entrance never fired and the whole section sat
+           * invisible. A list of roles does not need an entrance animation
+           * badly enough to risk that.
+           */}
+          <div>
             <Accordion type="single" collapsible className="mt-14 w-full">
               {ROLES.map((role) => (
                 <AccordionItem key={role.id} value={role.id}>
@@ -225,7 +234,7 @@ export default function CareerPage() {
                 </AccordionItem>
               ))}
             </Accordion>
-          </Reveal>
+          </div>
         </Container>
       </Section>
 

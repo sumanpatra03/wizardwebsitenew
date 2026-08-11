@@ -22,8 +22,11 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { SITE } from "@/constants/site";
+import { useFieldValidation } from "@/hooks/use-field-validation";
+import { cv as validateCv } from "@/lib/validation";
 import { cn } from "@/lib/utils";
 import {
+  APPLICATION_RULES,
   INITIAL_APPLICATION_STATE,
   submitApplication,
   type ApplicationState,
@@ -82,9 +85,32 @@ function ApplyForm({ role, onDone }: { role: string; onDone: () => void }) {
     INITIAL_APPLICATION_STATE,
   );
 
+  const { errors, onBlur, onChange, checkAll, setError } =
+    useFieldValidation(APPLICATION_RULES);
+
   const id = useId();
   const errorId = (name: string) => `${id}-${name}-error`;
   const value = (name: string) => state.values?.[name] ?? "";
+
+  // The client wins while the form is being corrected: a server message from
+  // the previous submission describes a value that no longer exists.
+  const errorFor = (field: string) => errors[field] ?? state.errors?.[field];
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const form = event.currentTarget;
+    const firstInvalid = checkAll(form);
+
+    // The CV is a File, so it sits outside the string rules.
+    const input = form.querySelector<HTMLInputElement>('input[name="cv"]');
+    const cvProblem = validateCv(input?.files?.[0] ?? null);
+    setError("cv", cvProblem);
+
+    const target = firstInvalid ?? (cvProblem ? "cv" : undefined);
+    if (!target) return;
+
+    event.preventDefault();
+    form.querySelector<HTMLElement>(`[name="${target}"]`)?.focus();
+  };
 
   if (state.status === "success") {
     return (
@@ -94,7 +120,7 @@ function ApplyForm({ role, onDone }: { role: string; onDone: () => void }) {
         </DialogHeader>
         <DialogBody>
           <div className="flex flex-col items-start gap-4">
-            <CheckCircle2 aria-hidden="true" className="size-8 text-accent" />
+            <CheckCircle2 aria-hidden="true" className="text-accent size-8" />
             <p className="text-body-base text-fg-muted">{state.message}</p>
             <Button variant="outline" onClick={onDone}>
               Close
@@ -115,7 +141,12 @@ function ApplyForm({ role, onDone }: { role: string; onDone: () => void }) {
       </DialogHeader>
 
       <DialogBody>
-        <form action={action} noValidate className="flex flex-col gap-4">
+        <form
+          action={action}
+          onSubmit={handleSubmit}
+          noValidate
+          className="flex flex-col gap-4"
+        >
           {/* Carries the role through without the applicant restating it. */}
           <input type="hidden" name="role" value={role} />
 
@@ -129,7 +160,7 @@ function ApplyForm({ role, onDone }: { role: string; onDone: () => void }) {
             >
               <AlertCircle
                 aria-hidden="true"
-                className="mt-0.5 size-4 shrink-0 text-danger"
+                className="text-danger mt-0.5 size-4 shrink-0"
               />
               {state.message}
             </p>
@@ -140,8 +171,10 @@ function ApplyForm({ role, onDone }: { role: string; onDone: () => void }) {
             name="name"
             required
             defaultValue={value("name")}
-            error={state.errors?.name}
+            error={errorFor("name")}
             errorId={errorId("name")}
+            onBlur={onBlur}
+            onChange={onChange}
             autoComplete="name"
           />
           <Field
@@ -150,8 +183,10 @@ function ApplyForm({ role, onDone }: { role: string; onDone: () => void }) {
             type="email"
             required
             defaultValue={value("email")}
-            error={state.errors?.email}
+            error={errorFor("email")}
             errorId={errorId("email")}
+            onBlur={onBlur}
+            onChange={onChange}
             autoComplete="email"
             inputMode="email"
           />
@@ -161,8 +196,10 @@ function ApplyForm({ role, onDone }: { role: string; onDone: () => void }) {
             type="tel"
             required
             defaultValue={value("phone")}
-            error={state.errors?.phone}
+            error={errorFor("phone")}
             errorId={errorId("phone")}
+            onBlur={onBlur}
+            onChange={onChange}
             autoComplete="tel"
             inputMode="tel"
           />
@@ -174,12 +211,18 @@ function ApplyForm({ role, onDone }: { role: string; onDone: () => void }) {
             placeholder="e.g. Senior QA Engineer at Acme"
           />
 
-          <CvField error={state.errors?.cv} errorId={errorId("cv")} />
+          {/* Not wired to the shared blur handlers: those read
+              `event.currentTarget.value`, which for a file input is a fake
+              path rather than the file. It validates on selection instead,
+              which is the equivalent moment. */}
+          <CvField
+            error={errorFor("cv")}
+            errorId={errorId("cv")}
+            onSelect={(file) => setError("cv", validateCv(file))}
+          />
 
           <label className="flex flex-col gap-1.5">
-            <span className="text-label uppercase text-fg-subtle">
-              Anything else
-            </span>
+            <span className="text-label text-fg-subtle uppercase">Anything else</span>
             <textarea
               name="message"
               rows={3}
@@ -224,13 +267,22 @@ function ApplyForm({ role, onDone }: { role: string; onDone: () => void }) {
  * label that is styled, not a button pretending — so clicking, tabbing and
  * screen readers all behave normally.
  */
-function CvField({ error, errorId }: { error?: string; errorId: string }) {
+function CvField({
+  error,
+  errorId,
+  onSelect,
+}: {
+  error?: string;
+  errorId: string;
+  /** Fires whenever the chosen file changes, including when it is removed. */
+  onSelect: (file: File | null) => void;
+}) {
   const [file, setFile] = useState<File | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   return (
     <div className="flex flex-col gap-1.5">
-      <span className="text-label uppercase text-fg-subtle">
+      <span className="text-label text-fg-subtle uppercase">
         Upload CV <span className="text-accent">*</span>
       </span>
 
@@ -238,16 +290,16 @@ function CvField({ error, errorId }: { error?: string; errorId: string }) {
         className={cn(
           "flex cursor-pointer items-center gap-3 rounded-lg border border-dashed",
           "border-border-strong bg-bg px-4 py-3 transition-colors",
-          "duration-(--duration-fast) hover:border-accent hover:bg-accent-muted/40",
-          "focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-ring",
+          "hover:border-accent hover:bg-accent-muted/40 duration-(--duration-fast)",
+          "focus-within:outline-ring focus-within:outline-2 focus-within:outline-offset-2",
           error && "border-danger",
         )}
       >
-        <Paperclip aria-hidden="true" className="size-4 shrink-0 text-accent" />
-        <span className="text-body-sm min-w-0 flex-1 truncate text-fg-muted">
+        <Paperclip aria-hidden="true" className="text-accent size-4 shrink-0" />
+        <span className="text-body-sm text-fg-muted min-w-0 flex-1 truncate">
           {file ? file.name : "Choose a PDF or Word document"}
         </span>
-        <span className="text-label shrink-0 uppercase text-accent">Browse</span>
+        <span className="text-label text-accent shrink-0 uppercase">Browse</span>
 
         <input
           ref={inputRef}
@@ -257,24 +309,29 @@ function CvField({ error, errorId }: { error?: string; errorId: string }) {
           accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
           aria-invalid={Boolean(error)}
           aria-describedby={error ? errorId : undefined}
-          onChange={(event) => setFile(event.target.files?.[0] ?? null)}
+          onChange={(event) => {
+            const chosen = event.target.files?.[0] ?? null;
+            setFile(chosen);
+            onSelect(chosen);
+          }}
           className="sr-only"
         />
       </label>
 
       {file ? (
-        <p className="text-body-sm flex items-center gap-2 text-fg-subtle">
+        <p className="text-body-sm text-fg-subtle flex items-center gap-2">
           <FileText aria-hidden="true" className="size-3.5" />
           {(file.size / 1024 / 1024).toFixed(1)}MB
           <button
             type="button"
             onClick={() => {
               setFile(null);
+              onSelect(null);
               if (inputRef.current) inputRef.current.value = "";
             }}
             className={cn(
-              "inline-flex items-center gap-1 text-fg-muted",
-              "transition-colors duration-(--duration-fast) hover:text-accent",
+              "text-fg-muted inline-flex items-center gap-1",
+              "hover:text-accent transition-colors duration-(--duration-fast)",
               "focus-visible:outline-2 focus-visible:outline-offset-2",
               "focus-visible:outline-ring",
             )}
@@ -328,7 +385,7 @@ function Field({
 }) {
   return (
     <label className="flex flex-col gap-1.5">
-      <span className="text-label uppercase text-fg-subtle">
+      <span className="text-label text-fg-subtle uppercase">
         {label} {required ? <span className="text-accent">*</span> : null}
       </span>
       <input

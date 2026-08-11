@@ -110,7 +110,7 @@ export function Hero() {
               anyone who cannot see the image. */}
           <Reveal direction="scale" delay={0.35} className="lg:col-span-5">
             <Image
-              src="/digi_banner-02.png"
+              src="/digi_banner-02.webp"
               alt="Wizard's capabilities: eLearning solutions, digital commerce, web and mobile apps, strategy and development, and supply chain consulting."
               width={636}
               height={562}

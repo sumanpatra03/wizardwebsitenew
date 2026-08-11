@@ -1,6 +1,5 @@
 import type { MetadataRoute } from "next";
 
-import { CASE_STUDIES } from "@/constants/project-pages";
 import { PRODUCTS } from "@/constants/products";
 import { PROJECTS } from "@/constants/projects";
 import { SERVICE_PAGES } from "@/constants/service-pages";
@@ -28,6 +27,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       { url: url("/contact"), priority: 0.7, changeFrequency: "yearly" },
       { url: url("/career"), priority: 0.6, changeFrequency: "weekly" },
       { url: url("/privacy-policy"), priority: 0.3, changeFrequency: "yearly" },
+      { url: url("/accessibility"), priority: 0.3, changeFrequency: "yearly" },
     ] satisfies MetadataRoute.Sitemap
   ).map((entry) => ({ ...entry, lastModified }));
 

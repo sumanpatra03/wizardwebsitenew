@@ -51,7 +51,7 @@ export default function ProjectsPage() {
            * that runs to all four sides of its own square.
            */
           <Image
-            src="/projects/projects-banner.png"
+            src="/projects/projects-banner.webp"
             // Decorative: the <h1> beside it already says what the page is.
             alt=""
             width={641}

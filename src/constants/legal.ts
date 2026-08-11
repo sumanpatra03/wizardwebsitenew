@@ -271,3 +271,90 @@ export const PRIVACY_POLICY = {
     },
   ] satisfies readonly LegalSection[],
 } as const;
+
+/**
+ * Accessibility statement.
+ *
+ * Written from what this site actually does, not from a template: every claim
+ * below is checkable in the codebase, and the limitations are stated rather
+ * than omitted. An accessibility statement that overclaims is worse than none,
+ * because it tells a disabled user the barrier they just hit should not exist.
+ */
+export const ACCESSIBILITY = {
+  eyebrow: "Legal",
+  title: "Accessibility",
+  updated: "11 August 2026",
+  lead: `${SITE.legalName} aims to make this website usable by as many people as possible, including those who browse with a keyboard, a screen reader, magnification, or reduced motion enabled.`,
+
+  sections: [
+    {
+      id: "standard",
+      heading: "The standard we aim for",
+      blocks: [
+        {
+          type: "text",
+          body: "We target WCAG 2.1 Level AA. That is the level most commonly referenced in procurement and in accessibility law, and it is the level this site was designed and built against rather than retrofitted to.",
+        },
+        {
+          type: "text",
+          body: "We have not commissioned an independent audit. The statement below describes what we have implemented and verified ourselves.",
+        },
+      ],
+    },
+    {
+      id: "measures",
+      heading: "What we have done",
+      blocks: [
+        {
+          type: "list",
+          items: [
+            "Colour contrast is measured rather than estimated. Every body-size text and background pair in both the light and dark themes was checked in-browser, and one colour was lightened after it fell short at 4.1:1.",
+            "Both themes are designed, not inverted. The site follows your operating system preference by default and can be switched manually.",
+            "A skip link is the first thing in the tab order on every page, so keyboard users can bypass the header and navigation.",
+            "Every interactive element has a visible focus outline, offset from the element so it stays legible against any background.",
+            "Motion respects prefers-reduced-motion throughout. Animated content renders in its final state rather than being hidden, so nothing is reachable only through movement.",
+            "Carousels that play automatically expose a pause control, as WCAG 2.2.2 requires of motion running longer than five seconds.",
+            "Menus, accordions, dialogs and drawers are built on accessible primitives that manage focus, trap it while open, restore it on close, and support arrow-key navigation.",
+            "Forms label every field, mark errors with aria-invalid and aria-describedby rather than colour alone, and announce results in a live region without moving focus.",
+            "Images that carry meaning have descriptive alternative text. Decorative images are marked as such so screen readers skip them instead of announcing filenames.",
+            "Headings follow a single hierarchy per page, with exactly one first-level heading.",
+            "The site is built as static HTML with progressive enhancement, so content and forms work before JavaScript loads.",
+          ],
+        },
+      ],
+    },
+    {
+      id: "limitations",
+      heading: "Known limitations",
+      blocks: [
+        {
+          type: "text",
+          body: "We would rather name these than let you discover them:",
+        },
+        {
+          type: "list",
+          items: [
+            "The map on our contact page is an embedded Google Maps frame. Its interface is Google's and outside our control; the same address is printed as text beside it, so no information is only available inside the map.",
+            "Some client and partner logos are supplied as images with text baked into them. Where that happens the organisation's name also appears as real text nearby.",
+            "A few case-study images published by clients include text within the artwork. The same information appears in the page copy.",
+            "We have not tested with every combination of assistive technology and browser. If something does not work with yours, please tell us.",
+          ],
+        },
+      ],
+    },
+    {
+      id: "feedback",
+      heading: "Tell us if something does not work",
+      blocks: [
+        {
+          type: "text",
+          body: "If you meet a barrier on this site, or need something here in a different format, email us and we will put it right. Please include the page address and what you were trying to do — that is usually enough for us to reproduce it.",
+        },
+        {
+          type: "text",
+          body: "We aim to respond within one working day.",
+        },
+      ],
+    },
+  ] satisfies readonly LegalSection[],
+} as const;

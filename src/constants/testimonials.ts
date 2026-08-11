@@ -14,7 +14,7 @@ export const TESTIMONIALS: readonly Testimonial[] = [
     author: "Aniruddha Sur",
     role: "Sr. Project Manager",
     organization: "Adayana Learning Solutions",
-    avatar: "/clients/av-aniruddha.png",
+    avatar: "/clients/av-aniruddha.webp",
   },
   {
     quote:

@@ -20,6 +20,13 @@ export const contentType = "image/png";
  * directory at render time, so the file is read from disk here instead.
  */
 export default async function OpenGraphImage() {
+  /*
+   * PNG on purpose, and kept alongside the WebP the site itself uses.
+   *
+   * Satori — the renderer behind `ImageResponse` — decodes PNG and JPEG only.
+   * Pointing this at the WebP fails the build at prerender time, so this one
+   * file stays in both formats: WebP for the browser, PNG for the card.
+   */
   const logo = await readFile(
     join(process.cwd(), "public", "wizard-logo-dark.png"),
   );

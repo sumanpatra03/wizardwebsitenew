@@ -1,6 +1,8 @@
 "use server";
 
 import { SITE } from "@/constants/site";
+import { validate } from "@/lib/validation";
+import * as rules from "@/lib/validation";
 
 /**
  * Contact form submission.
@@ -20,9 +22,10 @@ import { SITE } from "@/constants/site";
  *
  * ## Validation
  *
- * Hand-rolled rather than pulling in a schema library for four fields. It runs
- * here, on the server, because client-side validation is a convenience for
- * honest users and no obstacle at all to anyone else.
+ * The rules live in `lib/validation` and are imported by the form too, so the
+ * message shown on blur is the same one the server would return. They run
+ * again here regardless: the browser's copy is a convenience for honest users
+ * and no obstacle at all to anyone else.
  */
 
 export type EnquiryState = {
@@ -37,8 +40,13 @@ export type EnquiryState = {
 
 export const INITIAL_ENQUIRY_STATE: EnquiryState = { status: "idle" };
 
-/** Deliberately permissive — the only real test of an address is sending to it. */
-const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+/** Shared with the form, so the two can never disagree about what is valid. */
+export const CONTACT_RULES = {
+  name: rules.name,
+  email: rules.email,
+  phone: rules.phone(false),
+  message: rules.message(20),
+};
 
 export async function submitEnquiry(
   _previous: EnquiryState,
@@ -64,19 +72,7 @@ export async function submitEnquiry(
     return { status: "success", message: "Thank you — your message is on its way." };
   }
 
-  const errors: Record<string, string> = {};
-  if (values.name.length < 2) {
-    errors.name = "Please tell us your name.";
-  }
-  if (!EMAIL.test(values.email)) {
-    errors.email = "That email address does not look right.";
-  }
-  if (values.phone && values.phone.replace(/[^\d]/g, "").length < 7) {
-    errors.phone = "That phone number looks too short.";
-  }
-  if (values.message.length < 20) {
-    errors.message = "A sentence or two about the project helps us reply usefully.";
-  }
+  const errors = validate(formData, CONTACT_RULES);
 
   if (Object.keys(errors).length > 0) {
     return {

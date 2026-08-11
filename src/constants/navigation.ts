@@ -23,7 +23,11 @@ export const NAV_ITEMS: readonly NavItem[] = [
   { label: "HOME", href: "/" },
   {
     label: "COMPANY",
-    href: "/company",
+    // There is no `/company` landing page. This href is never navigated to —
+    // an item with children opens the mega-menu on desktop and an accordion
+    // on mobile, where it serves only as the panel's identifier — but it
+    // points at the section's first real page so nothing can route to a 404.
+    href: "/about-us",
     children: [
       {
         label: "About Us",
@@ -108,7 +112,10 @@ export const FOOTER_COLUMNS: readonly FooterColumn[] = [
     links: [
       { label: "About Us", href: "/about-us" },
       { label: "Why Wizard", href: "/why-wizard" },
-      { label: "Who We Serve", href: "/who-we-serve" },
+      // Points at `/industries`, which *is* the who-we-serve page — the
+      // thirteen sectors and the five deep-dives. A second route saying the
+      // same thing would only split the traffic and the maintenance.
+      { label: "Who We Serve", href: "/industries" },
       { label: "Work With Us", href: "/work-with-us" },
       { label: "Career", href: "/career" },
     ],
@@ -148,9 +155,17 @@ export const FOOTER_COLUMNS: readonly FooterColumn[] = [
   },
 ] as const;
 
+/**
+ * Terms of Use is deliberately absent.
+ *
+ * It linked to a route that did not exist, and the honest fix is not to
+ * invent one: terms are a binding legal document that has to come from the
+ * company's own counsel, not from whoever built the site. A missing link is
+ * better than a 404, and both are better than terms nobody agreed to.
+ * Restore this entry once the copy exists.
+ */
 export const LEGAL_LINKS = [
   { label: "Privacy Policy", href: "/privacy-policy" },
-  { label: "Terms of Use", href: "/terms" },
   { label: "Accessibility", href: "/accessibility" },
 ] as const;
 

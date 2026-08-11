@@ -62,8 +62,8 @@ export function Logo({ className, size = "md", priority = false }: LogoProps) {
   // jsx-a11y rule cannot see it through a spread.
   return (
     <span className={cn("inline-flex items-center", className)}>
-      <Image src="/wizard-logo-dark.png" alt="" data-logo-theme="dark" {...common} />
-      <Image src="/wizard-logo.png" alt="" data-logo-theme="light" {...common} />
+      <Image src="/wizard-logo-dark.webp" alt="" data-logo-theme="dark" {...common} />
+      <Image src="/wizard-logo.webp" alt="" data-logo-theme="light" {...common} />
     </span>
   );
 }

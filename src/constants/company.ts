@@ -313,16 +313,16 @@ export const CLIENTS_COPY = {
  */
 export const CLIENT_LOGOS = [
   { name: "ITC", src: "/clients/itc.png" },
-  { name: "SAIL", src: "/clients/sail.png" },
-  { name: "Sanofi Aventis", src: "/clients/sanofi.png" },
+  { name: "SAIL", src: "/clients/sail.webp" },
+  { name: "Sanofi Aventis", src: "/clients/sanofi.webp" },
   { name: "NEC", src: "/clients/nec.png" },
-  { name: "CMC Limited", src: "/clients/cmc.png" },
-  { name: "Adayana Learning Solutions", src: "/clients/adayana.png" },
-  { name: "Amplo", src: "/clients/amplo.png" },
-  { name: "CDEC", src: "/clients/cdec.png" },
-  { name: "Crimzon Glow", src: "/clients/crimzon-glow.png" },
+  { name: "CMC Limited", src: "/clients/cmc.webp" },
+  { name: "Adayana Learning Solutions", src: "/clients/adayana.webp" },
+  { name: "Amplo", src: "/clients/amplo.webp" },
+  { name: "CDEC", src: "/clients/cdec.webp" },
+  { name: "Crimzon Glow", src: "/clients/crimzon-glow.webp" },
   { name: "Service Works", src: "/clients/service-works.png" },
-  { name: "Trased", src: "/clients/trased.png" },
+  { name: "Trased", src: "/clients/trased.webp" },
 ] as const;
 
 /* ------------------------------------------------------------------ */

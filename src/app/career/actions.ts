@@ -1,6 +1,8 @@
 "use server";
 
 import { SITE } from "@/constants/site";
+import { cv as validateCv, validate } from "@/lib/validation";
+import * as rules from "@/lib/validation";
 
 /**
  * Job application submission.
@@ -26,16 +28,12 @@ import { SITE } from "@/constants/site";
  * file at the cap.
  */
 
-const MAX_CV_BYTES = 5 * 1024 * 1024;
-
-const ACCEPTED = new Map([
-  ["application/pdf", "PDF"],
-  ["application/msword", "DOC"],
-  [
-    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-    "DOCX",
-  ],
-]);
+/** Shared with the dialog, so the two can never disagree about what is valid. */
+export const APPLICATION_RULES = {
+  name: rules.name,
+  email: rules.email,
+  phone: rules.phone(true),
+};
 
 export type ApplicationState = {
   status: "idle" | "success" | "error";
@@ -45,8 +43,6 @@ export type ApplicationState = {
 };
 
 export const INITIAL_APPLICATION_STATE: ApplicationState = { status: "idle" };
-
-const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 export async function submitApplication(
   _previous: ApplicationState,
@@ -66,28 +62,18 @@ export async function submitApplication(
   // Honeypot — hidden from people, filled by bots. Accepted silently so a
   // scripted submitter learns nothing from the response.
   if (read("website")) {
-    return { status: "success", message: "Thank you — your application is on its way." };
+    return {
+      status: "success",
+      message: "Thank you — your application is on its way.",
+    };
   }
 
-  const errors: Record<string, string> = {};
-  if (values.name.length < 2) errors.name = "Please tell us your name.";
-  if (!EMAIL.test(values.email)) {
-    errors.email = "That email address does not look right.";
-  }
-  if (values.phone.replace(/[^\d]/g, "").length < 7) {
-    errors.phone = "Please give us a number we can reach you on.";
-  }
+  const errors = validate(formData, APPLICATION_RULES);
 
-  const cv = formData.get("cv");
-  const file = cv instanceof File && cv.size > 0 ? cv : null;
-
-  if (!file) {
-    errors.cv = "Please attach your CV.";
-  } else if (!ACCEPTED.has(file.type)) {
-    errors.cv = "Please attach a PDF or Word document.";
-  } else if (file.size > MAX_CV_BYTES) {
-    errors.cv = `That file is ${(file.size / 1024 / 1024).toFixed(1)}MB. Please keep it under 5MB.`;
-  }
+  const uploaded = formData.get("cv");
+  const file = uploaded instanceof File && uploaded.size > 0 ? uploaded : null;
+  const cvProblem = validateCv(file);
+  if (cvProblem) errors.cv = cvProblem;
 
   if (Object.keys(errors).length > 0) {
     return {
@@ -98,8 +84,7 @@ export async function submitApplication(
     };
   }
 
-  const endpoint =
-    process.env.CAREERS_WEBHOOK_URL ?? process.env.CONTACT_WEBHOOK_URL;
+  const endpoint = process.env.CAREERS_WEBHOOK_URL ?? process.env.CONTACT_WEBHOOK_URL;
 
   if (!endpoint) {
     console.error(
