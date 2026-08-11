@@ -91,6 +91,14 @@ export type ServicePage = {
   summary: string;
   metaDescription: string;
 
+  /**
+   * A positioning statement, set directly below the hero — what we make in
+   * this line and who it is for, before the page starts listing services.
+   *
+   * Separate from `tagline` because that one line has to work on the services
+   * index card as well, where a headline fragment reads as truncated copy.
+   */
+  statement?: { heading: string; body: string };
   offerings?: {
     heading: string;
     lead?: string;
@@ -447,6 +455,11 @@ const MOBILE_APP: ServicePage = {
   summary: "Native and cross-platform apps that ship.",
   metaDescription:
     "Mobile app development for Android, iOS and cross-platform — enterprise mobility, e-commerce and on-demand apps built secure, scalable and store-ready.",
+
+  statement: {
+    heading: "Pocket-sized, feeling-first.",
+    body: "Native and cross-platform apps that people keep on their home screen. Field tools, commerce, wellness: designed around the thumb, engineered for the battery.",
+  },
 
   offerings: {
     heading: "Our Mobile App Development Services",

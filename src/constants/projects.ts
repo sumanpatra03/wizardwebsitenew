@@ -30,6 +30,44 @@ import { hasCaseStudy } from "./project-pages";
  */
 export const PROJECTS: readonly Project[] = [
   {
+    slug: "drift",
+    title: "Drift",
+    category: "Mobile App",
+    description:
+      "A sleep and relaxation app imagined and built end to end by Wizard: product spec, brand, UX, engineering and audio design. Sessions like Coastal Night, Rainfall System and Northern Lights pair living gradient visuals with layered soundscapes that fade as you do.",
+    monogram: "DR",
+    // A square crop of the countdown screen, taken below the device chrome —
+    // the card slot is square, so this needs no crop of its own.
+    image: "/projects/drift/drift-card.webp",
+    gallery: [
+      {
+        src: "/projects/drift/drift-home.webp",
+        caption: "A calm home: one question, one tap to begin",
+        width: 1080,
+        height: 2196,
+      },
+      {
+        src: "/projects/drift/drift-session.webp",
+        caption: "Sessions with sleep timers and a premium tier",
+        width: 1080,
+        height: 2196,
+      },
+      {
+        src: "/projects/drift/drift-timer.webp",
+        caption: "The screen dims and the audio fades as sleep nears",
+        width: 1080,
+        height: 2196,
+      },
+      {
+        src: "/projects/drift/drift-makers.webp",
+        caption: "Designed in Kolkata. For the world.",
+        width: 1080,
+        height: 2196,
+      },
+    ],
+    tags: ["Mobile App", "Audio Engine", "Product Design"],
+  },
+  {
     slug: "service-works",
     title: "Service Works",
     category: "Software Application",

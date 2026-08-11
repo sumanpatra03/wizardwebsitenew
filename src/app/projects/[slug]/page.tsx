@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { CASE_STUDIES, getCaseStudy } from "@/constants/project-pages";
 import { PROJECTS } from "@/constants/projects";
+import { ScreensRail } from "@/features/projects/screens-rail";
 import { ServiceCta } from "@/features/services/service-cta";
 import { ServiceOutcomes } from "@/features/services/service-outcomes";
 import { ServiceProcess } from "@/features/services/service-process";
@@ -240,23 +241,52 @@ export default async function CaseStudyPage({
        * projects skip both this and the approach rather than being padded out
        * with claims nobody wrote.
        */}
-      {study ? (
-        <>
-          <ServiceOutcomes
-            heading="What the work had to fix."
-            lead={project.description}
-            problems={{ heading: "The challenge", items: study.challenge }}
-            benefits={{ heading: "Business impact", items: study.impact }}
-            tone="subtle"
-          />
+      {study?.challenge && study.impact ? (
+        <ServiceOutcomes
+          heading="What the work had to fix."
+          lead={project.description}
+          problems={{ heading: "The challenge", items: study.challenge }}
+          benefits={{ heading: "Business impact", items: study.impact }}
+          tone="subtle"
+        />
+      ) : null}
 
-          <ServiceProcess
-            heading="How we built it."
-            eyebrow="Approach"
-            steps={study.steps}
-            tone="default"
-          />
-        </>
+      {study?.steps ? (
+        <ServiceProcess
+          heading="How we built it."
+          eyebrow="Approach"
+          steps={study.steps}
+          tone="default"
+        />
+      ) : null}
+
+      {/* For work with no client brief: what went into it, rather than a
+          challenge nobody set. */}
+      {study?.built ? (
+        <Section tone="subtle" backdrop className="border-y border-border">
+          <Container>
+            <SectionHeading eyebrow="Under the hood" title={study.built.heading} />
+            <ul className="mt-12 grid max-w-4xl gap-4 sm:grid-cols-2">
+              {study.built.items.map((item) => (
+                <li key={item}>
+                  <Card className="h-full p-6">
+                    <p className="text-body-base text-fg-muted">{item}</p>
+                  </Card>
+                </li>
+              ))}
+            </ul>
+          </Container>
+        </Section>
+      ) : null}
+
+      {/* Screens, where the project publishes them. */}
+      {project.gallery ? (
+        <Section>
+          <Container>
+            <SectionHeading eyebrow="The screens" title="How it looks in the hand." />
+            <ScreensRail screens={project.gallery} className="mt-12" />
+          </Container>
+        </Section>
       ) : null}
 
       {/* Three more projects, so the page ends on somewhere to go. */}

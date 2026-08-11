@@ -77,6 +77,7 @@ export default async function ServiceDetailPage({
   // Destructured so TypeScript narrows each optional block once, rather than
   // at every use inside the JSX below.
   const {
+    statement,
     offerings,
     features,
     why,
@@ -99,6 +100,20 @@ export default async function ServiceDetailPage({
    */
   const blocks: ((tone: "default" | "subtle") => ReactNode)[] = [];
 
+  if (statement) {
+    // First, so the positioning line lands straight off the hero — before the
+    // page starts enumerating what the service contains.
+    blocks.push((tone) => (
+      <Section key="statement" tone={tone}>
+        <Container>
+          <SectionHeading
+            title={statement.heading}
+            description={statement.body}
+          />
+        </Container>
+      </Section>
+    ));
+  }
   if (offerings) {
     blocks.push((tone) => (
       <ServiceOfferings key="offerings" {...offerings} tone={tone} />

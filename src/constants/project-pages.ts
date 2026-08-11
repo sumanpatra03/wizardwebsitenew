@@ -25,16 +25,44 @@ export type CaseStudy = {
   tagline: string;
   /** The published "solution" paragraph, used as the hero lead. */
   lead: string;
-  challenge: readonly string[];
-  /** The four-step delivery narrative. */
-  steps: readonly { title: string; body: string }[];
-  /** What the client ended up with. */
-  assets: readonly string[];
-  impact: readonly string[];
   metaDescription: string;
+
+  /*
+   * Everything below is optional.
+   *
+   * The seven client write-ups all share the same challenge / steps / assets /
+   * impact shape, because the source pages do. Work we commissioned ourselves
+   * does not — Drift has no client brief and no before-and-after to report, it
+   * has a product and a list of what went into it. Forcing that into the
+   * client template would mean inventing a challenge nobody set.
+   */
+  challenge?: readonly string[];
+  /** The four-step delivery narrative. */
+  steps?: readonly { title: string; body: string }[];
+  /** What the client ended up with. */
+  assets?: readonly string[];
+  impact?: readonly string[];
+  /** For work with no client brief: what the thing is made of. */
+  built?: { heading: string; items: readonly string[] };
 };
 
 export const CASE_STUDIES: readonly CaseStudy[] = [
+  {
+    slug: "drift",
+    tagline: "A soft landing into sleep.",
+    lead: "Drift is a sleep and relaxation app imagined and built end to end by Wizard: product spec, brand, UX, engineering and audio design. Sessions like Coastal Night, Rainfall System and Northern Lights pair living gradient visuals with layered soundscapes that fade as you do.",
+    metaDescription:
+      "Drift — a sleep and relaxation app built end to end by Wizard: product spec, brand, UX, engineering and audio design, with GPU gradient visuals and a three-layer audio engine.",
+    built: {
+      heading: "What we built",
+      items: [
+        "Living, multi-point gradient visuals rendered on the GPU, with a dimming scheduler tuned for bedtime",
+        "A three-layer synthesized audio engine with an exponential sleep fader, so sound never cuts, it dissolves",
+        "A twenty-session catalog with breath guidance, sleep timers and a premium tier",
+        "Architecture written to port one-to-one to native Android — Kotlin, Compose, AGSL",
+      ],
+    },
+  },
   {
     slug: "service-works",
     tagline:
