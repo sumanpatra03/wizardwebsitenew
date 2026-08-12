@@ -72,7 +72,13 @@ export function ApplyDialog({ role }: { role: string }) {
         </Button>
       </DialogTrigger>
 
-      <DialogContent aria-describedby={undefined}>
+      {/* Wider than the default panel so the short fields can pair up two to a
+          row. That is what keeps the whole form — submit button included —
+          inside a laptop viewport instead of below the fold. */}
+      <DialogContent
+        aria-describedby={undefined}
+        className="sm:w-[min(40rem,calc(100vw-2rem))]"
+      >
         <ApplyForm role={role} onDone={() => setOpen(false)} />
       </DialogContent>
     </Dialog>
@@ -166,50 +172,61 @@ function ApplyForm({ role, onDone }: { role: string; onDone: () => void }) {
             </p>
           ) : null}
 
-          <Field
-            label="Name"
-            name="name"
-            required
-            defaultValue={value("name")}
-            error={errorFor("name")}
-            errorId={errorId("name")}
-            onBlur={onBlur}
-            onChange={onChange}
-            autoComplete="name"
-          />
-          <Field
-            label="Email"
-            name="email"
-            type="email"
-            required
-            defaultValue={value("email")}
-            error={errorFor("email")}
-            errorId={errorId("email")}
-            onBlur={onBlur}
-            onChange={onChange}
-            autoComplete="email"
-            inputMode="email"
-          />
-          <Field
-            label="Phone number"
-            name="phone"
-            type="tel"
-            required
-            defaultValue={value("phone")}
-            error={errorFor("phone")}
-            errorId={errorId("phone")}
-            onBlur={onBlur}
-            onChange={onChange}
-            autoComplete="tel"
-            inputMode="tel"
-          />
-          <Field
-            label="Current designation"
-            name="designation"
-            defaultValue={value("designation")}
-            autoComplete="organization-title"
-            placeholder="e.g. Senior QA Engineer at Acme"
-          />
+          {/*
+           * Paired two to a row from `sm`.
+           *
+           * These are four short values, and a single column of them ran the
+           * form past the 92dvh the panel is capped at — on a laptop the
+           * submit button sat below the fold, which reads as a broken dialog
+           * rather than as something to scroll. Stacked again below `sm`,
+           * where a phone has the height but not the width.
+           */}
+          <div className="grid gap-4 sm:grid-cols-2">
+            <Field
+              label="Name"
+              name="name"
+              required
+              defaultValue={value("name")}
+              error={errorFor("name")}
+              errorId={errorId("name")}
+              onBlur={onBlur}
+              onChange={onChange}
+              autoComplete="name"
+            />
+            <Field
+              label="Email"
+              name="email"
+              type="email"
+              required
+              defaultValue={value("email")}
+              error={errorFor("email")}
+              errorId={errorId("email")}
+              onBlur={onBlur}
+              onChange={onChange}
+              autoComplete="email"
+              inputMode="email"
+            />
+            <Field
+              label="Phone number"
+              name="phone"
+              type="tel"
+              required
+              defaultValue={value("phone")}
+              error={errorFor("phone")}
+              errorId={errorId("phone")}
+              onBlur={onBlur}
+              onChange={onChange}
+              autoComplete="tel"
+              inputMode="tel"
+            />
+            <Field
+              label="Current designation"
+              name="designation"
+              defaultValue={value("designation")}
+              autoComplete="organization-title"
+              placeholder="e.g. Senior QA Engineer"
+            />
+          </div>
 
           {/* Not wired to the shared blur handlers: those read
               `event.currentTarget.value`, which for a file input is a fake
@@ -225,7 +242,9 @@ function ApplyForm({ role, onDone }: { role: string; onDone: () => void }) {
             <span className="text-label text-fg-subtle uppercase">Anything else</span>
             <textarea
               name="message"
-              rows={3}
+              // Two rows, and resizable: the field that grows on demand is the
+              // right one to start small when vertical space is the constraint.
+              rows={2}
               defaultValue={value("message")}
               placeholder="What have you built, and what would you like to build next?"
               className={cn(field, "resize-y")}

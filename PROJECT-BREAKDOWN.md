@@ -1,6 +1,6 @@
 # Wizard Communications — Corporate Website
 
-Work breakdown, as built on 7 August 2026.
+Work breakdown, as built on 12 August 2026.
 
 A rebuild of wizardcomm.net as a statically prerendered Next.js application.
 All copy is transcribed from the live site and held as typed data, so the whole
@@ -15,10 +15,10 @@ delivers it.
 | **Framework** | Next.js 16.2.12 — App Router, React 19.2.4 |
 | **Language** | TypeScript 5 |
 | **Styling** | Tailwind CSS v4, token-driven |
-| **Source files** | 110 (TS / TSX / CSS) |
-| **Pages live** | 11, all statically prerendered |
-| **Pages pending** | 17 routes linked but not built |
-| **Modules** | 14 — 10 built, 4 not started |
+| **Source files** | 141 (TS / TSX / CSS) |
+| **Routes live** | 15, prerendering to 53 pages |
+| **Pages pending** | None — every linked route is built |
+| **Modules** | 19 — all built |
 
 ---
 
@@ -201,69 +201,165 @@ and regeneration of four service heroes from the stored prompts.
 
 ---
 
-## M11 — Contact  *(not started)*
+## M11 — Contact & enquiry pipeline
 
-**Feature — Contact**
-An enquiry form with validation and a confirmation state, the office address and
-direct contact details, a location map, and structured data for the office.
+**Feature — Contact page and enquiry pipeline**
+The site's conversion endpoint: an enquiry form that validates on the server,
+reports field-level errors, and confirms in place without a page change; the
+office address, phone and email as real links; and structured data describing
+the office. The form posts through a Server Action, so it works with JavaScript
+disabled and enhances to inline errors and a pending state when it loads.
 
-**Task — Build the contact page and enquiry pipeline**
-Build the page, the accessible form and its submission handling with spam
-protection, and add the office block, map and LocalBusiness schema.
+**Task — Build the contact page and its submission path**
+Build the page and the accessible form, write the Server Action with shared
+validation rules, wire delivery to a configurable webhook, and add the office
+block and organisation schema. Submission fails loudly when the webhook
+environment variable is unset rather than reporting a success that never left
+the building.
 
-**Status** — Not started. **Highest priority** — every call-to-action on every
-page, the header action and two footer columns point at `/contact`, so the
-site's entire conversion path currently dead-ends.
+**Status** — Done.
 
 ---
 
-## M12 — Products  *(not started)*
+## M12 — Products
 
 **Feature — Products section**
-An index and four detail pages for the Smart-suite products: Smart Commerce
+An index and four detail pages for the Smart-suite products — Smart Commerce
 Suite, Smart Asset Management, Smart Restaurant Management and Smart Restaurant
-POS.
+POS — each with positioning, capability breakdown, who it is for, and a route
+back into the enquiry path.
 
-**Task — Build the products index and detail pages**
-Extend the product data model beyond the name, tagline and feature list it holds
-today, build the index and a data-driven detail template following the services
-pattern, and source product imagery.
+**Task — Build the products index and detail template**
+Extend the product data model past the name and feature list it held, build the
+index grid and one data-driven detail template that renders whatever sections a
+product actually defines, source product imagery, and prerender all five routes.
 
-**Status** — Not started. Content already exists in the constants, so this needs
-pages rather than a discovery phase.
-
----
-
-## M13 — Projects & industries  *(not started)*
-
-**Feature — Projects and industries**
-A case-study index and detail pages for the five projects, plus the industries
-page for the five verticals. Both routes are already linked from the primary
-navigation, and the home page's project rail links into detail pages that do not
-yet exist.
-
-**Task — Build the case studies and industries page**
-Extend the project data model with brief, approach and outcome, build the index
-and case-study template, build the industries page from the existing section
-component, and resolve whether the Industries section returns to the home page.
-
-**Status** — Not started
+**Status** — Done. Four detail pages live.
 
 ---
 
-## M14 — Secondary & legal pages  *(not started)*
+## M13 — Projects & case studies
 
-**Feature — Secondary and legal pages**
-The remaining routes linked from the navigation and footer: a company landing
-page, a career page distinct from Work With Us, Who We Serve, and three legal
-pages — privacy policy, terms of use and an accessibility statement.
+**Feature — Project portfolio**
+The full portfolio: an index of 24 projects with category filtering that works
+before JavaScript loads, a detail page for every one of them, and eight written
+case studies carrying challenge, approach, delivered assets and business impact.
+Projects without a written brief render a shorter honest version rather than a
+padded template, so no card leaves the site and none invents a claim.
 
-**Task — Build the remaining linked routes**
-Build the six pages. The two policy pages need legal copy before implementation;
-the accessibility statement can draw on the measured contrast audit the design
-system already carries.
+**Task — Build the portfolio index, filter and detail template**
+Model the project and case-study data as separate shapes so a project can exist
+without a write-up, build the filterable index and the conditional detail
+template, recover the original artwork for all 24 entries, and add a build-time
+guard that fails the build if a case study has no matching project.
 
-**Status** — Not started
+**Status** — Done. 24 detail routes prerendered.
+
+---
+
+## M14 — Industries
+
+**Feature — Industries page**
+The sectors the company sells into, each with its own positioning, the problems
+that sector brings, and the work already delivered there — with photography
+rather than generic stock illustration.
+
+**Task — Build the industries page and its content model**
+Model the sector entries, build the page from the existing section components,
+source and process the imagery, and link each sector to the services and
+projects that serve it.
+
+**Status** — Done.
+
+---
+
+## M15 — Careers & applications
+
+**Feature — Careers and job applications**
+A careers page carrying the employer-brand copy, eight current openings as
+expandable panels with responsibilities and requirements, and an application
+flow: an in-page dialog per role capturing name, email, phone, current location,
+notice period and a CV upload, submitted without leaving the listing.
+
+**Task — Build the careers page and application pipeline**
+Model the openings, build the accordion listing and the application dialog,
+write the Server Action that validates the upload by type and size and delivers
+it to a configurable webhook, and raise the request body limit to accept a CV.
+
+**Status** — Done. Eight roles live.
+
+---
+
+## M16 — Form validation & submission layer
+
+**Feature — Shared validation and submission layer**
+One set of validation rules used by both the server and the browser, so a field
+cannot pass in one place and fail in the other. Fields validate on blur rather
+than on every keystroke, re-check as you correct them once they have been
+touched, and on submit the first invalid field takes focus. Native browser
+validation is suppressed so the messages match the rest of the interface.
+
+**Task — Build the validation module and wire both forms to it**
+Write the shared rule set covering name, email, phone, message length and file
+type and size; build the blur-validation hook around it; and wire the contact
+and application forms to use it on both sides of the request.
+
+**Status** — Done. Covers both forms.
+
+---
+
+## M17 — Team & social proof
+
+**Feature — Leadership and client proof**
+The people and the evidence: leadership cards with role, portrait and a full
+biography in a dialog, laid out as a carousel that steps from one card to four
+across the breakpoints; and a client wall that scrolls the logos of the
+corporates and government bodies already served.
+
+**Task — Build the leadership carousel and client wall**
+Build the leader card, its biography dialog and the carousel around them; build
+the client wall as a reusable scrolling variant; and normalise the logo
+treatment so eleven marks drawn in different inks read consistently in both
+themes.
+
+**Status** — Done.
+
+---
+
+## M18 — E-Learning service line
+
+**Feature — E-Learning Solutions service**
+A seventh service line — content and platform work for education — following
+the same page contract as the other six: positioning statement, offerings,
+process, outcomes, technology, FAQ and call to action, with its own hero
+artwork and metadata.
+
+**Task — Add the E-Learning service and its supporting content**
+Write the service entry against the existing page model, source the hero and
+supporting imagery, and add it to the services index, the navigation menu, the
+related-services rotation and the sitemap.
+
+**Status** — Done. Seven service pages live.
+
+---
+
+## M19 — Legal & accessibility pages
+
+**Feature — Policy and accessibility statements**
+The two standing statements the footer links: a privacy policy covering what the
+enquiry and application forms collect, why, and how long it is held; and an
+accessibility statement declaring the standard targeted, the measures taken and
+how to report a barrier — written against the contrast and keyboard behaviour
+the design system actually enforces rather than as boilerplate.
+
+**Task — Build the policy and accessibility routes**
+Model the policy content as typed sections so it stays editable without touching
+components, build both pages on a shared prose template, and reconcile the
+footer links with what exists. Terms of Use is deliberately not included: it is a
+binding contract that needs drafting by counsel, so the link was removed rather
+than filled with invented terms.
+
+**Status** — Done. Terms of Use is a business decision, not outstanding work.
 
 ---
 

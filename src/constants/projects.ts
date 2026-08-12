@@ -29,7 +29,67 @@ import { hasCaseStudy } from "./project-pages";
  * resolves all three cases, so no card links into a 404.
  */
 export const PROJECTS: readonly Project[] = [
+ 
   {
+    slug: "service-works",
+    title: "Service Works",
+    category: "Software Application",
+    description:
+      "Real time tracking of technician's position. Completely integrated accounting solution. Free onboarding including data import from most existing software. Smart scheduling using Google Maps.",
+    monogram: "SW",
+    image: "/projects/service-works.jpg",
+    tags: ["Cloud SaaS", "Field Service", "Scheduling"],
+  },
+  {
+    slug: "itc-limited",
+    title: "ITC",
+    category: "Software Application",
+    description:
+      "A fragrance development and approval platform for one of India's largest FMCG groups, digitising a formulation workflow that previously ran on paper.",
+    monogram: "IT",
+    image: "/projects/itc-limited.jpg",
+    tags: ["Enterprise", "Workflow", "FMCG"],
+  },
+  {
+    slug: "parliament-museum",
+    title: "Parliament Museum",
+    category: "Digital Experience",
+    description:
+      "Indian Parliament Museum had set up a digital interactive kiosk on the Democratic Heritage of India, spanning 2500 years. We played a significant role in creating this digital experience, woven from virtual 3D walkthroughs, digital rich media interactions and audio-visual presentation.",
+    monogram: "PM",
+    image: "/projects/parliament-museum.jpg",
+    gallery: [
+      {
+        src: "/projects/parliament-museum-1.jpg",
+        caption:
+          "Digital Rich Media Interaction — Legislative Reforms in India, 1833 to 1947",
+        width: 600,
+        height: 447,
+      },
+      {
+        src: "/projects/parliament-museum-2.jpg",
+        caption:
+          "Digital Rich Media Interaction — the three organs of state: executive, legislature, judiciary",
+        width: 600,
+        height: 447,
+      },
+      {
+        src: "/projects/parliament-museum-3.jpg",
+        caption:
+          "Digital Rich Media Interaction — the Indian Constitution, from preamble to directive principles",
+        width: 600,
+        height: 447,
+      },
+      {
+        src: "/projects/parliament-museum-4.jpg",
+        caption: "Digital 3D modelling and virtual walkthrough",
+        width: 600,
+        height: 447,
+      },
+    ],
+    tags: ["3D Walkthrough", "Rich Media", "Government"],
+  },
+   {
     slug: "drift",
     title: "Drift",
     category: "Mobile App",
@@ -66,26 +126,6 @@ export const PROJECTS: readonly Project[] = [
       },
     ],
     tags: ["Mobile App", "Audio Engine", "Product Design"],
-  },
-  {
-    slug: "service-works",
-    title: "Service Works",
-    category: "Software Application",
-    description:
-      "Real time tracking of technician's position. Completely integrated accounting solution. Free onboarding including data import from most existing software. Smart scheduling using Google Maps.",
-    monogram: "SW",
-    image: "/projects/service-works.jpg",
-    tags: ["Cloud SaaS", "Field Service", "Scheduling"],
-  },
-  {
-    slug: "itc-limited",
-    title: "ITC",
-    category: "Software Application",
-    description:
-      "A fragrance development and approval platform for one of India's largest FMCG groups, digitising a formulation workflow that previously ran on paper.",
-    monogram: "IT",
-    image: "/projects/itc-limited.jpg",
-    tags: ["Enterprise", "Workflow", "FMCG"],
   },
   {
     slug: "aim",
@@ -127,45 +167,7 @@ export const PROJECTS: readonly Project[] = [
     image: "/projects/wondr-years.jpg",
     tags: ["e-Learning", "Integrations"],
   },
-  {
-    slug: "parliament-museum",
-    title: "Parliament Museum",
-    category: "Digital Experience",
-    description:
-      "Indian Parliament Museum had set up a digital interactive kiosk on the Democratic Heritage of India, spanning 2500 years. We played a significant role in creating this digital experience, woven from virtual 3D walkthroughs, digital rich media interactions and audio-visual presentation.",
-    monogram: "PM",
-    image: "/projects/parliament-museum.jpg",
-    gallery: [
-      {
-        src: "/projects/parliament-museum-1.jpg",
-        caption:
-          "Digital Rich Media Interaction — Legislative Reforms in India, 1833 to 1947",
-        width: 600,
-        height: 447,
-      },
-      {
-        src: "/projects/parliament-museum-2.jpg",
-        caption:
-          "Digital Rich Media Interaction — the three organs of state: executive, legislature, judiciary",
-        width: 600,
-        height: 447,
-      },
-      {
-        src: "/projects/parliament-museum-3.jpg",
-        caption:
-          "Digital Rich Media Interaction — the Indian Constitution, from preamble to directive principles",
-        width: 600,
-        height: 447,
-      },
-      {
-        src: "/projects/parliament-museum-4.jpg",
-        caption: "Digital 3D modelling and virtual walkthrough",
-        width: 600,
-        height: 447,
-      },
-    ],
-    tags: ["3D Walkthrough", "Rich Media", "Government"],
-  },
+  
   {
     
     slug: "uvanij",
@@ -359,7 +361,7 @@ export const PROJECTS_COPY = {
   stats: [
     { value: "200+", label: "Successful Consulting" },
     { value: "150+", label: "Live Websites" },
-    { value: "10", label: "eLearning Solutions" },
+    { value: "100+", label: "eLearning Solutions" },
   ],
 } as const;
 

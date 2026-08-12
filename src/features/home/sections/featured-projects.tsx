@@ -24,7 +24,7 @@ import { ProjectCard, ProjectsEndCard } from "./project-card";
  * which turned a six-card pinned scroll into a twenty-three-card one, and a
  * pin length to match. The end card routes to the full index for the rest.
  */
-const FEATURED = PROJECTS.slice(0, 6);
+const FEATURED = PROJECTS.slice(0, 5);
 
 /**
  * Featured projects.

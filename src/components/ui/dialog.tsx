@@ -78,7 +78,14 @@ export function DialogHeader({
 }: ComponentPropsWithoutRef<"div">) {
   return (
     <div
-      className={cn("flex flex-col gap-2 p-6 pr-14 sm:p-8 sm:pr-14", className)}
+      className={cn(
+        // Less padding below than above: the header sits directly against a
+        // scrolling body, and on a short screen every row of padding here is
+        // a row of the form that has to be scrolled to.
+        "flex flex-col gap-2 p-6 pr-14 pb-4",
+        "sm:px-8 sm:pt-8 sm:pr-14 sm:pb-5",
+        className,
+      )}
       {...props}
     />
   );

@@ -32,7 +32,7 @@ export const STORY = {
   title: "In 2004, we started with a simple belief:",
   paragraphs: [
     "What began as a small team of passionate thinkers, creators, and technologists has grown into a trusted digital transformation partner serving businesses, enterprises, government organizations, educational institutions, healthcare providers, startups, and global brands.",
-    "Over the last 22+ years, we have delivered more than 200 successful projects and earned the trust of 100+ clients across industries and geographies. But numbers only tell part of the story. The real measure of our success lies in the relationships we've built, the challenges we've solved, and the growth we've helped create.",
+    "Since 2004 we started and have delivered more than 200 successful projects and earned the trust of 100+ clients across industries and geographies. But numbers only tell part of the story. The real measure of our success lies in the relationships we've built, the challenges we've solved, and the growth we've helped create.",
   ],
 } as const;
 
@@ -306,7 +306,7 @@ export type GalleryPhoto = {
 
 export const CLIENTS_COPY = {
   eyebrow: "Featured Clients",
-  body: "We are proud to have 200+ satisfied clients from across the world and industries. From corporates to the government, we are the secret behind the success of countless agencies for 22 years.",
+  body: "We are proud to have 200+ satisfied clients across the globe, spanning diverse industries. From corporate enterprises to government organizations, we have been the trusted technology partner behind the success of countless businesses since 2004.",
 } as const;
 
 /**
@@ -363,10 +363,10 @@ export const BEYOND = {
 export const CHOOSE_WIZARD = {
   title: "Why Clients Choose Wizard",
   reasons: [
-    "Because we think beyond projects.",
-    "Because we ask better questions.",
-    "Because we care as much about outcomes as we do about ideas.",
-    "Most importantly, because we work as partners — not vendors.",
+    "We think beyond projects.",
+    "We ask the right questions.",
+    "We work as partners, not vendors.",
+    "We focus on outcomes as much as ideas.",
   ],
   closing: [
     "Your goals become our goals.",

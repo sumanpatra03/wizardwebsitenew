@@ -1,7 +1,6 @@
 import Image from "next/image";
 
 import { ClientWall } from "@/components/common/client-wall";
-import { Gallery } from "@/components/common/gallery";
 import { JsonLd } from "@/components/common/json-ld";
 import { TestimonialsCarousel } from "@/components/common/testimonials-carousel";
 import { Container } from "@/components/layout/container";
@@ -12,6 +11,7 @@ import { CLIENTS_COPY } from "@/constants/company";
 import { PROJECTS, PROJECTS_COPY } from "@/constants/projects";
 import { TESTIMONIALS_HEADING } from "@/constants/testimonials";
 import { CtaBand } from "@/features/home/sections/cta-band";
+import { GalleryCarousel } from "@/features/projects/gallery-carousel";
 import { ProjectGrid } from "@/features/projects/project-grid";
 import { breadcrumbJsonLd } from "@/lib/jsonld";
 import { buildMetadata } from "@/lib/seo";
@@ -134,7 +134,11 @@ export default function ProjectsPage() {
               title={project.title}
               description={project.description}
             />
-            <Gallery photos={project.gallery ?? []} className="mt-14" />
+            <GalleryCarousel
+              photos={project.gallery ?? []}
+              label={project.title}
+              className="mt-14"
+            />
           </Container>
         </Section>
       ))}

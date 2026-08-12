@@ -442,10 +442,12 @@ const MOBILE_APP: ServicePage = {
   slug: "mobile-app-development",
   label: "Mobile App Development",
   eyebrow: "Mobile App Development",
-  titleLines: ["Build Powerful Mobile Apps", "That Grow Your Business"],
-  tagline: "Android, iOS and cross-platform, delivered end to end.",
-  lead: "At Wizard Communication, we create high-performance mobile applications that help businesses engage customers, improve operations, and accelerate growth.",
+  titleLines: ["Pocket-sized,", "feeling-first."],
+  tagline:
+    "Native and cross-platform apps that people keep on their home screen.",
+  lead: "Field tools, commerce, wellness: designed around the thumb, engineered for the battery.",
   body: [
+    "At Wizard Communication, we create high-performance mobile applications that help businesses engage customers, improve operations, and accelerate growth.",
     "From startups to enterprises, we develop secure, scalable, and user-friendly mobile apps tailored to your business goals. Whether you need an Android app, iOS app, or cross-platform solution, our team delivers modern applications with seamless performance and exceptional user experience.",
   ],
   image: "/services/hero/mobile-app-development.webp",
@@ -592,6 +594,13 @@ const MOBILE_APP: ServicePage = {
         chips: [TECH.mysql, TECH.firebase, TECH.restApi],
       },
     ],
+  },
+  /* Our own app, so it is the one piece of work here we can show end to end
+     — spec, brand, engineering and audio all in one place. */
+  caseStudies: {
+    heading: "Drift.",
+    lead: "A sleep and relaxation app we imagined and built ourselves: living gradient visuals, layered soundscapes and a timer that fades the audio as you go under.",
+    slugs: ["drift"],
   },
 
   faqs: {
@@ -1195,7 +1204,7 @@ const E_LEARNING: ServicePage = {
   body: [
     "Full-scale services including personalized LMS development, courseware creation, SME hiring, curriculum localization, and interactive mobile learning solutions.",
   ],
-  image: "/services/hero/e-learning-solutions.webp",
+  image: "/services/hero/e-learning-solutions.png",
   // Near-square flat artwork, so it is fitted rather than cropped.
   imageFit: "contain",
   imagePrompt:
@@ -1216,27 +1225,27 @@ const E_LEARNING: ServicePage = {
       {
         title: "Custom Courseware Development",
         body: "Meaningful, memorable, motivational learning. We use an agile development process, the SAM and CCAF instructional design models, and our own smart studios — building for real-world implementation rather than for the certificate alone.",
-        image: "/services/hero/elearning-courseware.webp",
+        image: "/services/hero/elearning-courseware.png",
       },
       {
         title: "Mobile Learning",
         body: "Let learners carry the course with them and continue coursework while travelling. Built for professionals who would rather spend a commute on knowledge acquisition and augmentation than on nothing at all.",
-        image: "/services/hero/elearning-mobile.webp",
+        image: "/services/hero/elearning-mobile.png",
       },
       {
         title: "Open Source LMS Configuration",
         body: "SCORM 1.2, SCORM 2004 and AICC-compliant courseware. We favour an open source LMS — Moodle and the likes — for the cost profile and for how far it can be customised to how your teams actually learn.",
-        image: "/services/hero/elearning-lms.webp",
+        image: "/services/hero/elearning-lms.png",
       },
       {
         title: "Translation & Localization",
         body: "Multilingual content development, grounded in large-scale Indian eLearning programmes where the localisation was the hard part rather than an afterthought.",
-        image: "/services/hero/elearning-localization.webp",
+        image: "/services/hero/elearning-localization.png",
       },
       {
         title: "L&D Consultancy",
         body: "Advice on curriculum design, content retention, how effectiveness gets evaluated, and whether learners can actually implement what they have been taught.",
-        image: "/services/hero/elearning-consultancy.webp",
+        image: "/services/hero/elearning-consultancy.png",
       },
     ],
     // Four of the five are near-square flat illustrations that a 16:10 crop
