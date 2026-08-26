@@ -203,7 +203,7 @@ export const CASE_STUDIES: readonly CaseStudy[] = [
     slug: "uvanij",
     tagline:
       "Empowering entrepreneurs with a secure, high-performance digital commerce platform.",
-    lead: "Wizard Communication developed Uvanij with a multi-layered security framework, scalable cloud architecture, and optimized platform performance to deliver a secure and reliable eCommerce ecosystem.",
+    lead: "Wizard Communications developed Uvanij with a multi-layered security framework, scalable cloud architecture, and optimized platform performance to deliver a secure and reliable eCommerce ecosystem.",
     challenge: [
       "Cybersecurity threats and data protection risks",
       "Platform availability and infrastructure scalability concerns",
@@ -247,7 +247,7 @@ export const CASE_STUDIES: readonly CaseStudy[] = [
     slug: "restaurant-management-software",
     tagline:
       "Digitizing restaurant operations for greater efficiency and customer satisfaction.",
-    lead: "Wizard Communication developed an integrated Restaurant Management Software that connects front-of-house, kitchen, inventory, finance, and workforce operations into a single intelligent platform.",
+    lead: "Wizard Communications developed an integrated Restaurant Management Software that connects front-of-house, kitchen, inventory, finance, and workforce operations into a single intelligent platform.",
     challenge: [
       "Slow service and billing processes",
       "Limited business insights from operations",
@@ -293,7 +293,7 @@ export const CASE_STUDIES: readonly CaseStudy[] = [
   {
     slug: "sunbridge",
     tagline: "Building a secure, resilient, and future-ready digital infrastructure.",
-    lead: "Wizard Communication implemented a multi-layered cybersecurity architecture that enhanced infrastructure resilience, automated security operations, and ensured continuous protection against evolving cyber threats.",
+    lead: "Wizard Communications implemented a multi-layered cybersecurity architecture that enhanced infrastructure resilience, automated security operations, and ensured continuous protection against evolving cyber threats.",
     challenge: [
       "Legacy infrastructure and cloud security risks",
       "Limited threat monitoring and vulnerability exposure",
@@ -336,7 +336,7 @@ export const CASE_STUDIES: readonly CaseStudy[] = [
     slug: "k-middle-east",
     tagline:
       "Delivering a modern digital experience for global immigration services.",
-    lead: "Wizard Communication designed and developed a modern, WordPress-based website that delivers an intuitive user experience with optimized navigation and streamlined customer interactions.",
+    lead: "Wizard Communications designed and developed a modern, WordPress-based website that delivers an intuitive user experience with optimized navigation and streamlined customer interactions.",
     challenge: [
       "Outdated website with limited serviceability",
       "Complex navigation and poor user engagement",

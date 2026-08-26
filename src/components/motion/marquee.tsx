@@ -23,16 +23,18 @@ export function Marquee({
   reverse = false,
   className,
 }: MarqueeProps) {
-  // Duplicated once; the second copy is aria-hidden so the list is
-  // announced a single time.
+  // Duplicated once so the -50% translate lands back where it started.
   const track = [...items, ...items];
 
   return (
     <div
       className={cn("mask-fade-x group relative overflow-hidden", className)}
-      // Keeps the whole strip out of the a11y tree: it is decorative
-      // reinforcement of the tech list rendered elsewhere on the page.
-      role="presentation"
+      // `aria-hidden`, not `role="presentation"`: presentation strips only the
+      // element's own semantics and leaves its descendants in the tree, so the
+      // duplicated track was still announced — every technology twice over.
+      // `aria-hidden` removes the subtree, which is what this wants: the strip
+      // is decorative reinforcement of the tech list rendered beneath it.
+      aria-hidden="true"
     >
       <ul
         className={cn(

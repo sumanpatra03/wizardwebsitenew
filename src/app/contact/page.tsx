@@ -136,11 +136,17 @@ export default function ContactPage() {
               </h2>
 
               <ul className="mt-6 flex flex-col gap-4">
+                {/* Both addresses were previously listed bare, one under the
+                    other, which left a visitor to guess which one their
+                    enquiry belonged in — and made the named address read as a
+                    personal inbox pasted onto a business page. */}
                 <DetailCard icon={Mail} label="Email">
                   <a href={`mailto:${contact.email}`} className={linkClass}>
+                    <span className="text-fg-subtle">General enquiries — </span>
                     {contact.email}
                   </a>
                   <a href={`mailto:${contact.salesEmail}`} className={linkClass}>
+                    <span className="text-fg-subtle">Sales — </span>
                     {contact.salesEmail}
                   </a>
                 </DetailCard>

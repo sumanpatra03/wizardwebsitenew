@@ -2,15 +2,15 @@ import { Boxes, ChefHat, ScanBarcode, ShoppingCart } from "lucide-react";
 
 import type { Product } from "@/types/content";
 
-/** The four Smart products, with copy taken from wizardcomm.net/products. */
+/** The four products, with copy taken from wizardcomm.net/products. */
 export const PRODUCTS: readonly Product[] = [
   {
     slug: "smart-commerce-suite",
     image: "/products/smart-commerce-suite.webp",
-    name: "Smart Commerce ",
+    name: "Smart Commerce",
     tagline: "All-in-one commerce operations",
     description:
-      "Transform your business with our Smart Commerce  — a powerful, all-in-one platform designed to simplify and accelerate modern commerce operations.",
+      "Transform your business with our Smart Commerce — a powerful, all-in-one platform designed to simplify and accelerate modern commerce operations.",
     icon: ShoppingCart,
     features: [
       "Order management",
@@ -22,10 +22,10 @@ export const PRODUCTS: readonly Product[] = [
   {
     slug: "smart-asset-management",
     image: "/products/smart-asset-management.webp",
-    name: " Asset Management System",
+    name: "Asset Management System",
     tagline: "Track every asset, end to end",
     description:
-      "Take complete control of your organization's assets with our  Asset Management System — a robust and intelligent solution designed to streamline asset tracking, maintenance, and lifecycle management.",
+      "Take complete control of your organization's assets with our Asset Management System — a robust and intelligent solution designed to streamline asset tracking, maintenance, and lifecycle management.",
     icon: Boxes,
     features: [
       "Asset allocation",
@@ -38,10 +38,10 @@ export const PRODUCTS: readonly Product[] = [
   {
     slug: "smart-restaurant-management",
     image: "/products/smart-restaurant-management.webp",
-    name: " Restaurant back Office Management",
+    name: "Restaurant Back Office Management",
     tagline: "Run the whole back of house",
     description:
-      "Optimize your restaurant operations with our  Restaurant back Office Management — an all-in-one solution built to simplify daily management and improve operational efficiency.",
+      "Optimize your restaurant operations with our Restaurant Back Office Management — an all-in-one solution built to simplify daily management and improve operational efficiency.",
     icon: ChefHat,
     features: [
       "Inventory, purchasing and requisitions",
@@ -53,10 +53,10 @@ export const PRODUCTS: readonly Product[] = [
   {
     slug: "smart-restaurant-pos",
     image: "/products/smart-restaurant-pos.webp",
-    name: " Restaurant POS",
+    name: "Restaurant POS",
     tagline: "Fast, reliable front of house",
     description:
-      "Simplify your restaurant operations with our  Restaurant POS — a fast, reliable, and intelligent solution for modern food businesses.",
+      "Simplify your restaurant operations with our Restaurant POS — a fast, reliable, and intelligent solution for modern food businesses.",
     icon: ScanBarcode,
     features: [
       "Table management and KOT processing",

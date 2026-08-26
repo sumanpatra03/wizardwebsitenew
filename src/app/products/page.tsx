@@ -29,7 +29,7 @@ const CRUMBS = [
 export const metadata = buildMetadata({
   title: "Products",
   description:
-    "  Smart Commerce , Asset Management,  Restaurant BackOffice Management and  Restaurant POS — scalable digital products built for modern enterprises.",
+    "Smart Commerce, Asset Management System, Restaurant Back Office Management and Restaurant POS — scalable digital products built for modern enterprises.",
   path: "/products",
 });
 

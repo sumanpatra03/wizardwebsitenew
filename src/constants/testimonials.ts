@@ -6,6 +6,12 @@ import type { Testimonial } from "@/types/content";
  * The About Us page carries longer versions of two of these than the home
  * page does; the full text is used here, since truncating a client's own
  * words to fit a card is the wrong trade.
+ *
+ * One correction to the source: two quotes read "Salt Lake City, Kolkata".
+ * The office is in Salt Lake — a Kolkata neighbourhood — and "Salt Lake City"
+ * names a different place entirely to any reader outside the city. The rest
+ * of the site (contact page, its metadata, the map heading) already says
+ * "Salt Lake, Kolkata", which is what these now say too.
  */
 export const TESTIMONIALS: readonly Testimonial[] = [
   {
@@ -18,7 +24,7 @@ export const TESTIMONIALS: readonly Testimonial[] = [
   },
   {
     quote:
-      "Wizard Communications, Salt Lake City, Kolkata has provided a commendable support and assistance in setting up of the digital experience.",
+      "Wizard Communications, Salt Lake, Kolkata has provided a commendable support and assistance in setting up of the digital experience.",
     author: "Parliament Museum of India",
     organization: "Parliament Museum of India",
     location: "New Delhi",
@@ -26,7 +32,7 @@ export const TESTIMONIALS: readonly Testimonial[] = [
   },
   {
     quote:
-      "Wizard Communications of Salt Lake City, Kolkata has been an outstanding partner for the Education and Training Services. They have been assisting us in many of our significant courseware development projects related to digital learning experience and localization. Their dedication, quality and commitment is excellent with high level of customer satisfaction.",
+      "Wizard Communications of Salt Lake, Kolkata has been an outstanding partner for the Education and Training Services. They have been assisting us in many of our significant courseware development projects related to digital learning experience and localization. Their dedication, quality and commitment is excellent with high level of customer satisfaction.",
     author: "Prof. Subir Ghosh",
     role: "Principal",
     organization:

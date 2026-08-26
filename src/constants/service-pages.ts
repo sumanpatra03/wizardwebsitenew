@@ -447,7 +447,7 @@ const MOBILE_APP: ServicePage = {
     "Native and cross-platform apps that people keep on their home screen.",
   lead: "Field tools, commerce, wellness: designed around the thumb, engineered for the battery.",
   body: [
-    "At Wizard Communication, we create high-performance mobile applications that help businesses engage customers, improve operations, and accelerate growth.",
+    "At Wizard Communications, we create high-performance mobile applications that help businesses engage customers, improve operations, and accelerate growth.",
     "From startups to enterprises, we develop secure, scalable, and user-friendly mobile apps tailored to your business goals. Whether you need an Android app, iOS app, or cross-platform solution, our team delivers modern applications with seamless performance and exceptional user experience.",
   ],
   image: "/services/hero/mobile-app-development.webp",
@@ -494,7 +494,7 @@ const MOBILE_APP: ServicePage = {
   },
 
   why: {
-    heading: "Why Businesses Choose Wizard Communication",
+    heading: "Why Businesses Choose Wizard Communications",
     items: [
       {
         title: "Business-Focused Development",
@@ -675,7 +675,7 @@ const MOBILE_APP: ServicePage = {
 
   cta: {
     title: "Ready to Build Your Mobile App?",
-    body: "Partner with Wizard Communication to develop secure, scalable, and high-performing mobile applications that drive business growth and customer engagement.",
+    body: "Partner with Wizard Communications to develop secure, scalable, and high-performing mobile applications that drive business growth and customer engagement.",
     label: "Get Started Now",
   },
 };
