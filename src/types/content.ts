@@ -38,6 +38,8 @@ export type Service = {
    * there replaces the generated `ServiceArtwork` automatically.
    */
   imagePrompt: string;
+  /** Explicit card image path under `public/`. Overrides the `findPublicImage` slug lookup. */
+  image?: string;
   /** Capability bullets revealed on card expansion. */
   capabilities: readonly string[];
 };

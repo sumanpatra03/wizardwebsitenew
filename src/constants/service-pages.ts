@@ -2,7 +2,9 @@ import {
   BrainCircuit,
   Code2,
   GraduationCap,
+  LifeBuoy,
   Megaphone,
+  PenTool,
   ShieldCheck,
   Smartphone,
   UsersRound,
@@ -1360,6 +1362,515 @@ const E_LEARNING: ServicePage = {
 };
 
 /* ------------------------------------------------------------------ */
+/* UX / UI Design & Development                                        */
+/* ------------------------------------------------------------------ */
+
+const UX_UI: ServicePage = {
+  slug: "ux-ui-design",
+  label: "UX/UI Design & Development",
+  eyebrow: "Experience Intelligence™",
+  titleLines: ["Every Great Experience", "Begins Long Before Design."],
+  tagline: "Most organisations think design starts with wireframes.",
+  lead: "Why are customers abandoning your platform? Why does adoption remain low? Why do employees avoid internal systems? Why are support tickets increasing? Why are customers choosing competitors despite similar products?",
+  body: [
+    "The answers rarely live inside analytics dashboards. They live inside human behaviour.",
+    "At Wizard, every engagement begins by understanding the people behind the pixels. Only then do we begin designing.",
+  ],
+  emphasis: "Because assumptions create expensive products. Insights create extraordinary ones.",
+  image: "/services/uiux.jpg",
+  imagePrompt:
+    "Cinematic close-up of a designer desk at blue hour, translucent wireframe panels floating above a drawing tablet, stylus in hand, cyan key light against deep charcoal, volumetric haze, shallow depth of field, photorealistic, 16:9, no text, no logos",
+  icon: PenTool,
+  summary: "Experience Intelligence™ and human-centred UI/UX design.",
+  metaDescription:
+    "Experience Intelligence™ — Every great experience begins long before design. We replace assumptions with evidence through behavioural research, Design Thinking 2.0, and human-centred UI/UX development.",
+
+  statement: {
+    heading: "We Don't Guess. We Discover.",
+    body: "Digital experiences fail for one simple reason: too many decisions are based on opinions. We replace assumptions with evidence. Our multidisciplinary research teams combine behavioural science, customer psychology, business analysis and data intelligence to uncover opportunities that traditional UX processes often overlook. Every interview. Every observation. Every workshop. Every customer journey. Every interaction. Every data point contributes to one objective — creating experiences people naturally understand.",
+  },
+
+  offerings: {
+    heading: "Research That Creates Competitive Advantage",
+    lead: "Because customers rarely say what they really need. Great research isn't about asking better questions — it's about observing better behaviour. Wizard's Experience Research practice combines qualitative insight with quantitative evidence to reveal unmet customer needs and hidden business opportunities.",
+    items: [
+      {
+        title: "User Interviews & Stakeholder Discovery",
+        body: "Benchmark studies, competitive experience reviews, in-depth user interviews, and stakeholder discovery to uncover core expectations and align business goals with user needs.",
+      },
+      {
+        title: "Field Observation & Contextual Inquiry",
+        body: "Observing users in their natural environment, ethnographic research, and diary studies to understand unarticulated workflows and real-world friction.",
+      },
+      {
+        title: "Customer Journey & Experience Mapping",
+        body: "Mapping every interaction across the full customer lifecycle to identify friction, drop-offs, emotional moments, and digital maturity opportunities.",
+      },
+      {
+        title: "Customer Personas & Behaviour Analytics",
+        body: "Data-backed persona creation, digital analytics, customer satisfaction analysis, heatmaps, and session replays that expose true user intent.",
+      },
+      {
+        title: "Information Architecture & Navigation Validation",
+        body: "Card sorting, tree testing, taxonomy development, and navigation structure validation to turn complex structures into intuitive paths.",
+      },
+      {
+        title: "Usability Testing & Accessibility Evaluation",
+        body: "Comprehensive usability testing, heuristic evaluation, and accessibility compliance assessments so products feel effortless for everyone.",
+      },
+    ],
+  },
+
+  features: {
+    heading: "Experience Intelligence™ in Action",
+    lead: "That's why our design process produces more than beautiful interfaces. It produces measurable business outcomes.",
+    items: [
+      {
+        title: "Human-Centred Design: Understand People First, Technology Second",
+        body: "Technology changes every year. Human behaviour evolves much more slowly. That's why our philosophy remains remarkably simple: understand people first, technology second. Wizard follows globally recognised Human-Centred Design principles to ensure every digital product feels intuitive, inclusive and emotionally engaging. Because products shouldn't force people to adapt. Products should adapt to people. Every interaction is evaluated through the lens of emotion, trust, accessibility, context, human behaviour, cognitive load, mental models, decision architecture, motivation, and habit formation. When experiences respect human behaviour... people stop noticing the technology.",
+        image: "/services/uiux.jpg",
+      },
+      {
+        title: "Behavioural Design: Understanding Why People Click",
+        body: "Understanding why people click is more important than knowing where they click. Every digital interaction is a behavioural decision: Should I trust this? Should I continue? Should I purchase? Should I return later? Should I abandon this process? Behavioural science helps answer those questions long before customers consciously realise they're making them. Wizard incorporates behavioural psychology through choice architecture, visual hierarchy, decision simplicity, cognitive fluency, persuasive design, trust signals, recognition over recall, progressive disclosure, emotional design, and behavioural nudges. The objective isn't manipulation — it's removing unnecessary friction.",
+        image: "/services/hero/hero_collab.webp",
+      },
+      {
+        title: "Information Architecture: Clarity Is A Competitive Advantage",
+        body: "When information is organised intelligently... people think less, customers convert faster, employees become more productive, support costs decrease, and digital adoption improves. Wizard structures complex information into intuitive navigation systems that make digital products feel remarkably simple. Our expertise includes content architecture, navigation design, taxonomy development, search strategy, knowledge architecture, cross-platform navigation, enterprise information models, content governance, semantic structure, and AI-ready information architecture. Good architecture disappears. Great architecture feels obvious.",
+        image: "/services/hero/hero_growth.webp",
+      },
+      {
+        title: "AI-Enhanced Research: Human Insight Meets Artificial Intelligence",
+        body: "AI doesn't replace researchers. It allows researchers to uncover deeper patterns, analyse larger datasets and move from insight to innovation much faster. Wizard responsibly integrates AI into every stage of discovery — including research synthesis, sentiment analysis, journey analysis, behaviour prediction, persona generation, content structuring, experience pattern recognition, accessibility evaluation, and opportunity identification. But every recommendation is validated by experienced strategists and researchers: technology accelerates insight, while human expertise ensures relevance.",
+        image: "/services/aihuman.jpg",
+      },
+      {
+        title: "Customer Journey Mapping: Designed Around One Unified Journey",
+        body: "Customers don't think in departments. They don't distinguish between marketing, sales, customer support or technology. To them... it's one journey. Wizard maps every interaction across the customer lifecycle — Advocacy, Support, Adoption, Onboarding, Purchase, Evaluation, Discovery, and Awareness — to identify opportunities for improvement, automation and delight.",
+        image: "/services/hero/hero_trust.webp",
+      },
+    ],
+  },
+
+  why: {
+    heading: "Why Choose Wizard Communications",
+    lead: "Understand people first. Technology second. When experiences respect human behaviour... people stop noticing the technology.",
+    items: [
+      {
+        title: "We Don't Guess. We Discover.",
+        body: "Digital experiences fail when decisions are based on opinions. We replace assumptions with evidence. Our multidisciplinary research teams combine behavioural science, customer psychology, business analysis and data intelligence.",
+      },
+      {
+        title: "Enterprise Design Thinking 2.0",
+        body: "At Wizard, Design Thinking becomes an enterprise innovation framework — not simply a workshop methodology — connecting customer expectations, market realities, and business goals.",
+      },
+      {
+        title: "Behavioural Science & Friction Removal",
+        body: "We design for how humans actually make decisions — applying choice architecture, visual hierarchy, and cognitive fluency so experiences feel natural and frictionless.",
+      },
+      {
+        title: "AI-Accelerated, Strategist-Validated",
+        body: "We responsibly integrate AI into every stage of discovery to uncover deep patterns across large datasets, with every recommendation verified by expert strategists.",
+      },
+      {
+        title: "Measurable Commercial Outcomes",
+        body: "Our design process produces more than beautiful interfaces. It produces measurable business outcomes: higher adoption, increased conversion, lower drop-offs, and reduced support costs.",
+      },
+    ],
+    backdrop: "/services/hero/hero_collab.webp",
+  },
+
+  process: {
+    heading: "Design Thinking 2.0: Six Connected Stages",
+    lead: "Creativity backed by commercial intelligence. Design Thinking has transformed how organisations innovate — we've evolved it further into an enterprise innovation framework where every iteration reduces uncertainty and every insight increases confidence.",
+    steps: [
+      {
+        title: "Understand",
+        body: "Customer expectations, technology constraints, market realities, stakeholder ambitions, and business goals.",
+      },
+      {
+        title: "Discover",
+        body: "Ethnographic research, contextual inquiry, observation studies, behavioural analytics, customer interviews, Voice of Customer research, digital analytics, and competitive intelligence.",
+      },
+      {
+        title: "Define",
+        body: "Problem framing, experience strategy, Jobs-to-be-Done (JTBD), business opportunity mapping, experience vision, and success metrics.",
+      },
+      {
+        title: "Imagine",
+        body: "Collaborative ideation, design studios, AI-assisted brainstorming, future scenario planning, rapid concept generation, and service innovation.",
+      },
+      {
+        title: "Prototype",
+        body: "Conversational interfaces, motion prototypes, low and high fidelity design, AI-generated concepts, experience simulations, clickable prototypes, and interactive wireframes.",
+      },
+      {
+        title: "Validate",
+        body: "Usability testing, accessibility reviews, customer feedback, heatmaps, behaviour analytics, A/B testing, and continuous learning.",
+      },
+    ],
+  },
+
+  outcomes: {
+    heading: "The Outcome: Answering What Matters Before Designing",
+    lead: "By the time we begin designing interfaces... we've already answered the most important questions.",
+    problems: {
+      heading: "Questions We Answer First",
+      items: [
+        "Who are the users?",
+        "Where do they struggle?",
+        "What motivates them?",
+        "What creates trust?",
+        "What drives conversion?",
+        "How can AI remove friction?",
+        "How should success be measured?",
+      ],
+    },
+    benefits: {
+      heading: "Measurable Commercial Results",
+      items: [
+        "Higher customer adoption and retention across platforms",
+        "Reduced drop-offs and process abandonment",
+        "Decreased support costs through self-evident architecture",
+        "Higher employee productivity on internal systems",
+        "Competitive advantage built on observable human behaviour",
+        "Streamlined digital adoption and faster time-to-value",
+      ],
+    },
+    closing:
+      "Good architecture disappears. Great architecture feels obvious. When experiences respect human behaviour... people stop noticing the technology.",
+    backdrop: "/services/hero/outcomes-backdrop.webp",
+  },
+
+  tech: {
+    heading: "Evaluation Lenses & Experience Engineering",
+    lead: "Every digital product interaction is evaluated through the lens of human behaviour and built with modern engineering standards.",
+    groups: [
+      {
+        label: "Research & Design",
+        chips: [TECH.uiux, TECH.qa],
+      },
+      {
+        label: "Front-End Implementation",
+        chips: [TECH.html5, TECH.react, TECH.vue, TECH.angular],
+      },
+      {
+        label: "Data & Architecture",
+        chips: [TECH.restApi, TECH.mobile, TECH.wordpress],
+      },
+    ],
+  },
+
+  industries: {
+    heading: "Industries Where Experience Drives Advantage",
+    items: [
+      "Enterprises & Internal Systems",
+      "Healthcare & Digital Health",
+      "Finance, Banking & Insurance",
+      "Retail & eCommerce",
+      "Education & eLearning",
+      "Government & Public Sector",
+      "Manufacturing & Logistics",
+      "Startups & SaaS Platforms",
+      "Hospitality & Consumer Services",
+    ],
+    note: "Because products shouldn't force people to adapt. Products should adapt to people.",
+  },
+
+  caseStudies: {
+    heading: "Drift.",
+    lead: "A sleep and relaxation app we imagined and built ourselves: living gradient visuals, layered soundscapes and a timer that fades the audio as you go under.",
+    slugs: ["drift"],
+  },
+
+  faqs: {
+    heading: "Frequently Asked Questions",
+    items: [
+      {
+        question: "What is Experience Intelligence™?",
+        answer:
+          "Experience Intelligence™ is Wizard's integrated consulting framework that combines customer insight, behavioural science, business strategy, AI-powered discovery and enterprise design into one continuous process. Rather than treating research, design and engineering as separate disciplines, Experience Intelligence™ connects them into a unified ecosystem where every decision is informed by evidence and measured against business outcomes. It transforms research into strategy, strategy into design, design into engineering, and engineering into meaningful customer experiences.",
+      },
+      {
+        question:
+          "Why does Wizard start with understanding people before creating wireframes?",
+        answer:
+          "Most organisations think design starts with wireframes. Why are customers abandoning your platform? Why does adoption remain low? Why do employees avoid internal systems? The answers rarely live inside analytics dashboards — they live inside human behaviour. At Wizard, every engagement begins by understanding the people behind the pixels. Assumptions create expensive products. Insights create extraordinary ones.",
+      },
+      {
+        question: "What is Design Thinking 2.0?",
+        bullets: [
+          "Understand: customer expectations, technology constraints, market realities, and business goals",
+          "Discover: ethnographic research, contextual inquiry, observation studies, and behavioural analytics",
+          "Define: problem framing, experience strategy, Jobs-to-be-Done, and experience vision",
+          "Imagine: collaborative ideation, design studios, AI-assisted brainstorming, and rapid concept generation",
+          "Prototype: conversational interfaces, motion prototypes, clickable prototypes, and interactive wireframes",
+          "Validate: usability testing, accessibility reviews, customer feedback, heatmaps, and continuous learning",
+        ],
+      },
+      {
+        question: "How does behavioural design improve conversion?",
+        answer:
+          "Understanding why people click is more important than knowing where they click. Every digital interaction is a behavioural decision: Should I trust this? Should I continue? Should I purchase? Should I abandon? We incorporate choice architecture, visual hierarchy, decision simplicity, cognitive fluency, trust signals, recognition over recall, progressive disclosure, and behavioural nudges to remove friction without manipulation.",
+      },
+      {
+        question: "How do you combine AI with human insight in research?",
+        answer:
+          "AI doesn't replace researchers. It allows researchers to uncover deeper patterns, analyse larger datasets and move from insight to innovation much faster. Wizard responsibly integrates AI into every stage of discovery — for research synthesis, sentiment analysis, journey analysis, behaviour prediction, and persona generation — with every recommendation validated by experienced strategists and researchers.",
+      },
+      {
+        question:
+          "How does Information Architecture create a competitive advantage?",
+        answer:
+          "When information is organised intelligently, people think less, customers convert faster, employees become more productive, support costs decrease, and digital adoption improves. Wizard structures complex information into intuitive navigation systems that make digital products feel remarkably simple. Good architecture disappears. Great architecture feels obvious.",
+      },
+    ],
+  },
+
+  cta: {
+    title: "Next Chapter: Designing The Future.",
+    body: "Explore how Wizard combines Enterprise UX, Design Systems, AI-Native Product Design, Accessibility, Experience Engineering and Product Innovation to create digital platforms built for tomorrow.",
+    label: "Book Free Consultation",
+  },
+};
+
+/* ------------------------------------------------------------------ */
+/* Maintenance & Support                                               */
+/* ------------------------------------------------------------------ */
+
+const MAINTENANCE_SUPPORT: ServicePage = {
+  slug: "maintenance-support",
+  label: "Maintenance & Support",
+  eyebrow: "Managed Services",
+  titleLines: ["Keep your systems running.", "We handle the rest."],
+  tagline: "Proactive support that prevents problems before they become incidents.",
+  lead: "Launching software is the beginning, not the end. At Wizard Communications, we provide comprehensive maintenance and support services that keep your applications secure, performant, and continuously improving — so your team can focus on the business, not the infrastructure.",
+  body: [
+    "From 24/7 monitoring and rapid incident response to planned enhancements and release management, our managed services team becomes an extension of yours — with the context to act fast and the discipline to act right.",
+  ],
+  image: "/services/hero/hero_trust.webp",
+  imagePrompt:
+    "Cinematic wide shot of a modern operations centre at night, a wall of softly glowing monitors showing abstract system dashboards with no legible text, two engineers in quiet conversation at a standing desk, cyan status lights against deep charcoal, volumetric haze, shallow depth of field, photorealistic, 16:9, no text, no logos",
+  icon: LifeBuoy,
+  summary: "Ensuring seamless, secure system operations.",
+  metaDescription:
+    "Application maintenance and managed support services — 24/7 monitoring, incident response, performance optimisation, CI/CD, release management and proactive issue resolution.",
+
+  statement: {
+    heading: "Software that ships is software that needs care.",
+    body: "Every production system drifts — dependencies age, traffic patterns shift, edge cases surface. A dedicated support partner catches those signals early and acts before users notice.",
+  },
+
+  offerings: {
+    heading: "What we cover",
+    lead: "A complete managed service from monitoring through to planned enhancement — one team, one contract, no gaps.",
+    items: [
+      {
+        title: "24/7 Application Monitoring",
+        body: "Continuous uptime and performance monitoring with alerting, so issues are caught before they reach your users.",
+      },
+      {
+        title: "Incident Response & Bug Fixes",
+        body: "Rapid triage, root-cause analysis and resolution — with clear SLAs and transparent communication throughout.",
+      },
+      {
+        title: "Performance Optimisation",
+        body: "Regular profiling, query tuning, caching strategy and infrastructure right-sizing to keep response times low as usage grows.",
+      },
+      {
+        title: "Security Patching",
+        body: "Scheduled dependency updates, vulnerability scanning and patch deployment — keeping your stack current without surprise downtime.",
+      },
+      {
+        title: "CI/CD & Release Management",
+        body: "Automated pipelines, environment management and controlled deployments that make releasing software a non-event.",
+      },
+      {
+        title: "Database Administration",
+        body: "Backup schedules, replication health, index maintenance and capacity planning for your production databases.",
+      },
+      {
+        title: "Planned Enhancements",
+        body: "Structured sprint cycles for feature additions and UX improvements — so the product keeps moving forward, not just staying alive.",
+      },
+      {
+        title: "Documentation & Knowledge Transfer",
+        body: "Living runbooks, architecture notes and handover packs that mean your team is never dependent on a single person.",
+      },
+    ],
+  },
+
+  why: {
+    heading: "Why businesses choose Wizard for support",
+    items: [
+      {
+        title: "Context from day one",
+        body: "We prefer to support what we build — which means we already know the architecture, the edge cases and the decisions that shaped them.",
+      },
+      {
+        title: "Proactive, not reactive",
+        body: "Monitoring, alerting and regular health reviews mean we surface problems before they become incidents, not after.",
+      },
+      {
+        title: "Transparent SLAs",
+        body: "Clear response and resolution targets, reported monthly — so you always know what you are getting and whether we are delivering it.",
+      },
+      {
+        title: "One team, full stack",
+        body: "Frontend, backend, database, cloud and security under one roof. No finger-pointing between vendors when something crosses a boundary.",
+      },
+      {
+        title: "Scales with you",
+        body: "Support tiers that grow with your product — from a startup's first production deployment to an enterprise platform serving millions.",
+      },
+    ],
+    backdrop: "/services/hero/hero_collab.webp",
+  },
+
+  process: {
+    heading: "How we onboard and operate",
+    lead: "A structured handover so nothing falls through the cracks, followed by a steady operating rhythm.",
+    steps: [
+      {
+        title: "Audit",
+        body: "We review your codebase, infrastructure, monitoring setup and deployment process to understand the current state.",
+      },
+      {
+        title: "Stabilise",
+        body: "Known issues are triaged and resolved, monitoring gaps are closed, and runbooks are written or updated.",
+      },
+      {
+        title: "Instrument",
+        body: "Alerting thresholds, dashboards and on-call rotations are configured to match your SLA requirements.",
+      },
+      {
+        title: "Operate",
+        body: "The steady state: monitoring, incident response, patching and planned releases running on a predictable cadence.",
+      },
+      {
+        title: "Review",
+        body: "Monthly health reports, retrospectives on any incidents, and a forward look at upcoming risks or enhancements.",
+      },
+    ],
+  },
+
+  outcomes: {
+    heading: "What good support actually delivers",
+    lead: "The value of a managed service is not just fewer incidents — it is the compounding effect of a system that keeps getting better.",
+    problems: {
+      heading: "Without a support partner",
+      items: [
+        "Incidents discovered by users, not your team",
+        "Security patches delayed until they are critical",
+        "Performance degradation that creeps up unnoticed",
+        "Deployments that require a developer on standby",
+        "Knowledge locked in one person's head",
+      ],
+    },
+    benefits: {
+      heading: "With Wizard managing your systems",
+      items: [
+        "Issues caught and resolved before users are affected",
+        "Security posture maintained continuously",
+        "Performance baselines tracked and improved over time",
+        "Releases that go out on schedule without drama",
+        "A documented, transferable system anyone can operate",
+        "Your engineering team freed to build, not firefight",
+      ],
+    },
+    closing: "Reliable software is not an accident. It is the result of consistent, disciplined care.",
+    backdrop: "/services/hero/outcomes-backdrop.webp",
+  },
+
+  tech: {
+    heading: "Technologies we support",
+    lead: "We maintain systems built on the stacks we know best — which is most of them.",
+    groups: [
+      {
+        label: "Frontend",
+        chips: [TECH.react, TECH.angular, TECH.vue, TECH.html5],
+      },
+      {
+        label: "Backend",
+        chips: [TECH.dotnet, TECH.node, TECH.php, TECH.python],
+      },
+      {
+        label: "Database",
+        chips: [TECH.mysql, TECH.postgres, TECH.sqlServer, TECH.oracle],
+      },
+      {
+        label: "Cloud & Integration",
+        chips: [TECH.aws, TECH.azure, TECH.firebase, TECH.restApi],
+      },
+    ],
+  },
+
+  industries: {
+    heading: "Industries we support",
+    items: [
+      "Healthcare",
+      "Finance & Insurance",
+      "Retail & eCommerce",
+      "Manufacturing",
+      "Hospitality",
+      "Education & eLearning",
+      "Government & Public Sector",
+      "Logistics & Transportation",
+      "Professional Services",
+      "Startups & Technology Companies",
+    ],
+    note: "If your business depends on software, we can keep it running.",
+  },
+
+  faqs: {
+    heading: "Frequently Asked Questions",
+    items: [
+      {
+        question: "Do you only support software you built?",
+        answer:
+          "No. We take on third-party and legacy systems too. The onboarding audit takes longer, but the operating model is the same.",
+      },
+      {
+        question: "What does a typical SLA look like?",
+        bullets: [
+          "Critical incidents: response within 1 hour, resolution target 4 hours",
+          "High priority: response within 4 hours, resolution target 1 business day",
+          "Standard issues: response within 1 business day, resolution target 3 business days",
+          "Planned work: scheduled in fortnightly sprints",
+        ],
+      },
+      {
+        question: "How do you handle after-hours incidents?",
+        answer:
+          "Critical and high-priority alerts page the on-call engineer directly. We configure thresholds with you during onboarding so the on-call rotation is not woken up for noise.",
+      },
+      {
+        question: "Can you take over support from our current team or vendor?",
+        answer:
+          "Yes. We run a structured handover process — codebase review, infrastructure audit, runbook creation — so nothing is lost in the transition.",
+      },
+      {
+        question: "Do you provide monthly reporting?",
+        answer:
+          "Every month you receive an uptime summary, incident log, patch status, performance trends and a forward look at planned work and upcoming risks.",
+      },
+      {
+        question: "Can the support scope grow over time?",
+        answer:
+          "Absolutely. Most clients start with reactive support and monitoring, then add planned enhancement sprints as the relationship matures.",
+      },
+    ],
+  },
+
+  cta: {
+    title: "Your system deserves better than hope.",
+    body: "Tell us what you are running and we will tell you how we would look after it.",
+    label: "Talk to Our Support Team",
+  },
+};
+
+/* ------------------------------------------------------------------ */
 /* Index                                                               */
 /* ------------------------------------------------------------------ */
 
@@ -1371,28 +1882,30 @@ export const SERVICE_PAGES: readonly ServicePage[] = [
   SECURITY,
   DIGITAL_MARKETING,
   ON_DEMAND_HIRING,
+  MAINTENANCE_SUPPORT,
+  UX_UI,
 ] as const;
 
 /** Slug lookup for the dynamic route. */
 export function getServicePage(slug: string): ServicePage | undefined {
-  return SERVICE_PAGES.find((page) => page.slug === slug);
+  const target = SLUG_ALIASES[slug] ?? slug;
+  return SERVICE_PAGES.find((page) => page.slug === target);
 }
 
 /**
  * Home-page service slugs that name the same thing as a detail page under a
- * different heading. The home page lists the seven services wizardcomm.net
- * advertises; only six of those have a page of their own, and one of the six
- * is published under a longer name.
+ * different heading.
  */
 const SLUG_ALIASES: Record<string, string> = {
   "software-development": "custom-software-development",
+  "ux-ui": "ux-ui-design",
+  "ux-ui-design-development": "ux-ui-design",
 };
 
 /**
  * Where a service card should link.
  *
- * Services with no detail page — UX/UI and Maintenance & Support, neither of
- * which wizardcomm.net publishes a page for — fall back to the index rather
+ * Services with no detail page — UX/UI — fall back to the index rather
  * than linking into a 404. Routing through one helper means a page added later
  * is picked up everywhere at once.
  */

@@ -8,6 +8,7 @@ import {
   LayoutGrid,
   Lightbulb,
   Megaphone,
+  PenTool,
   Rss,
   ShieldCheck,
   Smartphone,
@@ -73,6 +74,12 @@ const ALL_SERVICES: NavLink = {
 };
 
 const SERVICE_LINKS: readonly NavLink[] = [
+  {
+    label: "UX/UI Design",
+    href: "/services/ux-ui-design",
+    description: "Creating seamless, intuitive user experiences.",
+    icon: PenTool,
+  },
   {
     label: "Custom Software Development",
     href: "/services/custom-software-development",

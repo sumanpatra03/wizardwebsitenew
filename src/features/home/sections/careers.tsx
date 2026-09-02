@@ -10,8 +10,7 @@ import { CareersCanvas } from "./careers-canvas";
  * crosses the boundary to the client canvas without trouble.
  */
 export function Careers() {
-  // Drop a file into `public/careers/` and it appears — see that README.
-  const image = findPublicImage("careers", "team");
+  const image = findPublicImage("careers", "team") ?? "/careers/team.jpg";
 
   return <CareersCanvas image={image} />;
 }

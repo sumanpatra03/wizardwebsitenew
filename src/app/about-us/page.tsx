@@ -56,7 +56,7 @@ export default function AboutUsPage() {
         eyebrow={ABOUT.eyebrow}
         titleLines={ABOUT.titleLines}
         lead={ABOUT.lead}
-        aside={<HeroImage src="/about/team-work.webp" />}
+        aside={<HeroImage src="/about/about_us2.jpg" />}
       />
 
       {/* Proof points */}

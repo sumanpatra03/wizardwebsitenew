@@ -69,9 +69,9 @@ export function ServicesGrid() {
         >
           {SERVICES.map((service, index) => {
             const accented = index % 2 === 1;
-            // Drop a file into `public/services/` named after the slug and it
-            // replaces the generated artwork — see `public/services/README.md`.
-            const image = findPublicImage("services", service.slug);
+            // `service.image` takes priority; otherwise fall back to the
+            // slug-based drop-in convention in `public/services/`.
+            const image = service.image ?? findPublicImage("services", service.slug);
 
             const faceTone = accented
               ? "border-accent/25 bg-bg-elevated bg-mesh"

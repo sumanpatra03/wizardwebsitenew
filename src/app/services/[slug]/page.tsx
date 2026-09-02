@@ -26,6 +26,7 @@ import { ServiceOutcomes } from "@/features/services/service-outcomes";
 import { ServiceProcess } from "@/features/services/service-process";
 import { ServiceWhy } from "@/features/services/service-why";
 import { TechStack } from "@/features/services/tech-stack";
+import { UxUiDetailPage } from "@/features/services/ux-ui-detail-page";
 import { breadcrumbJsonLd } from "@/lib/jsonld";
 import { buildMetadata } from "@/lib/seo";
 import { cn } from "@/lib/utils";
@@ -38,7 +39,9 @@ type Params = { slug: string };
  * 404 rather than an on-demand render of a page that cannot exist.
  */
 export function generateStaticParams(): Params[] {
-  return SERVICE_PAGES.map((page) => ({ slug: page.slug }));
+  const params: Params[] = SERVICE_PAGES.map((page) => ({ slug: page.slug }));
+  params.push({ slug: "ux-ui-design-development" });
+  return params;
 }
 
 export const dynamicParams = false;
@@ -73,6 +76,15 @@ export default async function ServiceDetailPage({
     { label: "Services", href: "/services" },
     { label: page.label },
   ] as const;
+
+  if (page.slug === "ux-ui-design") {
+    return (
+      <>
+        <JsonLd data={breadcrumbJsonLd(crumbs)} />
+        <UxUiDetailPage crumbs={crumbs} />
+      </>
+    );
+  }
 
   // Destructured so TypeScript narrows each optional block once, rather than
   // at every use inside the JSX below.
