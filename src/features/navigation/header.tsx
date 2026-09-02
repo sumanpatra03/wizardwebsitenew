@@ -132,7 +132,7 @@ export function Header() {
                   aria-current={isActive ? "page" : undefined}
                   onMouseEnter={() => setOpenMenu(null)}
                   className={cn(
-                    "rounded-pill px-3.5 py-2 text-body-sm font-medium",
+                    "rounded-pill px-2.5 py-2 text-body-sm font-medium xl:px-3.5",
                     "transition-colors duration-(--duration-fast)",
                     "hover:bg-surface-hover hover:text-fg",
                     "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
@@ -157,7 +157,7 @@ export function Header() {
                   aria-haspopup="true"
                   onClick={() => (isOpen ? setOpenMenu(null) : openNow(item.label))}
                   className={cn(
-                    "flex items-center gap-1 rounded-pill px-3.5 py-2",
+                    "flex items-center gap-1 rounded-pill px-2.5 py-2 xl:px-3.5",
                     "text-body-sm font-medium",
                     "transition-colors duration-(--duration-fast)",
                     "hover:bg-surface-hover hover:text-fg",

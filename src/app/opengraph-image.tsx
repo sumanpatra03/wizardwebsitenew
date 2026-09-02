@@ -5,7 +5,12 @@ import { ImageResponse } from "next/og";
 
 import { SITE } from "@/constants/site";
 
-export const alt = `${SITE.name} — ${SITE.tagline}`;
+/**
+ * Describes the card, rather than repeating the page title verbatim — which
+ * is what alt text is for, and it keeps `og:image:alt` from restating the
+ * tagline already carried by `og:title`.
+ */
+export const alt = `${SITE.name} share card: the company logo above the ${SITE.tagline} tagline on a dark background.`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 

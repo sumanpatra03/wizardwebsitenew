@@ -80,8 +80,12 @@ type MaskRevealProps = {
  * Display-type reveal: every line slides up from behind its own overflow
  * mask, the way Website A introduces its hero headline.
  *
- * The visual lines are `aria-hidden`; a visually hidden copy of the full
- * string carries the accessible name so assistive tech reads one sentence.
+ * The accessible name comes from `aria-label` on the heading itself, not from
+ * a visually hidden copy of the string. Both read identically to assistive
+ * tech, but the sr-only copy also put the text into the DOM twice, so every
+ * <h1> on the site reported its own headline twice to crawlers and SEO
+ * audits — "Digital & Beyond" appearing twice in the home page heading, and
+ * the same on every inner page. With `aria-label` the text is present once.
  */
 export function MaskReveal({
   lines,
@@ -102,16 +106,15 @@ export function MaskReveal({
   return (
     <MotionTag
       className={className}
+      aria-label={full}
       variants={staggerContainer(0.09, delay)}
       initial="hidden"
       whileInView="visible"
       viewport={viewportOnce}
     >
-      <span className="sr-only">{full}</span>
       {lines.map((line, index) => (
         <span
           key={`${line}-${index}`}
-          aria-hidden="true"
           // pb/-mb gives descenders room so the mask does not clip them.
           className="block overflow-hidden pb-[0.12em] -mb-[0.12em]"
         >
@@ -120,6 +123,10 @@ export function MaskReveal({
             className={cn("block will-change-transform", lineClassName)}
           >
             {line}
+            {/* Keeps the lines from concatenating into one run-on word when
+                a crawler reads the element's text content. Collapsed by the
+                block layout, so nothing shifts visually. */}
+            {index < lines.length - 1 ? " " : ""}
           </motion.span>
         </span>
       ))}

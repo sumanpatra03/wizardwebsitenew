@@ -27,17 +27,17 @@ import { cn } from "@/lib/utils";
 
 const CRUMBS = [
   { label: "Home", href: "/" },
-  { label: "Career" },
+  { label: "Careers" },
 ] as const;
 
 export const metadata = buildMetadata({
-  title: "Career",
+  title: "Careers",
   description:
     "Eight open roles at Wizard Communications — full stack, .NET, QA, Scrum Master, data engineering and pricing. Kolkata and Noida, hybrid and remote.",
-  path: "/career",
+  path: "/careers",
 });
 
-export default function CareerPage() {
+export default function CareersPage() {
   /*
    * The team photograph the home careers section already uses — a real
    * picture of the people you would be joining, which is the one image a

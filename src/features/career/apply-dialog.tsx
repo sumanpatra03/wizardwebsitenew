@@ -30,7 +30,7 @@ import {
   INITIAL_APPLICATION_STATE,
   submitApplication,
   type ApplicationState,
-} from "@/app/career/actions";
+} from "@/app/careers/actions";
 
 const field = cn(
   "w-full rounded-lg border border-border bg-bg px-4 py-2.5",

@@ -24,8 +24,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
       { url: url("/industries"), priority: 0.8, changeFrequency: "monthly" },
       { url: url("/products"), priority: 0.9, changeFrequency: "monthly" },
       { url: url("/projects"), priority: 0.8, changeFrequency: "monthly" },
+      { url: url("/resources"), priority: 0.6, changeFrequency: "weekly" },
       { url: url("/contact"), priority: 0.7, changeFrequency: "yearly" },
-      { url: url("/career"), priority: 0.6, changeFrequency: "weekly" },
+      { url: url("/careers"), priority: 0.6, changeFrequency: "weekly" },
       { url: url("/privacy-policy"), priority: 0.3, changeFrequency: "yearly" },
       { url: url("/accessibility"), priority: 0.3, changeFrequency: "yearly" },
     ] satisfies MetadataRoute.Sitemap

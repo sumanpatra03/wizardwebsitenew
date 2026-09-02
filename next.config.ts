@@ -24,6 +24,12 @@ const nextConfig: NextConfig = {
     },
   },
 
+  // `/career` was the published URL before the section was renamed to the
+  // plural. Permanent, so the link equity and any bookmark follow it over.
+  async redirects() {
+    return [{ source: "/career", destination: "/careers", permanent: true }];
+  },
+
   async headers() {
     return [
       {
